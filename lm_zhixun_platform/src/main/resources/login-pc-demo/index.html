@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<script src="./js/vue.global.js"></script>
+		<script src="./js/axios.min.js"></script>
+		<link href="./css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+		<style>
+			img{
+				width: 100px;
+				height: 100px;
+			}
+
+
+		</style>
+	</head>
+	<body>
+		<div id="app">
+			<button type="button" class="btn btn-primary">Primary</button>
+			<input type="checkbox" class="custom-control-input" id="customSwitch1">
+
+			<!--			<a>{{User_Data}}</a>-->
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<td>用户ID</td>
+						<td>用户账号</td>
+						<td>用户密码</td>
+						<td>头像</td>
+						<td>账号状态</td>
+						<td>操作</td>
+					</tr>
+				</thead>
+				<tbody>
+
+					<template v-for="(item,index) in User_Data.records">
+						<tr>
+							<td>{{item.userId}}</td>
+							<td>{{item.username}}</td>
+							<td>{{item.password}}</td>
+							<td>
+								<img sizes="50" :src="item.imageName" class="img-responsive" alt="Cinque Terre">
+							</td>
+							<td>
+								{{item.state}}
+							</td>
+							<td>
+								<a href="javascript:void(0);">修改</a><a>     </a>
+								<a href="javascript:void(0);">删除</a>
+							</td>
+						</tr>
+					</template>
+				</tbody>
+			</table>
+			
+		</div>
+	</body>
+	<script>
+
+		const cm = Vue.createApp({
+			data(){
+				return{
+					User_Data : 1,
+				}
+			},
+			mounted(){
+				alert("mounted")
+
+				axios.post('/user/login', {
+					username: 'admin',
+					password: '0fb584b9e8d3f17383a8df65ff8e4254'
+				})
+				.then((response)=> {
+
+					console.log(response.data.data);
+					if (response.data.data == "登录成功！")
+					{
+						axios.get('/user/page/1/10')
+						.then((re)=>{
+							console.log(re.data);
+							if (re.data.code == 1){
+								this.User_Data = re.data.data;
+								console.log(this.User_Data);
+							}
+						})
+					}
+
+				})
+				.catch(function (error) {
+					console.log(error);
+				});
+			},
+			created(){
+				alert("created")
+			}
+		}).mount("#app");
+	</script>
+</html>

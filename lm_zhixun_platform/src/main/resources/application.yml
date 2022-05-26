@@ -1,0 +1,20 @@
+
+#修改SpringBoot的端口
+server:
+  port: 8081
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/springboot_logindemo
+    username: root
+    password: 123456
+    type: com.alibaba.druid.pool.DruidDataSource #简单引入druid
+mybatis-plus:
+  configuration:
+    #转驼峰
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      id-type: assign_id #雪花算法
