@@ -4,7 +4,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.lm.common.ex.handler.UserExceptionHandler;
+import com.lm.common.ex.lthrow.UserExceptionThrow;
 import com.lm.common.r.UserResultEnum;
 import org.junit.Test;
 import org.springframework.stereotype.Component;
@@ -83,7 +83,7 @@ public class JwtService {
             DecodedJWT jwt = verifier.verify(token);
             return jwt.getClaim(LM_USER_ID).asLong();
         }catch (Exception exception){
-            throw new UserExceptionHandler(UserResultEnum.USER_TOKEN_ERROR);
+            throw new UserExceptionThrow(UserResultEnum.USER_TOKEN_ERROR);
         }
     }
     @Test

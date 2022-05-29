@@ -1,4 +1,4 @@
-package com.lm.vo.user;
+package com.lm.entity.vo.user;
 
 import lombok.Data;
 

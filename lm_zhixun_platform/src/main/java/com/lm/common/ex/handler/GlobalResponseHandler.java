@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lm.common.ex.ErrorHandler;
 import com.lm.common.r.R;
+import com.lm.entity.pojo.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
@@ -33,11 +34,20 @@ public class GlobalResponseHandler implements ResponseBodyAdvice<Object> {
 
     @Override
     public Object beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType, Class<? extends HttpMessageConverter<?>> selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
-       log.info("同一数据处理msg--->{}",body);
+       log.info("统一数据处理msg--->{}",body);
         //判断如果是抛出异常的时候，则使用R.error
        if (body instanceof ErrorHandler){
+
            // 1、如果返回的结果是一个异常的结果，就把异常返回的结构数据倒腾到R.error里面即可
            ErrorHandler errorHandler = (ErrorHandler)body;
+
+           User u = new User();
+           User sss = (User) R.sss(u);
+           sss.getImageName();
+
+           User user = R.s11(u);
+            user.getUserId();
+
            return R.error(errorHandler.getStatus(),errorHandler.getMessage());
        }
        else if (body instanceof String){

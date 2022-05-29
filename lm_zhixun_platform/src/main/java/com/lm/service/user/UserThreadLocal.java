@@ -1,7 +1,7 @@
 package com.lm.service.user;
 
 
-import com.lm.pojo.User;
+import com.lm.entity.pojo.User;
 
 public class UserThreadLocal {
     //每次使用完记得删除！不然会泄露

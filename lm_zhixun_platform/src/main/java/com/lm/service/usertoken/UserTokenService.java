@@ -1,7 +1,7 @@
 package com.lm.service.usertoken;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.lm.pojo.UserToken;
+import com.lm.entity.pojo.UserToken;
 
 public interface UserTokenService extends IService<UserToken> {
 

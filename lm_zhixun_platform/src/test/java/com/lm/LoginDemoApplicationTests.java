@@ -1,6 +1,6 @@
 package com.lm;
 
-import com.lm.pojo.UserToken;
+import com.lm.entity.pojo.UserToken;
 import com.lm.service.usertoken.UserTokenService;
 import com.lm.tool.Base64Tool;
 import org.junit.jupiter.api.Test;

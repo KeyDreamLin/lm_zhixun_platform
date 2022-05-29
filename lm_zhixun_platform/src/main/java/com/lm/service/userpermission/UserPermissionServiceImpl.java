@@ -1,8 +1,8 @@
 package com.lm.service.userpermission;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.lm.entity.pojo.UserPermission;
 import com.lm.mapper.UserPermissionMapper;
-import com.lm.pojo.UserPermission;
 import org.springframework.stereotype.Service;
 
 @Service

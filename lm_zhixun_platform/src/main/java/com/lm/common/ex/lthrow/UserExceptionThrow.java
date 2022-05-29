@@ -1,11 +1,11 @@
-package com.lm.common.ex.handler;
+package com.lm.common.ex.lthrow;
 
 import com.lm.common.r.GlobalResultEnumInterface;
 
 /**
- * 用户异常处理类
+ * 用户异抛出类
  */
-public class UserExceptionHandler extends RuntimeException{
+public class UserExceptionThrow extends RuntimeException{
     private Integer code;
     private String msg;
 
@@ -17,7 +17,7 @@ public class UserExceptionHandler extends RuntimeException{
      * @param globalResultEnumInterface the detail message. The detail message is saved for
      *                later retrieval by the {@link #getMessage()} method.
      */
-    public UserExceptionHandler(GlobalResultEnumInterface globalResultEnumInterface) {
+    public UserExceptionThrow(GlobalResultEnumInterface globalResultEnumInterface) {
         super(globalResultEnumInterface.getMsg());
         this.code = globalResultEnumInterface.getCode();
         this.msg = globalResultEnumInterface.getMsg();

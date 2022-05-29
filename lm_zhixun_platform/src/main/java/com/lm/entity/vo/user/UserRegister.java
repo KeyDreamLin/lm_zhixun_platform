@@ -1,7 +1,7 @@
-package com.lm.vo.user;
+package com.lm.entity.vo.user;
 
-import com.lm.pojo.User;
-import com.lm.pojo.UserPermission;
+import com.lm.entity.pojo.User;
+import com.lm.entity.pojo.UserPermission;
 
 import java.util.List;
 

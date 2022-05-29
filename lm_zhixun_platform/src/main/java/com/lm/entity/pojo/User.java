@@ -1,4 +1,4 @@
-package com.lm.pojo;
+package com.lm.entity.pojo;
 
 import com.baomidou.mybatisplus.annotation.*;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -10,7 +10,7 @@ import lombok.ToString;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-
+//Java中通过继承Serializable接口来获得序列化与反序列化的能力,使用ObjectInputStream和ObjectOutputStream来进行具体的对象序列化读写
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
