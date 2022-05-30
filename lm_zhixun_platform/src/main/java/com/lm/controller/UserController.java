@@ -51,7 +51,7 @@ public class UserController {
         LmAssert.isFalseEx(flagCheckPwd,UserResultEnum.USER_LOGIN_NO_EXIST);
         // 根据用户id生成token
         UserBo userBo = new UserBo();
-        userBo.setToken(jwtService.createToken(userDb.getUserId()));
+        userBo.setTokenJj(jwtService.createToken(userDb.getUserId()));
 
         // 往redis传tokenUuid
         String tokenUuid_key = "lm:user:login:id:" + userDb.getUserId();

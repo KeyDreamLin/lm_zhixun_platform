@@ -10,6 +10,8 @@ import org.junit.Test;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -38,11 +40,14 @@ public class JwtService {
      * @return
      */
     public String createToken(Long userId){
+        Date date = new Date();
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Algorithm algorithm = Algorithm.HMAC256(KEY);
         String token = JWT.create()
                 .withIssuer(AUTHOR)
                 .withClaim(LM_USER_ID,userId)
-                .withExpiresAt(new Date(System.currentTimeMillis()+TOKEN_EXPIRE_TIME))
+                .withIssuedAt(new Date(System.currentTimeMillis()))//设置签发日期
+                .withExpiresAt(new Date(System.currentTimeMillis()+TOKEN_EXPIRE_TIME))//设置过期日期
                 .sign(algorithm);
         return token;
     }
@@ -70,6 +75,11 @@ public class JwtService {
         }
     }
 
+    /**
+     * 获取用户id
+     * @param token
+     * @return
+     */
     public Long getTokenUserId(String token){
         //等于空的时候
         if (!StringUtils.hasText(token)){
@@ -86,8 +96,53 @@ public class JwtService {
             throw new UserExceptionThrow(UserResultEnum.USER_TOKEN_ERROR);
         }
     }
+
+    /**
+     * 获取签发日期
+     * @param token
+     * @return
+     */
+    public Date getTokenIssuedTime(String token){
+        try {
+            // 1：确定token加密签名的算法和密钥
+            Algorithm algorithm = Algorithm.HMAC256(KEY);
+            // 2 : 获取token的校验对象
+            JWTVerifier verifier = JWT.require(algorithm)
+                    .withIssuer(AUTHOR)
+                    .build(); //Reusable verifier instance
+            // 3: 开始校验，如果校验通过DecodedJWT.如果token是伪造或者失效的，就会出现异常。
+            DecodedJWT jwt = verifier.verify(token);
+            return jwt.getIssuedAt();
+        } catch (Exception ex) {
+            throw new UserExceptionThrow(UserResultEnum.USER_TOKEN_ERROR);
+        }
+    }
+
+    /**
+     * 获取过期时间
+     * @param token
+     * @return
+     */
+    public Date getTokenExpiresTime(String token){
+        try {
+            // 1：确定token加密签名的算法和密钥
+            Algorithm algorithm = Algorithm.HMAC256(KEY);
+            // 2 : 获取token的校验对象
+            JWTVerifier verifier = JWT.require(algorithm)
+                    .withIssuer(AUTHOR)
+                    .build(); //Reusable verifier instance
+            // 3: 开始校验，如果校验通过DecodedJWT.如果token是伪造或者失效的，就会出现异常。
+            DecodedJWT jwt = verifier.verify(token);
+            return jwt.getIssuedAt();
+        } catch (Exception ex) {
+            throw new UserExceptionThrow(UserResultEnum.USER_TOKEN_ERROR);
+        }
+    }
+
     @Test
     public void testSS(){
+        Date a = this.getTokenIssuedTime("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsbW0iLCJsbV91c2VyX2lkIjoxLCJleHAiOjE2NTM4NzI0MDksImlhdCI6MTY1Mzg3MDYwOX0.O3SHRvfPAeGgB9MQ18sBJXG4gI7_g-e8LUdEvlSfbn4");
+        System.out.println(DateTool.diffReturnMinute(new Date(),a));
 
         System.out.println( StringUtils.hasText(null));
         System.out.println( StringUtils.hasText(""));

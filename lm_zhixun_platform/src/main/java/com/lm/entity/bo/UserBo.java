@@ -8,7 +8,7 @@ import java.io.Serializable;
 @Data
 public class UserBo implements Serializable {
     // 存储jwt 登录秘钥
-    private String token;
+    private String tokenJj;
     // 用于下线的UUID
     private String tokenUuid;
     private User user;

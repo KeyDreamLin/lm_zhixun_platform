@@ -6,7 +6,9 @@ import com.lm.common.r.UserResultEnum;
 import com.lm.entity.pojo.User;
 import com.lm.service.user.UserService;
 import com.lm.service.user.UserThreadLocal;
+import com.lm.tool.DateTool;
 import com.lm.tool.JwtService;
+import com.lm.tool.LmAssert;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -18,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Method;
+import java.util.Date;
 
 /**
  * 检查用户权限，是否登录
@@ -25,7 +28,7 @@ import java.lang.reflect.Method;
  */
 @Component
 @Slf4j
-public class PassLoginCheckJwtFilter implements HandlerInterceptor {
+public class PassLoginCheckJwtInterceptor implements HandlerInterceptor {
     @Autowired
     private JwtService jwtService;
 
@@ -45,28 +48,50 @@ public class PassLoginCheckJwtFilter implements HandlerInterceptor {
             return true;
         }
 
-        String token = request.getHeader("token");
+        String token_jj = request.getHeader("token_jj");
         //检查token是否合法
-        if (!StringUtils.hasLength(token)){
+        if (!StringUtils.hasLength(token_jj)){
             throw new UserExceptionThrow(UserResultEnum.USER_TOKEN_ERROR);
         }
         //校验token是否失效
-        boolean verify = jwtService.verify(token);
+        boolean verify = jwtService.verify(token_jj);
         if (verify == false){
             //如果校验失败，抛出token过期了，前台就会捕获这个状态，会跳转到登录页面，重新登录获取token
             throw new UserExceptionThrow(UserResultEnum.USER_TOKEN_NOT_FOUND);
         }
         //解析token，获取用户id
-        Long userId = jwtService.getTokenUserId(token);
+        Long userId = jwtService.getTokenUserId(token_jj);
         if (userId == null){
             //用户不存在
             throw new UserExceptionThrow(UserResultEnum.USER_NULL_ERROR);
         }
-        //根据用户id查询用户信息
+        //根据用户id查询用户信息MySQL
         User user = userService.getById(userId);
         if (user==null){
             throw new UserExceptionThrow(UserResultEnum.USER_NULL_ERROR);
         }
+
+        // 对jwt续期，采用签发时间续期
+        // token续期
+        // 获取请求头的token_user_id
+        String token_user_id = request.getHeader("token_user_id");
+        LmAssert.isNotNull(token_user_id,UserResultEnum.USER_TOKEN_ERROR);
+
+        // 获取token jwt的签发时间
+        Date signTokenTime = jwtService.getTokenIssuedTime(token_jj);
+        // 获取token使用时间
+        Long UseTokenDateMinute = DateTool.diffReturnMinute(new Date(),signTokenTime);
+        log.info("token jwt的使用时间--->{}",UseTokenDateMinute);
+        //使用时间超过了15分钟，就重新生成一串jwt返回给前端
+        if (UseTokenDateMinute >= 15){
+            // 续期，重新生成一个新的token
+            String newToken = jwtService.createToken(Long.valueOf(token_user_id));
+            log.info("重新生成一个jwt--->{}",newToken);
+
+            // 通过response的头部输出token,然后前台通过reponse获取
+            response.setHeader("token_jj", newToken);
+        }
+
         //把用户信息放入UserThreadLocal
         UserThreadLocal.put(user);
         return true;

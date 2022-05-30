@@ -1,6 +1,6 @@
 package com.lm.config;
 
-import com.lm.filter.userlogin.PassLoginCheckJwtFilter;
+import com.lm.filter.userlogin.PassLoginCheckJwtInterceptor;
 import com.lm.filter.userlogin.PassportLogoutInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -11,7 +11,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
     @Autowired
-    private PassLoginCheckJwtFilter passLoginCheckJwtFilter;
+    private PassLoginCheckJwtInterceptor passLoginCheckJwtInterceptor;
     @Autowired
     private PassportLogoutInterceptor passportLogoutInterceptor;
 
@@ -24,7 +24,7 @@ public class WebConfig implements WebMvcConfigurer {
         // 先检查用户UUID是否过期
         registry.addInterceptor(passportLogoutInterceptor).addPathPatterns("/user/**").excludePathPatterns("/user/login");
         // 再检查用户的jwt是否过期
-        registry.addInterceptor(passLoginCheckJwtFilter).addPathPatterns("/user/**").excludePathPatterns("/user/login");
+        registry.addInterceptor(passLoginCheckJwtInterceptor).addPathPatterns("/user/**").excludePathPatterns("/user/login");
     }
 
 
