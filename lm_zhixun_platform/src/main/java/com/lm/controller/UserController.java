@@ -1,6 +1,8 @@
 package com.lm.controller;
 
 import com.lm.common.r.UserResultEnum;
+import com.lm.config.redis.JwtBlackSetService;
+import com.lm.config.redis.key.RedisAndHeaderKey;
 import com.lm.entity.bo.UserBo;
 import com.lm.entity.pojo.User;
 import com.lm.entity.vo.user.UserLogin;
@@ -20,7 +22,7 @@ import java.util.UUID;
 @Slf4j
 @RestController
 @RequestMapping("/user")
-public class UserController {
+public class UserController implements RedisAndHeaderKey {
 
     @Resource
     private UserService userService;
@@ -30,6 +32,9 @@ public class UserController {
 
     @Autowired
     private StringRedisTemplate redisTemplate;
+
+    @Autowired
+    private JwtBlackSetService jwtBlackSetService;
 
     @PostMapping("/login")
     public UserBo Login(@RequestBody UserLogin userLogin, HttpServletRequest httpServletRequest , HttpServletResponse response) {
@@ -54,7 +59,7 @@ public class UserController {
         userBo.setTokenJj(jwtService.createToken(userDb.getUserId()));
 
         // 往redis传tokenUuid
-        String tokenUuid_key = "lm:user:login:id:" + userDb.getUserId();
+        String tokenUuid_key = REDIS_LOGIN_UUID_KEY + userDb.getUserId();
         String tokenUuid_Val = UUID.randomUUID().toString();
         // 把键和值传进去
         redisTemplate.opsForValue().set(tokenUuid_key,tokenUuid_Val);
@@ -72,11 +77,24 @@ public class UserController {
     /**
      * 登录注销功能，token过期也会被拦截到！
      * @param request
-     * @param response
      * @return
      */
     @GetMapping("/logout")
-    public String Logout(HttpServletRequest request,HttpServletResponse response){
+    public String Logout(HttpServletRequest request){
+        String token_jj = request.getHeader(HEADER_TOKEN_JJ);
+        String token_uuid = request.getHeader(HEADER_TOKEN_UUID);
+        String token_user_id = request.getHeader(HEADER_TOKEN_USER_ID);
+
+        LmAssert.isNotNull(token_jj,UserResultEnum.USER_TOKEN_NOT_FOUND);
+        LmAssert.isNotNull(token_uuid,UserResultEnum.USER_NO_LOGIN);
+        LmAssert.isNotNull(token_user_id,UserResultEnum.USER_NO_LOGIN);
+        // 删除redis下线的UUID
+        // 先拼接Redis的key
+        String tokenUuidKey = REDIS_LOGIN_UUID_KEY + token_user_id;
+        log.info("拼接后的UuidKey--->{}",tokenUuidKey);
+        redisTemplate.delete(tokenUuidKey);
+        // 把jwt添加到Redis的黑名单
+        jwtBlackSetService.addBlackList(token_jj);
         return "退出成功!";
     }
 

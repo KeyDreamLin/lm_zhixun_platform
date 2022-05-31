@@ -2,6 +2,7 @@ package com.lm.filter.userlogin;
 
 import com.lm.common.ex.lthrow.ValidatorExceptionThrow;
 import com.lm.common.r.UserResultEnum;
+import com.lm.config.redis.key.RedisAndHeaderKey;
 import com.lm.tool.LmAssert;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 @Slf4j
 @Component
-public class PassportLogoutInterceptor implements HandlerInterceptor {
+public class PassportLogoutInterceptor implements HandlerInterceptor , RedisAndHeaderKey {
 
     @Autowired
     private StringRedisTemplate redisTemplate;
@@ -26,15 +27,15 @@ public class PassportLogoutInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         // 获取请求头的UUID
-        String token_uuid = request.getHeader("token_uuid");
+        String token_uuid = request.getHeader(HEADER_TOKEN_UUID);
         log.info("获取到请求头中的token_uuid--->{}",token_uuid);
         // 如果token_UUID为空，抛出用户未登录
         LmAssert.isNotNull(token_uuid, UserResultEnum.USER_NO_LOGIN);
         // 通过请求头获取token_user_id获取Redis里面的UUID
-        String token_user_id = request.getHeader("token_user_id");
+        String token_user_id = request.getHeader(HEADER_TOKEN_USER_ID);
         // 通过请求头的用户id去获取Redis里面的UUID
         // 先组装UUID的key
-        String tokenUuid_key = "lm:user:login:id:" + token_user_id;
+        String tokenUuid_key = REDIS_LOGIN_UUID_KEY + token_user_id;
         // 通过key去查询Redis的val
         String db_token_uuid = redisTemplate.opsForValue().get(tokenUuid_key);
         // 如果获取不到则抛出异常未登录

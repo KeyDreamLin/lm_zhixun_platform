@@ -3,6 +3,8 @@ package com.lm.filter.userlogin;
 import com.lm.common.anno.IgnoreToken;
 import com.lm.common.ex.lthrow.UserExceptionThrow;
 import com.lm.common.r.UserResultEnum;
+import com.lm.config.redis.JwtBlackSetService;
+import com.lm.config.redis.key.RedisAndHeaderKey;
 import com.lm.entity.pojo.User;
 import com.lm.service.user.UserService;
 import com.lm.service.user.UserThreadLocal;
@@ -11,6 +13,7 @@ import com.lm.tool.JwtService;
 import com.lm.tool.LmAssert;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.method.HandlerMethod;
@@ -28,12 +31,19 @@ import java.util.Date;
  */
 @Component
 @Slf4j
-public class PassLoginCheckJwtInterceptor implements HandlerInterceptor {
+public class PassLoginCheckJwtInterceptor implements HandlerInterceptor , RedisAndHeaderKey {
     @Autowired
     private JwtService jwtService;
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private StringRedisTemplate redisTemplate;
+
+    @Autowired
+    private JwtBlackSetService jwtBlackSetService;
+
     //用于在将请求发送到控制器之前执行操作。此方法应返回true，以将响应返回给客户端。
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -48,7 +58,7 @@ public class PassLoginCheckJwtInterceptor implements HandlerInterceptor {
             return true;
         }
 
-        String token_jj = request.getHeader("token_jj");
+        String token_jj = request.getHeader(HEADER_TOKEN_JJ);
         //检查token是否合法
         if (!StringUtils.hasLength(token_jj)){
             throw new UserExceptionThrow(UserResultEnum.USER_TOKEN_ERROR);
@@ -59,6 +69,14 @@ public class PassLoginCheckJwtInterceptor implements HandlerInterceptor {
             //如果校验失败，抛出token过期了，前台就会捕获这个状态，会跳转到登录页面，重新登录获取token
             throw new UserExceptionThrow(UserResultEnum.USER_TOKEN_NOT_FOUND);
         }
+
+        // 校验jwt是否被拉黑（用户手动注销）
+        // 返回true时jwt存在黑名单中
+        boolean isBlack = jwtBlackSetService.isBlackList(token_jj);;
+        log.info("校验jwt是否被拉黑-->{}",isBlack);
+        // 返回token过期吧
+        LmAssert.isTrueEx(isBlack,UserResultEnum.USER_TOKEN_NOT_FOUND);
+
         //解析token，获取用户id
         Long userId = jwtService.getTokenUserId(token_jj);
         if (userId == null){
@@ -74,7 +92,7 @@ public class PassLoginCheckJwtInterceptor implements HandlerInterceptor {
         // 对jwt续期，采用签发时间续期
         // token续期
         // 获取请求头的token_user_id
-        String token_user_id = request.getHeader("token_user_id");
+        String token_user_id = request.getHeader(HEADER_TOKEN_USER_ID);
         LmAssert.isNotNull(token_user_id,UserResultEnum.USER_TOKEN_ERROR);
 
         // 获取token jwt的签发时间
@@ -111,4 +129,5 @@ public class PassLoginCheckJwtInterceptor implements HandlerInterceptor {
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
         UserThreadLocal.remove();
     }
+
 }
