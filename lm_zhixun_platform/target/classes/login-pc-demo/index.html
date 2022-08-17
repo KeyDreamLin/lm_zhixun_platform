@@ -3,97 +3,249 @@
 	<head>
 		<meta charset="utf-8" />
 		<title></title>
-		<script src="./js/vue.global.js"></script>
-		<script src="./js/axios.min.js"></script>
 		<link href="./css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+		<script type="text/javascript" src="./js/jquery-3.6.0.js"></script>
 		<style>
-			img{
-				width: 100px;
-				height: 100px;
+			#add_form{
+				margin: 10px;
+				padding: 10px;
+				background-color: #eee;
+				/*display: none;*/
 			}
-
-
 		</style>
 	</head>
 	<body>
-		<div id="app">
-			<button type="button" class="btn btn-primary">Primary</button>
-			<input type="checkbox" class="custom-control-input" id="customSwitch1">
-
-			<!--			<a>{{User_Data}}</a>-->
-			<table class="table table-striped">
-				<thead>
-					<tr>
-						<td>用户ID</td>
-						<td>用户账号</td>
-						<td>用户密码</td>
-						<td>头像</td>
-						<td>账号状态</td>
-						<td>操作</td>
-					</tr>
-				</thead>
-				<tbody>
-
-					<template v-for="(item,index) in User_Data.records">
-						<tr>
-							<td>{{item.userId}}</td>
-							<td>{{item.username}}</td>
-							<td>{{item.password}}</td>
-							<td>
-								<img sizes="50" :src="item.imageName" class="img-responsive" alt="Cinque Terre">
-							</td>
-							<td>
-								{{item.state}}
-							</td>
-							<td>
-								<a href="javascript:void(0);">修改</a><a>     </a>
-								<a href="javascript:void(0);">删除</a>
-							</td>
-						</tr>
-					</template>
-				</tbody>
-			</table>
-			
+		<div>
+			<input type="text" id="s-keyword">
+			<button id="searchBtn">搜索</button>
+			<button id="switchAddBtn">添加</button>
+			<button class="load-but">加载更多
+				<span class="span_current"></span>
+				/
+				<span class="span_pages"></span>
+			</button>
 		</div>
+		<div id="add_form">
+			<form>
+
+				<div class="form-group">
+					<label >用户名</label>
+					<input type="text" class="form-control" id="username" name="username" placeholder="请输入用户名">
+				</div>
+				<div class="form-group">
+					<label >昵称</label>
+					<input type="text" class="form-control" id="nickname" name="nickname" placeholder="请输入昵称">
+				</div>
+				<div class="form-group">
+					<label >密码</label>
+					<input type="password" class="form-control" id="password" name="password" placeholder="请输入密码">
+				</div>
+				<div class="form-group">
+					<label>
+						男
+						<input type="radio" class="sex" name="sex" value="1" checked>
+					</label>
+					<label>
+						女
+						<input type="radio" class="sex" name="sex" value="0">
+					</label>
+				</div>
+				<div class="form-group">
+					<label >添加朋友</label>
+					<input type="text" class="form-control" id="friend_input" name="friend" placeholder="添加朋友">
+					<div id="friend_DivView">
+
+					</div>
+				</div>
+				<button id="saveUserBtn" >注册</button>
+				<button id="cloudAddBtn">关闭</button>
+			</form>
+		</div>
+		<table class="table">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>用户名</th>
+					<th>昵称</th>
+					<th>年龄</th>
+					<th>性别</th>
+					<th>操作</th>
+				</tr>
+			</thead>
+			<tbody class="table_tbody">
+
+			</tbody>
+		</table>
+		<button class="load-but">加载更多</button>
 	</body>
-	<script>
+	<script type="text/javascript">
+		let PageUser ={
 
-		const cm = Vue.createApp({
-			data(){
-				return{
-					User_Data : 1,
-				}
+			pageNo:1,		// 需要查询第几页
+			pageSize:10,	// 这一页有多少条
+			total: 0,		// db一共有多少条 总数
+			current: 0,		// 当前页
+			pages: 0, 		// 一共有多少页
+			keyword :``,	// 关键词（搜索）
+			htmlList : "",	// 输出用户分页容器，存储前端代码然后输出到页面
+			friends_array:[],
+			init(){
+				// 分页
+				this.page();
+				// 搜索
+				this.search();
+				// 加载更多分页
+				this.pageMore();
+				// 初始化表单事件
+				this.switchForm();
+				// 初始化朋友控件
+				this.addFriend();
 			},
-			mounted(){
-				alert("mounted")
-
-				axios.post('/user/login', {
-					username: 'admin',
-					password: '0fb584b9e8d3f17383a8df65ff8e4254'
-				})
-				.then((response)=> {
-
-					console.log(response.data.data);
-					if (response.data.data == "登录成功！")
-					{
-						axios.get('/user/page/1/10')
-						.then((re)=>{
-							console.log(re.data);
-							if (re.data.code == 1){
-								this.User_Data = re.data.data;
-								console.log(this.User_Data);
-							}
-						})
+			addFriend(){
+				$("#friend_input").on("blur",function (e){
+					let friend_val = $("#friend_input").val();
+					let friend_array_is_exist = PageUser.friends_array.findIndex(f=>f==friend_val);
+					if(friend_array_is_exist != -1){
+						alert("数据已经存在");
+						return;
 					}
+					PageUser.friends_array.push(friend_val);
+					$("#friend_input").val("");
+					$("#friend_DivView").empty();
+					for (const friend_index in PageUser.friends_array) {
+						let friend_val = PageUser.friends_array[friend_index];
+						$("#friend_DivView").append(`
+							<span class="friend_Div_SpanView" text="${friend_val}">${friend_val}</span>
+						`);
+					}
+				});
+				//https://blog.csdn.net/abc67509227/article/details/84921704
+				// 动态加载的dom,js获取不到问题
+				// 因为页面已经将JS加载完毕，此时新增请求动态添加节点，自然获取不到。
+				// 在网上查阅资料后发现动态添加的标签要事件委托才能获取到节点，也就是说要用：
+				$("#friend_DivView").on("mouseenter",function () {
+					$(this).find(".friend_Div_SpanView").on("click",function () {
+						// 获取到的不是span的text属性，有空百度一下
+						// <span class="friend_Div_SpanView" text="${friend_val}">${friend_val}</span>
+						let this_text = $(this).text();
+						// 传入值返回对应数组的索引，如果存入的值数组不存在则返回-1
+						let friend_array_index = PageUser.friends_array.findIndex(f=>f==this_text);
+						if(friend_array_index == -1){
+							return;
+						}
+						// 数组删除函数
+						PageUser.friends_array.splice(friend_array_index,1);
+						// 删除标签
+						$(this).remove();
 
-				})
-				.catch(function (error) {
-					console.log(error);
+					});
 				});
 			},
-			created(){
-				alert("created")
+			switchForm(){
+				// 开关表单
+				$("#switchAddBtn").on("click",function (e) {
+					e.preventDefault();
+					$("#add_form").stop().slideToggle("slow");
+				});
+
+				// 关表单
+				$("#cloudAddBtn").on("click",function (e) {
+					e.preventDefault();
+					$("#add_form").stop().slideToggle("slow");
+				});
+				// 提交表单数据
+				$("#saveUserBtn").on("click",function (e) {
+					e.preventDefault();
+					let username = $("#username").val();
+					let nickname = $("#nickname").val();
+					let sex = $(".sex").val();
+					let password = $("#password").val();
+					let params ={
+						username:username,
+						nickname:nickname,
+						sex:sex,
+						password:password,
+						friends_array:[1,2,3,4,5],
+					};
+					$.post("/admin/user/save",params,function (saveResponse) {
+						if(saveResponse == undefined){
+							return;
+						}
+						let  json = $.parseJSON(saveResponse);
+						if(json.code != 200){
+							console.log(`服务器异常-->${json.msg}${json.code}`);
+							return;
+						}
+						console.log(`用户保存成功`);
+						PageUser.htmlList = "";
+						PageUser.page();
+						$("#add_form").stop().slideToggle("slow");
+					})
+				})
+
+			},
+			// 搜搜
+			search(){
+				$("#searchBtn").on("click",function (){
+					let input_keyword_val = $("#s-keyword").val();
+					PageUser.keyword = input_keyword_val;
+					PageUser.pageNo=1;		// 需要查询第几页
+					PageUser.pageSize=10;	// 这一页有多少条
+					PageUser.htmlList = "";
+					PageUser.page();
+				});
+			},
+			//加载更多
+			pageMore(){
+				$(".load-but").on("click",function () {
+					if(PageUser.pageNo >= 	 PageUser.pages){
+						alert("不要在点啦，加载完了！")
+						return;
+					}
+					PageUser.pageNo++;
+					PageUser.page();
+				});
+			},
+			page(){
+				let url = `/admin/user/pages?
+									pageNo=${PageUser.pageNo}
+									&pageSize=${PageUser.pageSize}
+									&keyword=${PageUser.keyword}`;
+				console.log(url)
+				$.get(url,function (ret) {
+					if (ret.code != 200){
+						alert(`服务器异常`)
+						return;
+					}
+					let ret_data = ret.data;
+					let userList = ret_data.records;
+					console.log(userList)
+					for (let i = 0 ;i < userList.length;i++){
+						let user = userList[i];
+						PageUser.htmlList +=`<tr>
+						<th>${user.id}</th>
+						<th>${user.nickname}</th>
+						<th>${user.username}</th>
+						<th>${user.age}</th>
+						<th>${user.sex}</th>
+						<th>
+							<a href="javascript:void(0)"> 编辑 </a>
+							<a href="javascript:void(0)"> 删除 </a>
+						</th></tr>`;
+					}
+					PageUser.total = ret_data.total;
+					PageUser.current = ret_data.current;
+					PageUser.pages = ret_data.pages;
+					$(".span_current").html(PageUser.current);
+					$(".span_pages").html(PageUser.pages);
+					$(".table_tbody").html(PageUser.htmlList);
+				})
 			}
-		}).mount("#app");
+
+		};
+		$(function () {
+			PageUser.init();
+		});
 	</script>
+
 </html>

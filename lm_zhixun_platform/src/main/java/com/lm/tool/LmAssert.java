@@ -5,8 +5,6 @@ import com.lm.common.r.GlobalResultEnumInterface;
 import org.springframework.lang.NonNull;
 
 public class LmAssert {
-    // 判断字符串是否为空
-
     /**
      * 字符串等于空的时候就抛出异常
      * 异常类型为ValidatorExceptionThrow验证器抛出异常

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/reset/reset.css">
+    <link rel="stylesheet" href="/css/albb_ione/iconfont.css">
+    <link rel="stylesheet" href="/css/albb_icon_2/iconfont.css">
+    <style>
+        body {
+            background: #e6e6e6;
+        }
+
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            /* background: rebeccapurple */
+        }
+
+        a {
+            /* 去除默认的下划线 */
+            text-decoration: none;
+            /* 去除旧版浏览器的点击后的外虚线框 */
+            outline: none;
+            /* 去除默认的颜色和点击后变化的颜色 */
+            color: #000;
+        }
+
+        .lm-header {}
+
+        .lm-header_logoBox {
+            width: 100%;
+            height: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #000;
+        }
+
+        .lm-header_logoBox img {
+            height: 200px;
+        }
+
+        .lm-header_navBox {
+            width: 100%;
+            background: pink;
+        }
+
+
+        .lm-header_navBox_navbarBox {
+            height: 56px;
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .lm-header_navBox_toggle {
+            display: none;
+        }
+
+        .lm-header_navBox_list {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .lm-header_navBox_list li a {
+            display: block;
+            line-height: 56px;
+            padding: 0 10px;
+        }
+
+        .lm-header_navBox_list li a:hover {
+            background: palegreen;
+            color: #fff;
+
+        }
+
+        @media screen and (max-width: 700px) {
+            .lm-header_navBox_navbarBox {
+                display: flex;
+            }
+            .lm-header_navBox_list{
+                display: none;
+            }
+            .lm-header_navBox_toggle:checked+.lm-header_navBox_list{
+                /* 将上面的flex清除掉 */
+                display: block;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app">
+        <header class="lm-header">
+            <div class="lm-header_logoBox">
+                <img src="https://img10.360buyimg.com/img/jfs/t1/199487/20/23852/33747/62862238E18f45301/a50ec1c60e6aad22.jpg"
+                    alt="">
+            </div>
+
+            <div class="lm-header_navBox">
+                <div class="lm-header_navBox_navbarBox">
+                    <label for="lm-header_navBox_toggle">
+                        <i class="iconfont icon-icon-test3"></i>
+                    </label>
+                </div>
+                <input type="checkbox" class="lm-header_navBox_toggle" id="lm-header_navBox_toggle">
+
+                <ul class="lm-header_navBox_list">
+                    <li><a href="">首页</a></li>
+                    <li><a href="">课程</a></li>
+                    <li><a href="">相册</a></li>
+                    <li><a href="">论文</a></li>
+                    <li><a href="">其他课程</a></li>
+                </ul>
+            </div>
+
+        </header>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>txnh.net</title>
+    <link rel="stylesheet" href="/css/reset/reset.css">
+    <link rel="stylesheet" href="/css/albb_ione/iconfont.css">
+
+    <style>
+        html,
+        body {
+            background: #eff3f5;
+        }
+
+        .lm-header {
+            height: 50px;
+            background: #fff;
+        }
+
+        .lm-container {
+            height: inherit;
+            margin: auto 10px;
+            /* 临时 */
+            /* background: aqua; */
+
+            display: flex;
+            /*居中对齐*/
+            align-items: center;
+        }
+
+        .lm-header_logo{
+            font-size: 40px;
+            margin-right: 30px;
+        }
+        
+        .lm-header_nav {
+            width: 100%;
+            height: inherit;
+            /* background :#f39ced; */
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .lm-nav_list{
+            display: flex;
+            gap: 30px;
+        }
+        .lm-ownMsg_list{
+            display: flex;
+        }
+        .lm-OwnMsg_item{
+            margin-right:  30px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="lm-mian">
+        <!-- 头 设置高度限制 -->
+        <header class="lm-header">
+            <!-- 可视化区域 -->
+            <div class="lm-container">
+                <a class="lm-header_logo iconfont icon-success-fill"></a>
+                <div class="lm-header_nav">
+                    <ul class="lm-nav_list">
+                        <li class="lm-nav_item">首页</li>
+                        <li class="lm-nav_item">文章</li>
+                        <li class="lm-nav_item">专栏</li>
+                        <li class="lm-nav_item">线路</li>
+                        <li class="lm-nav_item">会员</li>
+                    </ul>
+                    <ul class="lm-ownMsg_list">
+                        <li class="lm-OwnMsg_item"><a class="lm-header_logo iconfont icon-success-fill"></a></li>
+                        <li class="lm-OwnMsg_item"><a class="lm-header_logo iconfont icon-success-fill"></a></li>
+                    </ul>
+                </div>
+            </div>
+        </header>
+    </div>
+</body>
+
+</html>

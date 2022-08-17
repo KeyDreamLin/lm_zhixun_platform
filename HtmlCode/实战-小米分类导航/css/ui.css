@@ -1,0 +1,114 @@
+body {
+    margin: 0px;
+    background: #eff3f5;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+    color: inherit;
+    font-family: inherit;
+    font-weight: normal;
+    line-height: 1.5;
+    margin: 0;
+}
+
+/*取消ul li的小原点 因为会影响布局*/
+ul,
+ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+/* 头部 */
+.lm-head {
+    width: 100%;
+    height: 70px;
+    background: #FFF;
+}
+
+/* banner区域 start*/
+.lm-head_banner {
+    height: 280px;
+}
+
+.lm-head_banner img {
+    width: 100%;
+    height: 100%;
+}
+
+/* banner区域 end*/
+
+
+/* 按钮区域 start*/
+.lm-head_button {
+    height: 60px;
+}
+
+/* 按钮区域 end*/
+
+/* 内容区域 start*/
+.lm-head_content {}
+
+.lm-head_contentbox_item {
+    width: 291.25px;
+    height: 310px;
+    float: left;
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
+
+.lm-head_contentbox_item:nth-child(4n) {
+    /* background: rebeccapurple; */
+    margin-right: 0px;
+}
+
+.lm-head_contentbox_item img {
+    width: 100%;
+    height: 210px;
+}
+
+.lm-head_contentbox_item .title {
+    font-weight: bold;
+    font-size: 14px;
+    color: #34495e;
+}
+/* 圆角、字体颜色等，抄就完事啦 */
+.lm-head_contentbox_item .classify {
+    height: 20px;
+    margin-right: 10px;
+    padding: 0 5px;
+    font-size: 12px;
+    color: #9FB0BD;
+    line-height: 19px;
+    text-align: center;
+    background-color: #dfe5e9;
+    border-radius: 3px;
+}
+
+/* 内容区域 end*/
+
+/* 可视区域 */
+.content {
+    width: 1180px;
+    height: 100%;
+    margin: 0 auto;
+}
+
+.test_read {
+    background: red;
+}
+
+.margin_top_20 {
+    margin-top: 20px;
+}

@@ -1,0 +1,149 @@
+/*-----------------通用组件样式 修饰文字大小，隐藏显示，-----------------------*/
+/* 组件显示 */
+.lm-show{
+    display: block;
+}
+/* 组件隐藏 */
+.lm-hide{
+    display: none;
+}
+/*-----------------通用布局样式(lm-layout_)-----------------------*/
+
+.lm-layout_body {
+    display: flex;
+}
+
+/* 左侧边导航栏 start */
+.lm-layout_silde {
+    width: 240px;
+    /* 最小值 */
+    min-height: 100vh;
+    background: #001529;
+    color: #fff;
+    position: relative;
+    /* 动画 宽度变化 */
+    transition: width 300ms;
+}
+
+.lm-layout_silde_wrapper {
+    width: inherit;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 导航栏固定定位~~js动态加上去 */
+.lm-layout_silde_fixed {
+    position: fixed;
+    left: 0;
+}
+
+/* 左侧边导航栏缩小~~js动态加上去 */
+.lm-layout_silde_shrink {
+    width: 48px;
+}
+
+
+.lm-layout_silde_header {
+}
+
+.lm-layout_silde_main {
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+/* 隐藏滚动条 */
+.lm-layout_silde_main::-webkit-scrollbar {
+    display: none
+}
+
+.lm-layout_silde_footer {
+}
+.lm-layout_silde_footer_iconBox{
+    height: 40px;
+    margin: 4px 0;
+    padding: 0 16px;
+    display: flex;
+    align-items: center;
+}
+/* 左侧边导航栏 end */
+
+/* 主体内容区域 start */
+.lm-layout_main {}
+
+/* 主体内容区域 end */
+
+/*-----------------通用组件样式(lm-common-module)-----------------------*/
+/* logo start */
+.lm-common-module_logo {
+    padding: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.lm-common-module_logo>img {
+    width: 32px;
+    height: 32px;
+}
+
+.lm-common-module_logo>span {
+    /* cv */
+    display: inline-block;
+    margin: 0 0 0 12px;
+    color: #fff;
+    font-weight: 600;
+    font-size: 18px;
+    animation: pro-layout-title-hide .3s;
+}
+/* logo end */
+
+/* 菜单项组件 start */
+.lm-common-menu {
+    width: inherit;
+}
+
+/* 菜单子项 */
+.lm-common-menu_item {}
+
+/* 菜单子项标题 */
+.lm-common-menu_item_title {
+    height: 40px;
+    display: flex;
+    align-items: center;
+    padding: 0 34px 0 16px;
+}
+
+.lm-common-menu_item_title>span {
+    flex-grow: 1;
+    margin-left: 10px;
+}
+
+/* 菜单子项下拉菜单 */
+.lm-common-menu_sub {
+    background: #000c17;
+}
+
+.lm-common-menu_sub>li {
+    height: 40px;
+    display: flex;
+    align-items: center;
+    padding: 0 16px 0 34px;
+}
+
+/* 菜单项组件 end */
+
+/*-----------------通用元件 按钮 a p 表格ul li 等 (pu-)-----------------------*/
+
+
+/*-----------------响应式系统 pc 优先-----------------------*/
+
+@media(max-width:1400px) {}
+
+@media(max-width:1200px) {}
+
+@media(max-width:992px) {}
+
+@media(max-width:768px) {}
+
+@media(max-width:576px) {}

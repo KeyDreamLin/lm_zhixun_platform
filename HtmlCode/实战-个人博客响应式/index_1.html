@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/reset/reset.css">
+    <link rel="stylesheet" href="/fonts/iconfont.css">
+    <style>
+        .lm-header {
+            width: 100%;
+            height: 200px;
+            background: #eee;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .lm-header_logo {
+            font-size: 20px;
+            font-weight: 600;
+        }
+        /* 导航栏 */
+        .lm-nav {
+            width: 100%;
+            background: #e6e6e6;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+        }
+        /* 导航栏开关盒子 */
+        .lm-nav_toggleBox{
+            display: flex;
+            align-items: center;
+            height: 56px;
+        }
+        /* 导航栏开关图标 */
+        .lm-nav_toggleBox_font{
+            color: rgb(102, 102, 225);
+        }
+        /* 导航栏开关选择框 */
+        .lm-nav_toggleBox>input{
+            display: none;
+        }
+        .lm-nav_listBox{
+            display: flex;
+            align-items: center;
+            height: 56px;
+        }
+
+        .lm-nav_listBox>li>a{
+            display: block;
+            line-height: 56px;
+            padding: 0 10px;
+        }
+        .lm-nav_listBox>li>a:hover{
+            background: orange;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- header start -->
+    <header class="lm-header">
+        <div class="lm-header_logo">欢迎来到老马的博客</div>
+    </header>
+    <!-- header end -->
+
+    <!-- nav start -->
+    <nav class="lm-nav">
+        <div class="lm-nav_toggleBox">
+            <label for="lm-nav_toggle">
+                <i class="lm-nav_toggleBox_font iconfont icon-zhedie"></i>
+            </label>
+            <input type="checkbox"id="lm-nav_toggle">
+        </div>
+        <ul class="lm-nav_listBox">
+            <li><a href="">首页</a></li>
+            <li><a href="">课程</a></li>
+            <li><a href="">相册</a></li>
+            <li><a href="">论文</a></li>
+            <li><a href="">其他课程</a></li>
+        </ul>
+    </nav>
+    <!-- nav end -->
+    <main></main>
+    <footer></footer>
+</body>
+
+</html>

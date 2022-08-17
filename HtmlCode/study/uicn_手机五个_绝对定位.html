@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        a {
+            text-decoration: none;
+            /* 去除默认的下划线 */
+            outline: none;
+            /* 去除旧版浏览器的点击后的外虚线框 */
+            color: #000;
+            /* 去除默认的颜色和点击后变化的颜色 */
+        }
+
+        .lm_content {
+            width: 1180px;
+            height: 100%;
+            margin: 10px auto;
+            display: flex;
+            justify-content: space-evenly;
+
+        }
+
+        .lm_content .box1 {
+            width: 220px;
+            height: 476px;
+            float: left;
+            /* 把每个子元素的绝对定位的参考点设置到父容器上（默认无父级就是body） */
+            /* 给这个父盒子设置relative，原因是给里面的absolute子盒子作为参考点 并且这个不会破坏文档流 */
+            /* https://www.imooc.com/qadetail/325617 */
+            /* relative不会破坏文档流，而absolute会破坏文档流这个是一个层与层的关系 */
+            position: relative;
+        }
+
+        .lm_content .box1 img {
+            border: 0;
+            vertical-align: middle;
+            width: inherit;
+            height: inherit;
+            border-radius: 20px;
+        }
+
+        .lm_content .box1 .info {
+            /* inherit继承父容器的 */
+            width: inherit;
+            height: inherit;
+            position: absolute;
+            border-radius: 20px;
+            visibility: hidden;
+            background-image: linear-gradient(180deg, rgba(0, 0, 0, .2) 0, rgba(0, 0, 0, .199) 3.5%, rgba(0, 0, 0, .195) 7%, rgba(0, 0, 0, .19) 10.35%, rgba(0, 0, 0, .182) 13.85%, rgba(0, 0, 0, .174) 17.35%, rgba(0, 0, 0, .165) 20.85%, rgba(0, 0, 0, .155) 24.35%, rgba(0, 0, 0, .145) 27.85%, rgba(0, 0, 0, .135) 31.35%, rgba(0, 0, 0, .126) 34.85%, rgba(0, 0, 0, .118) 38.35%, rgba(0, 0, 0, .11) 41.85%, rgba(0, 0, 0, .105) 45.35%, rgba(0, 0, 0, .1) 48.85%, rgba(0, 0, 0, .103) 52.35%, rgba(0, 0, 0, .112) 55.85%, rgba(0, 0, 0, .126) 59.35%, rgba(0, 0, 0, .144) 62.85%, rgba(0, 0, 0, .165) 66.35%, rgba(0, 0, 0, .188) 69.85%, rgba(0, 0, 0, .213) 73.35%, rgba(0, 0, 0, .237) 76.85%, rgba(0, 0, 0, .262) 80.35%, rgba(0, 0, 0, .285) 83.85%, rgba(0, 0, 0, .306) 87.35%, rgba(0, 0, 0, .324) 90.85%, rgba(0, 0, 0, .338) 94.35%, rgba(0, 0, 0, .347) 97.85%, rgba(0, 0, 0, .35));
+        }
+
+        /* 鼠标移入事件 */
+        .lm_content .box1:hover .info {
+            top: 0;
+            bottom: 0;
+            right: 0;
+            left: 0;
+            visibility: visible;
+        }
+
+        .lm_content .box1 .info_tag {
+            top: 0;
+            right: 10px;
+            width: 50px;
+            position: absolute;
+            margin-right: 10px;
+        }
+
+        .lm_content .box1 .info a {
+            color: white;
+            width: 58px;
+            height: 28px;
+            border: 1px solid #fff;
+            font-size: 12px;
+            text-align: center;
+            line-height: 28px;
+            margin-top: 10px;
+            display: block;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="lm_main">
+        <div class="lm_content">
+            <div class="box1">
+                <img
+                    src="https://imgjike.ui.cn/data/singles/a800a745b8487b16a32d1ca1601f4f60.gif?imageView2/1/w/330/h/714" />
+                <div class="info">
+                    <div class="info_tag">
+                        <a href="javascript:;" class="agree">点赞</a>
+                        <a href="javascript:;" class="collect">收藏</a>
+                    </div>
+
+                </div>
+            </div>
+            <div class="box1">
+                <img
+                    src="	https://imgjike.ui.cn/data/singles/b93e4bdd4d0808030ac37a4f55cc57b4.png?imageView/1/w/330/h/714" />
+                <div class="info">
+                    <div class="info_tag">
+                        <a href="javascript:;" class="agree">点赞</a>
+                        <a href="javascript:;" class="collect">收藏</a>
+                    </div>
+
+                </div>
+            </div>
+            <div class="box1">
+                <img
+                    src="	https://imgjike.ui.cn/data/singles/4463a76352cd491b200a3d27738dc6cd.png?imageView/1/w/330/h/714" />
+                <div class="info">
+                    <div class="info_tag">
+                        <a href="javascript:;" class="agree">点赞</a>
+                        <a href="javascript:;" class="collect">收藏</a>
+                    </div>
+
+                </div>
+            </div>
+            <div class="box1">
+                <img
+                    src="https://imgjike.ui.cn/data/singles/c8616e7f93361f30396e9d1a574a4cc0.png?imageView/1/w/330/h/714" />
+                <div class="info">
+                    <div class="info_tag">
+                        <a href="javascript:;" class="agree">点赞</a>
+                        <a href="javascript:;" class="collect">收藏</a>
+                    </div>
+
+                </div>
+            </div>
+            <div class="box1">
+                <img
+                    src="	https://imgjike.ui.cn/data/singles/24a343b2e12a90abb47df7e4548fe0ad.png?imageView/1/w/330/h/714" />
+                <div class="info">
+                    <div class="info_tag">
+                        <a href="javascript:;" class="agree">点赞</a>
+                        <a href="javascript:;" class="collect">收藏</a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

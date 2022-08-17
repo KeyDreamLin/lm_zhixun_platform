@@ -83,11 +83,17 @@
             <artifactId>spring-boot-starter-data-redis</artifactId>
             <version>2.7.0</version>
         </dependency>
-
+        <!--生成验证码-->
+        <dependency>
+            <groupId>com.github.penggle</groupId>
+            <artifactId>kaptcha</artifactId>
+            <version>2.3.2</version>
+        </dependency>
     </dependencies>
 
     <build>
         <plugins>
+
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
@@ -100,6 +106,7 @@
                     </excludes>
                 </configuration>
             </plugin>
+
         </plugins>
     </build>
 

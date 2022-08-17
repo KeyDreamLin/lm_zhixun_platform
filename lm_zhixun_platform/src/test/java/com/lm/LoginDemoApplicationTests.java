@@ -1,34 +1,56 @@
 package com.lm;
 
-import com.lm.entity.pojo.UserToken;
-import com.lm.service.usertoken.UserTokenService;
-import com.lm.tool.Base64Tool;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.lm.entity.vo.banner.BannerUserVo;
+import com.lm.entity.vo.banner.BannerVo;
+import com.lm.mapper.BannerMapper;
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.ApplicationContext;
+import org.springframework.test.context.junit4.SpringRunner;
 
-@SpringBootTest
+@SpringBootTest(classes = LoginDemoApplication.class)
+@RunWith(SpringRunner.class)
 class LoginDemoApplicationTests {
-    @Autowired
-    private ApplicationContext context;
-    @Autowired
-    private UserTokenService userTokenService;
-    @Test
-    void contextLoads() {
-        //登录成功，并将cookie传入SQL和返回到前端
-        Long new_timestamp = System.currentTimeMillis();//获取当前时间戳
-        String token =  Base64Tool.Encode("123852753"+"&"+ new_timestamp);
 
-        //token实体类
-        UserToken userToken = new UserToken();
-        userToken.setUserIdToken(token);
-        userToken.setNewTimestamp(new_timestamp);
-        //存入数据库
-        userTokenService.save(userToken);
+    @Autowired
+    private BannerMapper bannerMapper;
+
+    @Test
+    public void contextLoads() {
+        BannerVo bannerVo = new BannerVo();
+        bannerVo.setKeyword("米");
+////        List<Banner> banners = bannerMapper.findBanners(bannerVo);
+//        List<BannerUserVo> bannerUsersVo = bannerMapper.findBannerUsersVo(bannerVo);
+//        for (BannerUserVo bannerUserVo : bannerUsersVo) {
+//            System.out.println(bannerUserVo.toString());
+//        }
+
+        // 设置分页
+        Page<BannerUserVo> page = new Page<>(1,2);
+        // 设置条件
+        QueryWrapper<BannerVo> queryWrapper = new QueryWrapper<>();
+        queryWrapper.like(StringUtils.isNotEmpty(bannerVo.getKeyword()),"t1.title",bannerVo.getKeyword());
+        IPage<BannerUserVo> bannerUsersVoPage = bannerMapper.findBannerUsersVoPage(page, queryWrapper);
+        System.out.println(bannerUsersVoPage.toString());
+
+
+//        LambdaQueryWrapper<Banner> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+//        lambdaQueryWrapper.like(Banner::getTitle,"1111");
+//        List<Banner> banners = bannerMapper.queryBanners(lambdaQueryWrapper);
+//        System.out.println(banners.toString());
+
+//        // 设置分页构造器
+//        Page<BannerUserVo> page = new Page<>(1,2);
+//        IPage<Banner> bannerIPage = bannerMapper.queryBannersPage(page);
+//        int i = 12;
     }
     @Test
-    void testC(){
+    public void testC(){
         String str = "123";
         System.out.println(str.hashCode());
         str = "23";

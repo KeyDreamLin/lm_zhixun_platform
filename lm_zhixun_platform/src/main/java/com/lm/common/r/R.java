@@ -35,9 +35,6 @@ public class R<T> {
     public static Object sss(Object obj){
         return obj;
     }
-    public static <T> T s11(T o){
-        return o;
-    }
 
     public static <T> R<T> error(Integer code, String msg) {
         return new R<T>(code,msg,null);

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>fixed 简单案例</title>
+    <link rel="stylesheet" href="css/reset/reset.css">
+    <style>
+        div {
+            width: 100px;
+            height: 100px;
+            /* 固定布局 */
+            position: fixed;
+        }
+
+        .up_left_box {
+            background: red;
+            left: 0;
+            top: 0;
+
+        }
+
+        .up_right_box {
+            background: rebeccapurple;
+            right: 0;
+            top: 0;
+        }
+
+        .down_left_box {
+            background: burlywood;
+            left: 0;
+            bottom: 0;
+        }
+
+        .down_right_box {
+            background: aqua;
+            right: 0;
+            bottom: 0;
+        }
+
+        .centre_box {
+            width: 100px;
+            height: 100px;
+            background: pink;
+            left: 50%;
+            top: 50%;
+            margin-left: -50px;
+            /* margin-left: width/2 */
+            margin-top: -50px;
+            /* margin-top: height/2 */
+            /*更改了宽和高对应的margin-left/top也要进行调整 除以二即可*/
+
+        }
+    </style>
+</head>
+
+<body>
+    <p>123</p>
+    <p>123</p>
+    <p>123</p>
+    <p>123</p>
+    <p>123</p>
+    <p>123</p>
+    <p>123</p>
+    <p>123</p>
+    <p>123</p>
+    <p>123</p>
+    <p>123</p>
+    <p>123</p>
+    <p>123</p>
+    <p>123</p>
+    <p>123</p>
+    <p>123</p>
+    <p>123</p>
+    <p>123</p>
+    <p>123</p>
+    <p>123</p>
+    <p>123</p>
+    <p>123</p>
+    <p>123</p>
+    <p>123</p>
+    <p>123</p>
+    <p>123</p>
+    <p>123</p>
+    <p>123</p>
+    <p>123</p>
+    <p>123</p>
+    <p>123</p>
+    <p>123</p>
+    <p>123</p>
+    <p>123</p>
+    <p>123</p>
+    <p>123</p>
+    <p>123</p>
+    <p>123</p>
+    <p>123</p>
+    <p>123</p>
+    <p>123</p>
+    <p>123</p>
+    <p>123</p>
+    <!-- up down Left right -->
+    <div>
+        <div class="up_left_box">
+            上左
+        </div>
+        <div class="up_right_box">
+            上右
+        </div>
+        <div class="down_left_box">
+            下左
+        </div>
+        <div class="down_right_box">
+            下右
+        </div>
+        <div class="centre_box">
+            垂直居中
+        </div>
+    </div>
+</body>
+
+</html>

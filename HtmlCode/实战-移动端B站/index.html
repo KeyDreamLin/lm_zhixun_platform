@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/reset/reset.css">
+    <link rel="stylesheet" href="/fonts/albb_icon_2/iconfont.css">
+    <style>
+        html {
+            font-size: 26.666667vw;
+        }
+
+        body {
+            font-size: 16px;
+        }
+
+        .lm-header {
+            width: 3.75rem;
+            background: #fff;
+            position: fixed;
+            top: 0;
+            z-index: 1000;
+        }
+
+
+        /* 导航栏盒子 */
+        .lm-header_navbar__Box {
+            /* 怪异盒模型 */
+            width: 3.75rem;
+            box-sizing: border-box;
+            height: .5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: .1rem;
+            /* background: #fff; */
+        }
+
+        .lm-header_navbar_logo__Box {
+
+        }
+
+        .lm-header_navbar__rightBox {
+            display: flex;
+            align-items: center;
+
+
+        }
+
+        .lm-header_navbar__rightBox .search {
+            font-size: .25rem;
+            margin-right: .15rem;
+        }
+
+        .lm-header_navbar__rightBox .portrait {
+            margin-right: .15rem;
+            width: .25rem;
+            height: .25rem;
+            border-radius: .05rem
+        }
+
+        .lm-header_navbar__rightBox .but {
+            background: #fb7299;
+            margin-right: .05rem;
+            color: #fff;
+            padding: .05rem .15rem;
+            border-radius: .05rem;
+            font-size: .16rem;
+        }
+
+        .lm-header_nav__Box {
+            margin-top: .1rem;
+            overflow-x: auto;
+            height: .4rem;
+        }
+
+        .lm-header_nav_list__Box {
+            width: 3.75rem;
+            display: flex;
+            white-space: nowrap;
+            align-items: center;
+            /* 如果盒子溢出添加滚动条——运行滑动 */
+            overflow-x: auto;
+            padding: .05rem 0;
+        }
+
+        /* 隐藏滚动条 */
+        .lm-header_nav_list__Box::-webkit-scrollbar {
+            display: none
+        }
+
+        .lm-header_nav_list__Box a {
+            display: block;
+            padding: .05rem .2rem;
+            font-size: .16rem;
+        }
+
+        .lm-main {
+            margin-top: 1.1rem;
+            padding: 0 .05rem;
+        }
+
+        .lm-main_content_list__box {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: .05rem;
+        }
+
+        .lm-main-content_list_item_img__box {
+            position: relative;
+        }
+
+        .lm-main-content_list_item_img__box img {
+            width: 100%;
+            object-fit: cover;
+        }
+
+        .lm-main-content_list_item_img_data__box {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            position: absolute;
+            bottom: 0;
+            margin-bottom: .05rem;
+        }
+
+        .lm-main-content_list_item_img_data__box i {
+            font-size: .13rem;
+            color: #fff;
+            margin: 0 .03rem;
+            display: block;
+        }
+
+        .lm-main_content_list_item_title {
+            font-size: .13rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="lm-header">
+        <!-- 导航条盒子 logo 搜索框 头像  -->
+        <div class="lm-header_navbar__Box">
+
+            <div class="lm-header_navbar_logo__Box">
+                <!-- logo -->
+                <img class="logo" src="/image/logo.png">
+            </div>
+
+            <div class="lm-header_navbar__rightBox">
+                <!-- 搜索框按钮 -->
+                <i class="search iconfont icon-icon-test4"></i>
+                <!-- 头像 -->
+                <img class="portrait" src="/image/touxiang.jpg">
+                <!-- 下载按钮 -->
+                <a class="but">
+                    下载App
+                </a>
+            </div>
+
+        </div>
+        <!-- 导航盒子 -->
+        <div class="lm-header_nav__Box">
+            <!-- 导航列表盒子 -->
+            <ul class="lm-header_nav_list__Box">
+                <li class="active"><a href="">首页</a></li>
+                <li><a href="">动画</a></li>
+                <li><a href="">番剧</a></li>
+                <li><a href="">国创</a></li>
+                <li><a href="">音乐</a></li>
+                <li><a href="">舞台剧</a></li>
+                <li><a href="">舞台剧</a></li>
+                <li><a href="">舞台剧</a></li>
+                <li><a href="">舞台剧</a></li>
+            </ul>
+        </div>
+
+    </header>
+    <main class="lm-main">
+        <!-- 视频内容列表盒子 -->
+        <div class="lm-main_content_list__box">
+
+            <!-- 视频内容子项盒子 start -->
+            <div class="lm-main_content_list_item__box">
+                <!-- 视频内容子项图片盒子 -->
+                <div class="lm-main-content_list_item_img__box">
+                    <img src="/image/1.png">
+                    <!-- 视频内容子项图片数据盒子 -->
+                    <div class="lm-main-content_list_item_img_data__box">
+                        <span><i class="iconfont icon-icon-test9">1333.3万</i></span>
+                        <span><i class="iconfont icon-icon-test3">1333.3万</i></span>
+                    </div>
+                </div>
+                <!-- 视频内容子项标题盒子 -->
+                <div class="lm-main_content_list_item_title">
+                    <span>【罗翔】令人愤怒的唐山打人案涉及什么犯人愤怒的唐山打人案涉及什么犯人愤怒的唐山打人案涉及什么犯人愤怒的唐山打人案涉及什么犯罪</span>
+                </div>
+            </div>
+            <!-- 视频内容子项盒子 end -->
+
+            <!-- 视频内容子项盒子 start -->
+            <div class="lm-main_content_list_item__box">
+                <!-- 视频内容子项图片盒子 -->
+                <div class="lm-main-content_list_item_img__box">
+                    <img src="/image/1.png">
+                    <!-- 视频内容子项图片数据盒子 -->
+                    <div class="lm-main-content_list_item_img_data__box">
+                        <span><i class="iconfont icon-icon-test9">1333.3万</i></span>
+                        <span><i class="iconfont icon-icon-test3">1333.3万</i></span>
+                    </div>
+                </div>
+                <!-- 视频内容子项标题盒子 -->
+                <div class="lm-main_content_list_item_title">
+                    <span>【罗翔】令人愤怒的唐山打人案涉及什么犯人愤怒的唐山打人案涉及什么犯人愤怒的唐山打人案涉及什么犯人愤怒的唐山打人案涉及什么犯罪</span>
+                </div>
+            </div>
+            <!-- 视频内容子项盒子 end -->
+            <!-- 视频内容子项盒子 start -->
+            <div class="lm-main_content_list_item__box">
+                <!-- 视频内容子项图片盒子 -->
+                <div class="lm-main-content_list_item_img__box">
+                    <img src="/image/1.png">
+                    <!-- 视频内容子项图片数据盒子 -->
+                    <div class="lm-main-content_list_item_img_data__box">
+                        <span><i class="iconfont icon-icon-test9">1333.3万</i></span>
+                        <span><i class="iconfont icon-icon-test3">1333.3万</i></span>
+                    </div>
+                </div>
+                <!-- 视频内容子项标题盒子 -->
+                <div class="lm-main_content_list_item_title">
+                    <span>【罗翔】令人愤怒的唐山打人案涉及什么犯人愤怒的唐山打人案涉及什么犯人愤怒的唐山打人案涉及什么犯人愤怒的唐山打人案涉及什么犯罪</span>
+                </div>
+            </div>
+            <!-- 视频内容子项盒子 end -->
+            <!-- 视频内容子项盒子 start -->
+            <div class="lm-main_content_list_item__box">
+                <!-- 视频内容子项图片盒子 -->
+                <div class="lm-main-content_list_item_img__box">
+                    <img src="/image/1.png">
+                    <!-- 视频内容子项图片数据盒子 -->
+                    <div class="lm-main-content_list_item_img_data__box">
+                        <span><i class="iconfont icon-icon-test9">1333.3万</i></span>
+                        <span><i class="iconfont icon-icon-test3">1333.3万</i></span>
+                    </div>
+                </div>
+                <!-- 视频内容子项标题盒子 -->
+                <div class="lm-main_content_list_item_title">
+                    <span>【罗翔】令人愤怒的唐山打人案涉及什么犯人愤怒的唐山打人案涉及什么犯人愤怒的唐山打人案涉及什么犯人愤怒的唐山打人案涉及什么犯罪</span>
+                </div>
+            </div>
+            <!-- 视频内容子项盒子 end -->
+            <!-- 视频内容子项盒子 start -->
+            <div class="lm-main_content_list_item__box">
+                <!-- 视频内容子项图片盒子 -->
+                <div class="lm-main-content_list_item_img__box">
+                    <img src="/image/1.png">
+                    <!-- 视频内容子项图片数据盒子 -->
+                    <div class="lm-main-content_list_item_img_data__box">
+                        <span><i class="iconfont icon-icon-test9">1333.3万</i></span>
+                        <span><i class="iconfont icon-icon-test3">1333.3万</i></span>
+                    </div>
+                </div>
+                <!-- 视频内容子项标题盒子 -->
+                <div class="lm-main_content_list_item_title">
+                    <span>【罗翔】令人愤怒的唐山打人案涉及什么犯人愤怒的唐山打人案涉及什么犯人愤怒的唐山打人案涉及什么犯人愤怒的唐山打人案涉及什么犯罪</span>
+                </div>
+            </div>
+            <!-- 视频内容子项盒子 end -->
+            <!-- 视频内容子项盒子 start -->
+            <div class="lm-main_content_list_item__box">
+                <!-- 视频内容子项图片盒子 -->
+                <div class="lm-main-content_list_item_img__box">
+                    <img src="/image/1.png">
+                    <!-- 视频内容子项图片数据盒子 -->
+                    <div class="lm-main-content_list_item_img_data__box">
+                        <span><i class="iconfont icon-icon-test9">1333.3万</i></span>
+                        <span><i class="iconfont icon-icon-test3">1333.3万</i></span>
+                    </div>
+                </div>
+                <!-- 视频内容子项标题盒子 -->
+                <div class="lm-main_content_list_item_title">
+                    <span>【罗翔】令人愤怒的唐山打人案涉及什么犯人愤怒的唐山打人案涉及什么犯人愤怒的唐山打人案涉及什么犯人愤怒的唐山打人案涉及什么犯罪</span>
+                </div>
+            </div>
+            <!-- 视频内容子项盒子 end -->
+            <!-- 视频内容子项盒子 start -->
+            <div class="lm-main_content_list_item__box">
+                <!-- 视频内容子项图片盒子 -->
+                <div class="lm-main-content_list_item_img__box">
+                    <img src="/image/1.png">
+                    <!-- 视频内容子项图片数据盒子 -->
+                    <div class="lm-main-content_list_item_img_data__box">
+                        <span><i class="iconfont icon-icon-test9">1333.3万</i></span>
+                        <span><i class="iconfont icon-icon-test3">1333.3万</i></span>
+                    </div>
+                </div>
+                <!-- 视频内容子项标题盒子 -->
+                <div class="lm-main_content_list_item_title">
+                    <span>【罗翔】令人愤怒的唐山打人案涉及什么犯人愤怒的唐山打人案涉及什么犯人愤怒的唐山打人案涉及什么犯人愤怒的唐山打人案涉及什么犯罪</span>
+                </div>
+            </div>
+            <!-- 视频内容子项盒子 end -->
+            <!-- 视频内容子项盒子 start -->
+            <div class="lm-main_content_list_item__box">
+                <!-- 视频内容子项图片盒子 -->
+                <div class="lm-main-content_list_item_img__box">
+                    <img src="/image/1.png">
+                    <!-- 视频内容子项图片数据盒子 -->
+                    <div class="lm-main-content_list_item_img_data__box">
+                        <span><i class="iconfont icon-icon-test9">1333.3万</i></span>
+                        <span><i class="iconfont icon-icon-test3">1333.3万</i></span>
+                    </div>
+                </div>
+                <!-- 视频内容子项标题盒子 -->
+                <div class="lm-main_content_list_item_title">
+                    <span>【罗翔】令人愤怒的唐山打人案涉及什么犯人愤怒的唐山打人案涉及什么犯人愤怒的唐山打人案涉及什么犯人愤怒的唐山打人案涉及什么犯罪</span>
+                </div>
+            </div>
+            <!-- 视频内容子项盒子 end -->
+            <!-- 视频内容子项盒子 start -->
+            <div class="lm-main_content_list_item__box">
+                <!-- 视频内容子项图片盒子 -->
+                <div class="lm-main-content_list_item_img__box">
+                    <img src="/image/1.png">
+                    <!-- 视频内容子项图片数据盒子 -->
+                    <div class="lm-main-content_list_item_img_data__box">
+                        <span><i class="iconfont icon-icon-test9">1333.3万</i></span>
+                        <span><i class="iconfont icon-icon-test3">1333.3万</i></span>
+                    </div>
+                </div>
+                <!-- 视频内容子项标题盒子 -->
+                <div class="lm-main_content_list_item_title">
+                    <span>【罗翔】令人愤怒的唐山打人案涉及什么犯人愤怒的唐山打人案涉及什么犯人愤怒的唐山打人案涉及什么犯人愤怒的唐山打人案涉及什么犯罪</span>
+                </div>
+            </div>
+            <!-- 视频内容子项盒子 end -->
+            <!-- 视频内容子项盒子 start -->
+            <div class="lm-main_content_list_item__box">
+                <!-- 视频内容子项图片盒子 -->
+                <div class="lm-main-content_list_item_img__box">
+                    <img src="/image/1.png">
+                    <!-- 视频内容子项图片数据盒子 -->
+                    <div class="lm-main-content_list_item_img_data__box">
+                        <span><i class="iconfont icon-icon-test9">1333.3万</i></span>
+                        <span><i class="iconfont icon-icon-test3">1333.3万</i></span>
+                    </div>
+                </div>
+                <!-- 视频内容子项标题盒子 -->
+                <div class="lm-main_content_list_item_title">
+                    <span>【罗翔】令人愤怒的唐山打人案涉及什么犯人愤怒的唐山打人案涉及什么犯人愤怒的唐山打人案涉及什么犯人愤怒的唐山打人案涉及什么犯罪</span>
+                </div>
+            </div>
+            <!-- 视频内容子项盒子 end -->
+            <!-- 视频内容子项盒子 start -->
+            <div class="lm-main_content_list_item__box">
+                <!-- 视频内容子项图片盒子 -->
+                <div class="lm-main-content_list_item_img__box">
+                    <img src="/image/1.png">
+                    <!-- 视频内容子项图片数据盒子 -->
+                    <div class="lm-main-content_list_item_img_data__box">
+                        <span><i class="iconfont icon-icon-test9">1333.3万</i></span>
+                        <span><i class="iconfont icon-icon-test3">1333.3万</i></span>
+                    </div>
+                </div>
+                <!-- 视频内容子项标题盒子 -->
+                <div class="lm-main_content_list_item_title">
+                    <span>【罗翔】令人愤怒的唐山打人案涉及什么犯人愤怒的唐山打人案涉及什么犯人愤怒的唐山打人案涉及什么犯人愤怒的唐山打人案涉及什么犯罪</span>
+                </div>
+            </div>
+            <!-- 视频内容子项盒子 end -->
+            <!-- 视频内容子项盒子 start -->
+            <div class="lm-main_content_list_item__box">
+                <!-- 视频内容子项图片盒子 -->
+                <div class="lm-main-content_list_item_img__box">
+                    <img src="/image/1.png">
+                    <!-- 视频内容子项图片数据盒子 -->
+                    <div class="lm-main-content_list_item_img_data__box">
+                        <span><i class="iconfont icon-icon-test9">1333.3万</i></span>
+                        <span><i class="iconfont icon-icon-test3">1333.3万</i></span>
+                    </div>
+                </div>
+                <!-- 视频内容子项标题盒子 -->
+                <div class="lm-main_content_list_item_title">
+                    <span>【罗翔】令人愤怒的唐山打人案涉及什么犯人愤怒的唐山打人案涉及什么犯人愤怒的唐山打人案涉及什么犯人愤怒的唐山打人案涉及什么犯罪</span>
+                </div>
+            </div>
+            <!-- 视频内容子项盒子 end -->
+            <!-- 视频内容子项盒子 start -->
+            <div class="lm-main_content_list_item__box">
+                <!-- 视频内容子项图片盒子 -->
+                <div class="lm-main-content_list_item_img__box">
+                    <img src="/image/1.png">
+                    <!-- 视频内容子项图片数据盒子 -->
+                    <div class="lm-main-content_list_item_img_data__box">
+                        <span><i class="iconfont icon-icon-test9">1333.3万</i></span>
+                        <span><i class="iconfont icon-icon-test3">1333.3万</i></span>
+                    </div>
+                </div>
+                <!-- 视频内容子项标题盒子 -->
+                <div class="lm-main_content_list_item_title">
+                    <span>【罗翔】令人愤怒的唐山打人案涉及什么犯人愤怒的唐山打人案涉及什么犯人愤怒的唐山打人案涉及什么犯人愤怒的唐山打人案涉及什么犯罪</span>
+                </div>
+            </div>
+            <!-- 视频内容子项盒子 end -->
+            <!-- 视频内容子项盒子 start -->
+            <div class="lm-main_content_list_item__box">
+                <!-- 视频内容子项图片盒子 -->
+                <div class="lm-main-content_list_item_img__box">
+                    <img src="/image/1.png">
+                    <!-- 视频内容子项图片数据盒子 -->
+                    <div class="lm-main-content_list_item_img_data__box">
+                        <span><i class="iconfont icon-icon-test9">1333.3万</i></span>
+                        <span><i class="iconfont icon-icon-test3">1333.3万</i></span>
+                    </div>
+                </div>
+                <!-- 视频内容子项标题盒子 -->
+                <div class="lm-main_content_list_item_title">
+                    <span>【罗翔】令人愤怒的唐山打人案涉及什么犯人愤怒的唐山打人案涉及什么犯人愤怒的唐山打人案涉及什么犯人愤怒的唐山打人案涉及什么犯罪</span>
+                </div>
+            </div>
+            <!-- 视频内容子项盒子 end -->
+        </div>
+    </main>
+</body>
+
+</html>

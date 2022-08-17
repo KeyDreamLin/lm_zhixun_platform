@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/fonts/iconfont.css">
+    <link rel="stylesheet" href="/css/reset.css">
+    <style>
+        :root{
+            --theme: #000;
+            --theme-text: #fff;
+        }
+
+         .u-items-box {
+            margin: 10px;
+            background: #eee;
+            padding: 10px;
+            display: flex;
+            gap: 0 10px;
+        }
+        
+        .u-items {
+            width: 20px;
+            height: 20px;
+            color: #fff;
+            border-radius: 2px;
+            text-align: center;
+        }
+        
+        .u-a {
+            background: #188efc
+        }
+        
+        .u-b {
+            background: #f2222c
+        }
+        
+        .u-c {
+            background: #fa541c
+        }
+        
+        .u-d {
+            background: #faad14
+        }
+        
+        .u-e {
+            background: #13c2c2
+        }
+        
+        .u-f {
+            background: #52c41a
+        }
+        
+        .u-g {
+            background: #2f54eb
+        }
+    </style>
+</head>
+
+<body>
+    <div class="dox">我是一个div标签</div>
+    <a>我是一个a标签</a>
+    <button>我是一个按钮</button>
+
+    <div>
+        <ul class="u-items-box">
+            <li class="u-items u-a"><i class="iconfont icon-check"></i></li>
+            <li class="u-items u-b"></li>
+            <li class="u-items u-c"></li>
+            <li class="u-items u-d"></li>
+            <li class="u-items u-e"></li>
+            <li class="u-items u-f"></li>
+            <li class="u-items u-g"></li>
+        </ul>
+    </div>
+
+    <script>
+        var u_items = window.getElementByClassName("u-items");
+        
+    </script>
+</body>
+
+</html>

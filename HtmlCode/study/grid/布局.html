@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/reset/reset.css">
+    <style>
+        .box {
+            display: grid;
+            grid-template-rows: repeat(4, 1fr);
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-areas:
+                "a b c d "
+                "e e e e "
+                "f f g g"
+                "h h h h";
+            gap: 30px;
+            padding: 30px;
+        }
+
+        .box div {
+            min-width: 170px;
+            background: #e6e6e6;
+
+            
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            /* padding: 20px 20px 10px; */
+         }
+
+        .box div:nth-child(1) {
+            grid-area: a;
+        }
+
+        .box div:nth-child(2) {
+            grid-area: b;
+        }
+
+        .box div:nth-child(3) {
+            grid-area: c;
+        }
+
+        .box div:nth-child(4) {
+            grid-area: d;
+        }
+
+        .box div:nth-child(5) {
+            grid-area: e;
+        }
+
+        .box div:nth-child(6) {
+            grid-area: f;
+        }
+
+        .box div:nth-child(7) {
+            grid-area: g;
+        }
+
+        .box div:nth-child(8) {
+            grid-area: h;
+        }
+
+        .box_databox{
+            font-size: 14px;
+            padding: 20px 20px 10px;
+        }
+        .box_databox_title{
+            font-style: 30px;
+            color: rgba(0, 0, 0, .45);
+        }
+        .box_databox_number{
+            margin-top: 4px;
+            margin-bottom: 0;
+            font-size: 30px;
+            font-weight: 400;
+        }
+        .box_databox_info{
+            padding: 20px 0 0 ;
+        }
+        .box_databox_info span{
+            margin-right: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app">
+        <div class="box">
+
+            <!-- 数据盒子 -->
+            <div class="box_databox">
+                <div class="box_databox_title"><span>总销售额</span></div>
+                <h3 class="box_databox_number">￥126，560</h3>
+                <div class="box_databox_info">
+                    <span>周同比12%</span>
+                    <span>日同比11% </span>
+                </div>
+                <div class="box_databox_info">
+                    <span>日销售额</span>
+                    <span>￥12,423</span>
+                </div>
+            </div>
+            <div class="box_databox">
+                <div class="box_databox_title"><span>总销售额</span></div>
+                <h3 class="box_databox_number">￥126，560</h3>
+                <div class="box_databox_info">
+                    <span>周同比12%</span>
+                    <span>日同比11% </span>
+                </div>
+                <div class="box_databox_info">
+                    <span>日销售额</span>
+                    <span>￥12,423</span>
+                </div>
+            </div>
+            <div class="box_databox">
+                <div class="box_databox_title"><span>总销售额</span></div>
+                <h3 class="box_databox_number">￥126，560</h3>
+                <div class="box_databox_info">
+                    <span>周同比12%</span>
+                    <span>日同比11% </span>
+                </div>
+                <div class="box_databox_info">
+                    <span>日销售额</span>
+                    <span>￥12,423</span>
+                </div>
+            </div>
+            <div class="box_databox">
+                <div class="box_databox_title"><span>总销售额</span></div>
+                <h3 class="box_databox_number">￥126，560</h3>
+                <div class="box_databox_info">
+                    <span>周同比12%</span>
+                    <span>日同比11% </span>
+                </div>
+                <div class="box_databox_info">
+                    <span>日销售额</span>
+                    <span>￥12,423</span>
+                </div>
+            </div>
+            <!--  -->
+
+            <!--  -->
+            <div>5</div>
+            <div>6</div>
+            <!--  -->
+
+            <!--  -->
+            <div>7</div>
+            <div>8</div>
+            <!--  -->
+
+        </div>
+    </div>
+</body>
+
+</html>

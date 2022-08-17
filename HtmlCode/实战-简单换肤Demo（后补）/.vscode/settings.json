@@ -1,0 +1,7 @@
+{
+    "editor.parameterHints.cycle": true,
+    "editor.quickSuggestions": {
+        "comments": "on",
+        "strings": "on"
+    }
+}

@@ -1,0 +1,23 @@
+{
+  "id": "",
+  "name": "",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "11488001",
+      "name": "close",
+      "font_class": "close",
+      "unicode": "e747",
+      "unicode_decimal": 59207
+    },
+    {
+      "icon_id": "11488326",
+      "name": "success-fill",
+      "font_class": "success-fill",
+      "unicode": "e78d",
+      "unicode_decimal": 59277
+    }
+  ]
+}

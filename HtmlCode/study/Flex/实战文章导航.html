@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/reset/reset.css">
+    <style>
+        li {
+            list-style-type: none;
+        }
+
+        a {
+            text-decoration: none;
+            /* 去除默认的下划线 */
+            outline: none;
+            /* 去除旧版浏览器的点击后的外虚线框 */
+            color: #000;
+            /* 去除默认的颜色和点击后变化的颜色 */
+        }
+
+        .navbox {
+            background: pink;
+            position:fixed;
+            top: 0;
+            bottom: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .navbox li {
+            background: #000;
+            padding: 20px 20px;
+            /* margin: 10px auto; */
+        }
+        /* 鼠标移入事件 */
+        .navbox li:hover {
+            background: #DF0ED1;
+        }
+
+        .navbox a {
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="lm-app-main">
+        <header class="navbox">
+            <li><a href="">首页</a></li>
+            <li><a href="">课程</a></li>
+            <li><a href="">相册</a></li>
+            <li><a href="">导航</a></li>
+            <li><a href="">视频</a></li>
+            <li><a href="">视频</a></li>
+        </header>
+    </div>
+</body>
+
+</html>

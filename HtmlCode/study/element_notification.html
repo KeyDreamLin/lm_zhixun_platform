@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>element_notification</title>
+    <link rel="stylesheet" href="css/albb_ione/iconfont.css">
+    <link rel="stylesheet" href="css/reset/reset.css">
+    <style>
+        .lm-notification {
+            width: 330px;
+            max-height: 82px;
+            padding: 20px;
+            box-shadow: 0px 0px 12px rgba(0, 0, 0, .12);
+            position: fixed;
+            top: 20px;
+            right: 20px;
+        }
+
+        .lm-notification_icon_success {
+            font-size: 22px;
+            color: #67c23a;
+            float: left;
+        }
+        .lm-notification_wrapper{
+            float: left;
+            margin-left: 20px;
+        }
+        .lm-notification_title{
+            font-size: 16px;
+            margin-bottom: 12px;
+        }
+        .lm-notification_content{
+            letter-spacing: 0.08em;
+            font-size: 12px;
+        }
+        .lm-notification_icon_close{
+            position: absolute;
+            right: 30px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="lm-notification">
+
+        <i class="lm-notification_icon_success iconfont icon-success-fill"></i>
+
+        <div class="lm-notification_wrapper">
+            <div class="lm-notification_title">
+                <h3>Success</h3>
+            </div>
+            <div class="lm-notification_content">
+                <p> 我是一个成功的消息.... </p>
+            </div>
+        </div>
+
+        <a href="" class="lm-notification_icon_close iconfont icon-close"></a>
+    </div>
+</body>
+
+</html>

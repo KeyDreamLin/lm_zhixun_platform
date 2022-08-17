@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>sticky 简单案例</title>
+    <link rel="stylesheet" href="/css/reset/reset.css">
+    <style>
+            /* 广告 start */
+            .lm-dvertising{
+                width: 100%;
+                height: 200px;
+                background: pink;
+            }
+            /* 广告 end */
+
+            /* 导航栏box start */
+            .lm-header{
+                width: 100%;
+                height: 50px;
+                margin: 0;
+                background: papayawhip;
+                        position: -webkit-sticky;
+            position: sticky;
+            top: 0;
+            }
+            /* -- 导航栏内容 */
+            .lm-header_nav_content{
+
+            }
+            /* 导航栏box end */
+
+            /* 内容区 start */
+            .lm-content{
+                width: 100%;
+                background: palegreen;
+            }
+            /* -- 标题 */
+            .lm_title{
+                width: 100%;
+                height: 100px;
+                margin-bottom: 10px;
+                background: palevioletred;
+            }
+            /* 内容区 end */
+    </style>
+</head>
+
+<body>
+    <!-- 仿造广告 -->
+    <div class="lm-dvertising">
+        仿造广告
+    </div>
+    <header class="lm-header">
+        <div class="lm-header_nav_content">
+            我是导航栏
+        </div>
+    </header>
+    <!-- 内容 -->
+    <div class="lm-content">
+        <div class="lm_title">1</div>
+        <div class="lm_title">1</div>
+        <div class="lm_title">1</div>
+        <div class="lm_title">1</div>
+        <div class="lm_title">1</div>
+        <div class="lm_title">1</div>
+        <div class="lm_title">1</div>
+        <div class="lm_title">1</div>
+        <div class="lm_title">1</div>
+    </div>
+</body>
+
+</html>

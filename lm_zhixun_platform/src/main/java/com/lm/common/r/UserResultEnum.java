@@ -14,6 +14,7 @@ public enum UserResultEnum implements GlobalResultEnumInterface{
     USER_TOKEN_NOT_FOUND(100105,"token not found or due"),//令牌没找到或者过期，就是jwt过期了
     USER_NULL_ERROR(100106, "用户不存在"),
     USER_LOGIN_SAME(100107,"用户已在其他地方登录"),
+    USER_INPUT_CODE_ERROR(100108,"验证码错误"),
     ;
 
     private Integer code; //编码

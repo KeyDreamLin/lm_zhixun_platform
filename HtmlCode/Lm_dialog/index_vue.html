@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/reset/reset.css">
+    <link rel="stylesheet" href="fonts/iconfont.css">
+    <style>
+        body {
+            /* background: #000; */
+        }
+
+        .lm-overlay {
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            height: 100%;
+            background: rgba(0, 0, 0, .5);
+        }
+
+        .lm-dialog_box {
+            width: 32%;
+            background: #fff;
+            border-radius: 2px;
+            margin: 5% auto 50px;
+        }
+
+        .lm-dialog_header {
+            padding: 20px;
+            padding-bottom: 10px;
+            position: relative;
+        }
+
+        .lm-dialog_header_title {
+            font-size: 18px;
+            color: #303113;
+
+        }
+
+        .lm-dialog_header_close {
+            position: absolute;
+            right: 0;
+            margin-right: 20px;
+        }
+
+        .lm-dialog_header_body {
+            padding: 20px 30px;
+        }
+
+        .lm-dialog_header_body span {
+            color: #606226;
+            font-size: 14px;
+        }
+
+        .lm-dialog_footer {
+            padding: 20px;
+            text-align: right;
+        }
+
+        .lm-dialog_footer span {
+            text-align: right;
+        }
+
+        .lm-dialog_footer button {
+            padding: 8px 15px;
+            border: 1px solid #dcdfe6;
+            background: transparent;
+            cursor: pointer;
+        }
+
+        .lm-dialog_footer button:nth-child(2) {
+            padding: 8px 15px;
+            border: 1px solid #dcdfe6;
+            background: #409eff;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .lm-dialog_footer button span {}
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <button @click="EventOpenDiaLog">打开</button>
+        <lm-dialog :is-open="LmDialog_isOpen" title="我是一个标题啦" content="哇呜，我还是内容" @close="EventCloseDiaLog"
+            @confirm="EventConfirmDiaLog">
+        </lm-dialog>
+    </div>
+    <script src="/js/vue3/vue.global.js"></script>
+    <script>
+        var app = Vue.createApp({
+            data() {
+                return {
+                    LmDialog_isOpen: false,
+                }
+            },
+            methods: {
+                // 打开对话框
+                EventOpenDiaLog() {
+                    this.LmDialog_isOpen = true;
+                    alert("打开对话框");
+                },
+                EventCloseDiaLog() {
+                    this.LmDialog_isOpen = false;
+                    alert("对话框_关闭按钮");
+                },
+                EventConfirmDiaLog() {
+                    this.LmDialog_isOpen = false;
+                    alert("对话框_确定按钮");
+                }
+
+            },
+
+        });
+        // 定义一个名为 lm-dialog 的新全局组件
+        app.component('lm-dialog', {
+            props: {
+                title: {
+                    type: String,
+                    default: "标2题"
+                },
+                content: {
+                    type: String,
+                    default: "内2容"
+                },
+                isOpen: {
+                    type: Boolean,
+                    default: false
+                }
+            },
+
+            template:
+                `
+            <div v-if="isOpen" class="lm-overlay">
+                <div class="lm-dialog_box">
+                    <!-- 页眉页头 -->
+                    <header class="lm-dialog_header">
+                        <span class="lm-dialog_header_title">{{ title }}</span>
+                        <span class="lm-dialog_header_close iconfont icon-guanbi1"></span>
+                    </header>
+                    <div class="lm-dialog_header_body">
+                        <span>{{content}}</span>
+                    </div>
+                    <!-- 页脚 -->
+                    <footer class="lm-dialog_footer">
+                        <span>
+                        <button @click="close"><span class="">Cancel</span></button>
+                        <button @click="confirm"><span class="">Cancel</span></button>
+                        </span>
+                    </footer>
+                </div>
+            </div>
+            `,
+            methods: {
+                
+                close() {
+                    // 自定义 映射事件  调用父的行为改变父的响应式数据，拿到父的行为 @close
+                    // close是自定义映射名称 
+                    this.$emit("close");
+                    // alert("点击了关闭");
+                },
+                confirm() {
+                    this.$emit("confirm");
+                    // alert("点击了确定");
+                }
+            }
+        })
+        // 挂载
+        app.mount("#app");
+    </script>
+</body>
+
+</html>

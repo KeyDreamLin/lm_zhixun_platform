@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>实战UI中国轮播图</title>
+    <link rel="stylesheet" href="/css/reset/reset.css">
+
+    <style>
+        body {
+            background: #eff3f5;
+        }
+
+        .lm-banner {
+            width: 100%;
+            height: 280px;
+            background: rgba(255, 192, 203, 0.382);
+        }
+
+        .lm-banner-container {
+            width: 1180px;
+            margin: 0 auto;
+            background: rebeccapurple;
+            display: flex;
+            /* 将元素从底部开始排 */
+            align-items: flex-end;
+            /* 居中 */
+            justify-content: center;
+        }
+
+        .lm-banner-container img {
+            width: inherit;
+            height: inherit;
+        }
+
+        .lm-banner_switchBox {
+            width: inherit;
+            height: 30px;
+
+            background: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /* 让元素浮动起来 加上绝对地位就是层与层的关系 */
+            position: absolute;
+            background: rgba(105, 105, 105, 0.314);
+        }
+
+        .lm-banner_paer_dot{
+
+            width: 20px;
+            height: 20px;
+            line-height: 20px;
+           
+            background: #000;
+            margin: 0 5px;
+            border-radius: 50%;
+            color: #fff;
+            font-size: 12px;
+            text-align: center;
+
+            /* 鼠标样式 */
+            cursor: pointer;
+        }
+
+        .lm-banner_paer_dot:hover,
+        .lm-banner_paer_dot.active {
+            background: springgreen
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="lm-mian">
+        <!-- 轮播图 -->
+        <div class="lm-banner">
+            <!-- 轮播图可视区域 -->
+            <div class="lm-banner-container">
+                <!-- 图片 -->
+                <img src="/image/banner_1.png">
+                <!-- 切换图片区域 -->
+                <div class="lm-banner_switchBox">
+                    <!-- 切换图片小圆点 -->
+                    <div class="lm-banner_paer_dot">1</div>
+                    <div class="lm-banner_paer_dot">2</div>
+                    <div class="lm-banner_paer_dot">3</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <p>234</p>
+    <p>234</p>
+    <p>234</p>
+    <p>234</p>
+    <p>234</p>
+    <p>234</p>
+    <p>234</p>
+    <p>234</p>
+    <p>234</p>
+    <p>234</p>
+    <p>234</p>
+    <p>234</p>
+    <p>234</p>
+    <p>234</p>
+    <p>234</p>
+
+</body>
+
+</html>

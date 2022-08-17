@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>实战UI中国文章列表</title>
+    <link rel="stylesheet" href="/css/reset/reset.css">
+    <link rel="stylesheet" href="/css/albb_ione/iconfont.css">
+    <style>
+        body {
+            background: #eff3f5;
+        }
+
+        .w820 {
+            width: 820px;
+            margin: 100px;
+        }
+
+        /* 文章列表盒子 start */
+        .lm-article_list_box {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* 文章列表盒子 end */
+
+
+        /* - lm-article_item 文章列表项盒子 start */
+        .lm-article_item {
+            display: flex;
+            padding: 10px 0;
+            border-bottom: 1px solid #c8d3dc;
+        }
+
+        /* -- 文章列表图片 左盒子 */
+        .lm-article_item img {
+            width: 160px;
+            height: 120px;
+        }
+
+        /*  */
+
+        /* -- 文章列表信息 右盒子 start */
+        .lm-article_info_right {
+            /* 平铺拉满 */
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            margin-left: 20px;
+
+        }
+
+        /* --- 文章头部内容 start */
+        .lm-article_info_header {
+            display: flex;
+            /*居中对齐*/
+            align-items: center;
+            margin-bottom: 5px;
+        }
+
+        /* 标签 */
+        .lm-article_info_header .info_tag {
+            padding: 5px 10px;
+            margin-right: 5px;
+            background: #3d7eff;
+            font-size: 12px;
+            color: #fff;
+        }
+
+        /* 标题 */
+        .lm-article_info_header .title {
+            font-size: 18px;
+            font-weight: bold;
+            flex-grow: 1;
+
+        }
+
+        /* 时间 */
+        .lm-article_info_header .date {
+            margin-right: 5px;
+            color: #bdbdbd;
+            font-size: 14px;
+        }
+
+        /* --- 文章头部内容 end */
+        /* -- 文章列表信息 右盒子 end */
+        /* -- 文章列表 内容 start */
+        .lm-article_info_right p {
+            max-height: 44px;
+            /* 溢出隐藏 */
+            overflow: hidden;
+            margin-top: 5px;
+            font-size: 14px;
+            color: #bdbdbd;
+        }
+
+        /* -- 文章列表 内容 end */
+        /* -- 文章列表 信息 start */
+        .lm-article_info_meta{
+            margin-top: 20px;
+        }
+        .lm-article_info_meta img{
+            width: 20px;
+            height: 20px;
+        }
+        /* -- 文章列表 信息 end */
+
+        /* - lm-article_item 文章列表项盒子 end */
+    </style>
+</head>
+
+<body>
+    <div class="app w820">
+
+        <div class="lm-article_list_box">
+            <li class="lm-article_item">
+                <img src="/image/4172988.jpg">
+                <!-- 这里使用flex列布局 -->
+                <div class="lm-article_info_right">
+                    <!-- 头 -->
+                    <div class="lm-article_info_header">
+                        <span class="info_tag">经验观点</span>
+                        <span class="title">多身份｜体验B站 哔哩哔哩 bilibili 小破站产品设计</span>
+                        <span class="date"><i class="iconfont icon-success-fill"></i>7-4 16:24</span>
+                    </div>
+                    <!-- 内容 -->
+                    <p>此次我将按照不同受众用户，进行哔哩哔哩产品设计细节分析，一起来看B站在往多元化发展的设计发力点都有哪些。</p>
+                    <!-- 信息 -->
+                    <div class="lm-article_info_meta">
+                        <img src="/image/toux1.png">
+                    </div>
+                </div>
+            </li>
+            <li class="lm-article_item">
+                <img src="/image/4172988.jpg">
+                <div class="lm-article_info_right">
+                    asd
+                </div>
+            </li>
+            <li class="lm-article_item">
+                <img src="/image/4172988.jpg">
+                <div class="lm-article_info_right">
+                    asd
+                </div>
+            </li>
+        </div>
+    </div>
+</body>
+
+</html>

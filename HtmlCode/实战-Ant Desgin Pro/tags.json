@@ -1,0 +1,26 @@
+// tags.json
+{
+    "app-demo": {
+      "attributes": [
+        "model-value",
+        "change"
+      ],
+      "description": "This is a description of the Demo component"
+    }
+  }
+  
+  // attributes.json
+  {
+    "app-demo/model-value": {
+      "type": "string",
+      "options": [
+        "top",
+        "bottom"
+      ],
+      "description": "bind value"
+    },
+    "app-demo/change": {
+      "type": "event",
+      "description": "triggers when state changed"
+    }
+  }

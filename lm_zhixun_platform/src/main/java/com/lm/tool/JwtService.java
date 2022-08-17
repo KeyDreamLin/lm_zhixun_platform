@@ -6,7 +6,6 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.lm.common.ex.lthrow.UserExceptionThrow;
 import com.lm.common.r.UserResultEnum;
-import org.junit.Test;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
@@ -137,22 +136,5 @@ public class JwtService {
         } catch (Exception ex) {
             throw new UserExceptionThrow(UserResultEnum.USER_TOKEN_ERROR);
         }
-    }
-
-    @Test
-    public void testSS(){
-        Date a = this.getTokenIssuedTime("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsbW0iLCJsbV91c2VyX2lkIjoxLCJleHAiOjE2NTM4NzI0MDksImlhdCI6MTY1Mzg3MDYwOX0.O3SHRvfPAeGgB9MQ18sBJXG4gI7_g-e8LUdEvlSfbn4");
-        System.out.println(DateTool.diffReturnMinute(new Date(),a));
-
-        System.out.println( StringUtils.hasText(null));
-        System.out.println( StringUtils.hasText(""));
-        System.out.println( StringUtils.hasText(" "));
-        System.out.println( StringUtils.hasText("  "));
-        System.out.println( StringUtils.hasText("  34 "));
-        //false
-        //false
-        //false
-        //false
-        //true
     }
 }

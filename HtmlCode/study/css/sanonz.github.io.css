@@ -1,0 +1,133 @@
+html,body {
+    margin: 0px;
+    height: 100%;
+    /* 字间距 */
+    line-height:1.5;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+    color: inherit;
+    font-family: inherit;
+    font-weight: normal;
+    margin: 0;
+    color: #fff;
+}
+
+#app{
+    height: 100%;
+}
+
+.f_l{
+    /* 浮动 */
+    float:left;
+}
+
+/* 侧边栏 */
+.lm-header{
+    width: 380px;
+    height: 100%;
+    background-color: rgba(0, 255, 238, 0.235);
+}
+/* 侧边栏-导航*/
+.lm-header_nav{
+    width: 80px;
+    height: 100%;
+    background-color: #272822;
+}
+/* 侧边栏-标题树*/
+.lm-header_title_list{
+    width: 300px;
+    height: 100%;
+    background-color: #282b30;
+}
+/* 文章内容快 */
+.lm-content{
+    width: auto;
+    margin-left: 380px;
+    height: 100%;
+    background-color: #2b2e32;
+}
+/* 文章内容可视区域 */
+.lm-content_article{
+    max-width: 800px;
+    height:100%;
+    margin: 0 auto;
+}
+/* 文章内容头 start */
+.lm-content_article_header{
+    padding-top: 15px;
+
+}
+
+.lm-content_article_header h1{
+    font-size: 2em;
+    font-weight:400;
+}
+/* 文章内容头 end */
+
+
+/* 内容标签块 start */
+.lm-content_article_meta{
+    margin-top: 8px;
+    font-size: 14px;
+}
+/* 文章更新时间 */
+.lm-content_article_date {
+    float: left;
+    color: #a0a0a0;
+}
+/* 文章关联标签 */
+.lm-content_article_tag_list{
+    float: left;
+    margin-left: 20px;
+    color: #a0a0a0;
+}
+/* 内容标签块 end */
+
+/* 文章内容主体 start */
+.lm-content_article_body{
+    margin-top: 24px;
+    width: 100%;
+    float: left;
+}
+.lm-content_article_body h2{
+    padding-bottom: 0.3em;
+    color: #eaeaea;
+    font-weight:bold ;
+    /* 线 */
+    border-bottom: 1px solid #484848;   
+}
+/* 段落p */
+.lm-content_article_body p{
+    font-size: 16px;
+    color: #eaeaea;
+}
+/* 高亮 */
+.lm-content_article_body code{
+    font-size: 16px;
+    background-color: #3f4248;
+    padding: 4px 0;
+}
+
+.lm-content_article_body blockquote{
+    background-color: #0055ff;
+    padding: 2px 1em;
+    margin: 0;
+    background-color: #313338;
+    color: #6a737d;
+    border-left: .25em solid #686b6f;   
+
+}
+/* 文章内容主体 end */
+

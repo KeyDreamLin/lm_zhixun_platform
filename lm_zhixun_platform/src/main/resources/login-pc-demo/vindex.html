@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<link href="./css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+		<script type="text/javascript" src="./js/jquery-3.6.0.js"></script>
+		<style>
+			#add_form{
+				margin: 10px;
+				padding: 10px;
+				background-color: #eee;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="app">
+			{{title}}
+				<input type="text" id="s-keyword">
+				<button id="searchBtn">搜索</button>
+				<button id="switchAddBtn" @click="switchAddBtn">{{add_form_show_flag?'关闭':'添加'}}</button>
+				<button class="load-but">加载更多
+					{{current}}/{{pages}}
+				</button>
+
+			<div id="add_form" v-show="add_form_show_flag">
+				<form>
+					<div class="form-group">
+						<label >用户名</label>
+						<input type="text" class="form-control" id="username" name="username" placeholder="请输入用户名">
+					</div>
+					<div class="form-group">
+						<label >昵称</label>
+						<input type="text" class="form-control" id="nickname" name="nickname" placeholder="请输入昵称">
+					</div>
+					<div class="form-group">
+						<label >密码</label>
+						<input type="password" class="form-control" id="password" name="password" placeholder="请输入密码">
+					</div>
+					<div class="form-group">
+						<label>
+							男
+							<input type="radio" class="sex" name="sex" value="1" checked>
+						</label>
+						<label>
+							女
+							<input type="radio" class="sex" name="sex" value="0">
+						</label>
+					</div>
+					<div class="form-group">
+						<label >添加朋友</label>
+						<input type="text" class="form-control" id="friend_input" name="friend" placeholder="添加朋友">
+						<div id="friend_DivView">
+
+						</div>
+					</div>
+					<button id="saveUserBtn" >注册</button>
+					<button id="cloudAddBtn" @click="switchAddBtn">关闭</button>
+				</form>
+			</div>
+			<table class="table">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>用户名</th>
+						<th>昵称</th>
+						<th>年龄</th>
+						<th>性别</th>
+						<th>操作</th>
+					</tr>
+				</thead>
+				<tbody >
+					<template class="table_tbody" v-for="(user,index) in usersList">
+						<tr>
+							<th>{{user.id}}</th>
+							<th>{{user.nickname}}</th>
+							<th>{{user.username}}</th>
+							<th>{{user.age}}</th>
+							<th>{{user.sex}}</th>
+							<th>
+								<a href="javascript:void(0)"> 编辑 </a>
+								<a href="javascript:void(0)"> 删除 </a>
+							</th>
+						</tr>
+					</template>
+				</tbody>
+			</table>
+			<button class="load-but" @click="page_loads">加载更多
+				{{current}}/{{pages}}
+			</button>
+		</div>
+	</body>
+	<script src="./js/axios.min.js"></script>
+	<script src="./js/vue.global.js"></script>
+	<script >
+		const app = Vue.createApp({
+			data() {
+				return {
+					title:"这个是标题",
+					pageNo:1,		// 需要查询第几页
+					pageSize:10,	// 这一页有多少条
+					total: 0,		// db一共有多少条 总数
+					current: 0,		// 当前页
+					pages: 0, 		// 一共有多少页
+					keyword :``,	// 关键词（搜索）
+					usersList : [],	// 输出用户分页容器，存储前端代码然后输出到页面
+					add_form_show_flag : false,// 隐藏和显示注册用户表单
+				}
+			},
+			created(){
+				this.page();
+			},
+			methods:{
+				switchAddBtn(){
+					this.add_form_show_flag = !this.add_form_show_flag;
+				},
+				page(){
+					let params = {pageNo:this.pageNo,pageSize:this.pageSize,keyword:this.keyword};
+					axios.get("/admin/user/pages",{params}).then((ret)=>{
+						if(ret.data.code != 200){
+							return;
+						}
+						console.log(ret.data.data);
+						ret.data.data.records.forEach((item)=>{
+							this.usersList.push(item)
+						})
+						//this.usersList = ret.data.data.records;
+						this.current = ret.data.data.current;	// 当前页
+						this.pages = ret.data.data.pages;		// 一共有多少页
+					});
+				},
+				page_loads(){
+					this.pageNo++;
+					this.page();
+				}
+			}
+		}).mount('#app');
+	</script>
+
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>基础宫格</title>
+    <style>
+        body{
+            background: #e6e6e6;
+        }
+        .lm-main_gridBox{
+            width: 300px;
+            height: 300px;
+            background: pink;
+            display: grid;
+            /* 确定有多少行 */
+            grid-template-rows: 1fr 1fr 1fr;
+            /* 确定有多少列 fr是一个比例 */
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-template-areas: 
+            "a a b"
+            "c c b"
+            "d e e";
+            gap: 5px;
+            padding: 5px;
+        }
+        .lm-main_gridBox div{
+            background: #fff;
+        }
+        .lm-main_gridBox div:nth-child(1){
+            background: rgb(255, 0, 98);
+            /* 设置别名 */
+            grid-area: a;
+        }
+        .lm-main_gridBox div:nth-child(2){
+            background: rgb(255, 255, 0);
+            /* 设置别名 */
+            grid-area: b;
+        }
+        .lm-main_gridBox div:nth-child(3){
+            background: rgb(5, 197, 255);
+            /* 设置别名 */
+            grid-area: c;
+        }
+        .lm-main_gridBox div:nth-child(4){
+            background: rgb(115, 255, 0);
+            /* 设置别名 */
+            grid-area: d;
+        }
+        .lm-main_gridBox div:nth-child(5){
+            background: rgb(111, 0, 255);
+            /* 设置别名 */
+            grid-area: e;
+        }
+    </style>
+</head>
+<body>
+    <div class="lm-app">
+        <header></header>
+        <main>
+            <div class="lm-main_gridBox">
+                <div>1</div>
+                <div>2</div>
+                <div>3</div>
+                <div>4</div>
+                <div>5</div>
+            </div>
+        </main>
+        <footer></footer>
+    </div>
+</body>
+</html>

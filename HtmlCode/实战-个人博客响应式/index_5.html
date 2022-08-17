@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/reset/reset.css">
+    <link rel="stylesheet" href="/fonts/iconfont.css">
+    <link rel="stylesheet" href="/css/index/header_and_nav.css">
+    <link rel="stylesheet" href="/css/lm_grid.css">
+    <style>
+        .lm-main {
+            width: 100%
+        }
+
+        body {
+            background: #f8f8f8;
+        }
+
+        .lm-container {
+            margin: 0 auto;
+            /* background: pink; */
+        }
+
+        /* .test{
+            height: 400px;
+        } */
+    </style>
+</head>
+
+<body>
+    <!-- header start -->
+    <header class="lm-header">
+        <div class="lm-header_logo">欢迎来到博客</div>
+    </header>
+    <!-- header end -->
+
+    <!-- nav start -->
+    <nav class="lm-nav">
+        <!-- 导航栏开关盒子 start -->
+        <div class="lm-nav_toggleBox">
+            <label for="lm-nav_toggleBox_input">
+                <i class="lm-nav_toggleBox_font iconfont icon-zhedie"></i>
+            </label>
+        </div>
+        <!-- 导航栏开关选择框 -->
+        <input type="checkbox" id="lm-nav_toggleBox_input" class="lm-nav_toggleBox_input">
+        <!-- 导航栏开关盒子 end -->
+        <!-- 导航栏标签盒子 start -->
+        <ul class="lm-nav_listBox">
+            <li><a href="">首页</a></li>
+            <li><a href="">课程</a></li>
+            <li><a href="">相册</a></li>
+            <li><a href="">论文</a></li>
+            <li><a href="">其他课程</a></li>
+        </ul>
+        <!-- 导航栏标签盒子 end -->
+    </nav>
+    <!-- nav end -->
+    <main class="lm-main">
+        <!-- 可视区域 -->
+        <div class="lm-container">
+            <!-- 分成12份 -->
+            <div class="row">
+                <!-- 文章列表盒子9份 -->
+                <div class="lm-main_ArticleListBox">
+                    <!-- 分成12份 -->
+                    <div class="row_1">
+                        <!-- 文章列表子项盒子9份 -->
+                        <div class="lm-main_ArticleItemBox">
+                            <div class="lm-main_ArticleItemBox_title">
+                                <a href="">苹果用 3 分钟，正式宣战新行业</a>
+                            </div>
+                            <div class="lm-main_ArticleItemBox_info">
+                                <span>出品 | 嘻嘻嘻组 作者 | 小郭宝贝 | 小马官网</span>
+                                <img src="/image/article_item_image_1.png">
+                                <a class="content">WWDC ，Worldwide Developers Conference
+                                    苹果全球开发者大会，往年，抽签买到门票的开发者们在这个时间齐聚一堂，用一周的时间探讨如何用软件构建苹果的硬件生态，或者说得更加程序员文化一些 —— 用软件改变世界。
+                                    。</a>
+                                <div class="buttonBox">
+                                    <button class="button">阅读全文</button>
+                                </div>
+                            </div>
+                            <div class="lm-main_ArticleItemBox_tag">
+                                <a>标签：</a>
+                                <a class="tag">客户端</a>
+                                <a class="tag">Android</a>
+                            </div>
+
+                        </div>
+                        <div class="lm-main_ArticleItemBox" style="background: rgb(133, 163, 255)">
+                            <div class="test">盒子二</div>
+                        </div>
+                        <div class="lm-main_ArticleItemBox" style="background: rgb(51, 70, 127)">
+                            <div class="test">盒子三</div>
+                        </div>
+                        <div class="lm-main_ArticleItemBox" style="background: rgb(0, 37, 148);">
+                            <div class="test">盒子四</div>
+                        </div>
+                        <div class="lm-main_ArticleItemBox" style="background: rgb(30, 46, 95)">
+                            <div class="test">盒子五</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 博客信息栏 三份 -->
+                <div class="lm-main_BlogsInfoBox">
+                    <div class="test">盒子六</div>
+                    <div class="test">盒子七</div>
+                    <div class="test">盒子八</div>
+                </div>
+            </div>
+            <!-- 分成12份 -->
+        </div>
+    </main>
+    <footer></footer>
+</body>
+
+</html>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lm.mapper.BannerMapper">
+
+    <select id="queryBanners" resultType="com.lm.entity.pojo.Banner">
+        SELECT * FROM kss_banner ${ew.customSqlSegment}
+    </select>
+
+    <select id="queryBannersPage" resultType="com.lm.entity.pojo.Banner">
+        SELECT * FROM kss_banner
+    </select>
+
+    <select id="findBanners" resultType="com.lm.entity.pojo.Banner">
+        <bind name="title_keyword" value="'%' + bannerVo.keyword + '%'" />
+        SELECT
+            *
+        FROM
+             kss_banner
+        <where>
+             <if test="bannerVo.keyword!=null">
+                 title LIKE #{title_keyword}
+             </if>
+        </where>
+    </select>
+
+    <select id="findBannerUsersVo" resultType="com.lm.entity.vo.banner.BannerUserVo">
+        <bind name="title_keyword" value="'%' + bannerVo.keyword + '%'" />
+        SELECT
+            t1.id,
+            t1.title,
+            t1.create_time as createTime,
+            t2.id as userId,
+            t2.create_time as ctime,
+            t2.username
+        FROM
+            kss_banner t1,
+            kss_user t2
+        WHERE
+            t1.user_id = t2.id
+        <if test="bannerVo.keyword != null">
+            and title LIKE #{title_keyword}
+        </if>
+    </select>
+
+
+    <select id="findBannerUsersVoPage" resultType="com.lm.entity.vo.banner.BannerUserVo">
+        SELECT
+            t1.id,
+            t1.title,
+            t1.create_time as createTime,
+            t2.id as userId,
+            t2.create_time as ctime,
+            t2.username
+        FROM
+            kss_banner t1
+        INNER JOIN
+            kss_user t2 on t1.user_id = t2.id
+        ${ew.customSqlSegment}
+    </select>
+
+</mapper>
