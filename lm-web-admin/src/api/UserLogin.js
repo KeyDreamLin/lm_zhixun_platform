@@ -3,13 +3,16 @@ import { ref, reactive, onMounted } from 'vue'
 import router from '@/router';
 // 状态管理
 import store from '@/store';
-import loginService from "@/services/login/LoginService.js"
+import nprogress from 'nprogress'
+import * as utils from '@/utils/index.js';
 import captchaService from "@/services/code/CaptchaService.js"
 function UserLogin() {
     //定义form表单对象，用于校验
     const Login_userFormRef = ref(null);
     // 验证码图像
     const captcha_imgData = ref(null);
+    // 按钮登录状态
+    const login_loading = ref(false);
     const Login_UserData = reactive({
         username: "lmlm",
         password: "123456",
@@ -27,8 +30,14 @@ function UserLogin() {
                 return;
             }
             try {
-                let ret = await store.dispatch("user/toLogin", Login_UserData);
-                console.log(ret);
+                nprogress.start();
+                login_loading.value = true;
+                // 拷贝一份userdata,如果不拷贝直接加密的话，直接将加密的值赋值到对象那input就会显示加密后的数据会很怪
+                let {...userCopy} = Login_UserData;
+                userCopy.username = utils.encryptByDES(Login_UserData.username);
+                userCopy.password = utils.encryptByDES(Login_UserData.password);
+                let ret = await store.dispatch("user/toLogin", userCopy);
+                alert(ret.msg);
                 // 成功就跳转到首页去
                 router.push("/");
             } catch (error) {
@@ -37,7 +46,10 @@ function UserLogin() {
                 createCaptchaEvent();
                 Login_UserData.password = "";
                 Login_UserData.code = "";
-                alert(error.msg)
+                // alert(error.msg)
+            }finally{
+                login_loading.value = false;
+                nprogress.done();
             }
 
             // console.log(store.state.count); // -> 1
@@ -64,7 +76,7 @@ function UserLogin() {
         }]
     });
     // 5 : 生成验证码
-    const createCaptchaEvent = async() => {
+    const createCaptchaEvent = async () => {
         try {
             var serverCode = await captchaService.createCaptcha();
 
@@ -88,7 +100,7 @@ function UserLogin() {
         createCaptchaEvent();
         // 后端5分钟清除Redis中的验证码，前端4分钟刷新，这样就不会后端Redis已经删除了这个验证码前端还显示这个验证码出来
         setInterval(createCaptchaEvent, 4 * 60 * 1000);
-       
+
     });
 
 
@@ -100,6 +112,7 @@ function UserLogin() {
         userLoginRules,
         captcha_imgData,
         createCaptchaEvent,
+        login_loading,
     };
 };
 

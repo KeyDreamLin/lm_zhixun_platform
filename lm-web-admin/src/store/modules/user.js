@@ -24,7 +24,7 @@ export default {
             state.avatar = serverUserData.avatar;
             state.roleList = [{ name: "管理员" }];
             state.permissionList = [{ code: "-1" }];
-            console.log("-1231231", serverUserData);
+            // console.log("-1231231", serverUserData);
         },
         // 清除状态
         delUser(state) {
@@ -39,11 +39,19 @@ export default {
     },
     actions: {
 
-        toLogout(context) {
-            //1: 异步请求去执行服务器退出操作
-            //2: 执行页面状态清空
-            context.commit("delUser");
-            return "success";
+        async toLogout(context) {
+            try {
+                //1: 异步请求去执行服务器退出操作
+                //2: 执行页面状态清空
+                let serverLogout = await loginService.toLogout();// 执行退出
+                // console.log("----------------------",serverLogout);
+                context.commit("delUser");//  清除用户在本地的状态
+                return Promise.resolve(serverLogout);
+            } catch (error) {
+                alert("退出失败" + error);
+                return Promise.reject(error);
+            }
+
         },
 
         // store.dispatch("toLogin",Login_UserData);

@@ -1,23 +1,36 @@
 // 导入vue-router，引入createRouter和createWebHashHistory方法
 //import { createRouter, createWebHashHistory } from 'vue-router'
 import { createRouter, createWebHistory } from 'vue-router'
-import store from '@/store';
+import store from '@/store'
+import Index from '@/views/LmAdmin.vue';
+
+
+// 自定义后台子路由
+const routes_children = [
+    {
+        path: "/",
+        name: "dashboard",
+        meta: { title: "控制面板" },
+        component: () => import("@/views/dashboard/Index.vue"),
+    },
+];
 
 //4 :定义路由配置规则
 const routes = [
     {
         path: "/",
         meta: { title: "首页" },
-        name: "index",
-        component: () =>
-            import('../views/Index.vue'),
+        name: "adminIndex",
+        component: Index,
+        // 导入配置
+        children: routes_children
     },
     {
         path: "/:pathMatch(.*)*",
         meta: { title: "404" },
         name: "NotFound",
         component: () =>
-            import('../views/_404.vue'),
+            import('@/views/error/_404.vue'),
     },
     {
         path: "/login",
@@ -41,7 +54,7 @@ const router = createRouter({
 });
 
 
-router.beforeEach((to, from ,next) => {
+router.beforeEach((to, from, next) => {
     // 如果是登录页面就不拦截
     if (to.path == "/login") {
         next();

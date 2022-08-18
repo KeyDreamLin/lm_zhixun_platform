@@ -21,6 +21,8 @@ lm_request.interceptors.request.use((config) => {
         config.headers['token_user_id'] = store.getters["user/getUserId"];
         config.headers['token_uuid'] = store.getters["user/getTokenUuid"];
         // console.log("携带token",store.getters["user/getTokenJj"]);
+        // console.log("server request yes-->", config);
+
     }
     // console.log("不携带token");
     return config
@@ -34,16 +36,17 @@ lm_request.interceptors.response.use((response) => {
     let res_data = response.data;
     // 因为后端对直接返回string的接口做了处理，使用string发挥的接口到js的时候是个string而不是object，所有需要加个判断然后转化成一下
     // 可以看com.lm.common.ex.handler.GlobalResponseHandler 是直接使用流输出的
-    if(typeof res_data === "string"){
+    if (typeof res_data === "string") {
         res_data = JSON.parse(res_data);
     }
-    if(res_data.code == 200){return res_data}
+    if (res_data.code == 200) { return res_data }
     // 业务的错误，全部抛出到页面处理 1、
     // alert("1-----err");
     // 100107
+    // console.log(res_data);
 
     // 用户已在其他地方登录
-    if(res_data.code == 100107){
+    if (res_data.code == 100107) {
         // 清除用户在本地的状态
         store.dispatch("user/toLogout");
         // 然后跳转到登录页面
@@ -51,7 +54,7 @@ lm_request.interceptors.response.use((response) => {
     }
 
     // 如果第一个为空 那就用第二个
-    let errorObj = errorCode[res_data.code] ||  errorCode["default"];
+    let errorObj = errorCode[res_data.code] || errorCode["default"];
     // console.log("server response yes-->", response) // 
     return Promise.reject(errorObj);
     // return response;

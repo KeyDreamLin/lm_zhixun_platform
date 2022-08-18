@@ -20,15 +20,15 @@ public class DesUtils {
 
     private final static String DES = "DES";//方式
     private final static String ENCODE = "UTF-8";//编码
-    private final static String defaultKey = "7396101173961011";//8的倍数秘钥
+    private final static String defaultKey = "739610LmlM3961011";//8的倍数秘钥
 
 
     public static void main(String[] args) throws Exception {
-        String data = "baOxcqUztKI=";
-        // System.err.println(encrypt(data, key));
+//        String data = "baOxcqUztKI=";
+//         System.err.println(encrypt("123456"));
         // System.err.println(decrypt(encrypt(data, key), key));
-        System.out.println(decrypt(data));
-        System.out.println(decrypt(encrypt(data)));
+//        System.out.println(decrypt(data));
+//        System.out.println(decrypt(encrypt(data)));
 
     }
 

@@ -4,6 +4,7 @@ import com.lm.config.redis.key.RedisAndHeaderKey;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 /**
@@ -19,7 +20,7 @@ import org.springframework.stereotype.Service;
 public class JwtBlackSetService implements IJwtBlackService ,RedisAndHeaderKey{
 
     @Autowired
-    public RedisTemplate redisTemplate;
+    public StringRedisTemplate redisTemplate;//RedisTemplate 会乱码  StringRedisTemplate用这个api是一样的
     /**
      * 添加黑白名单
      * @param token

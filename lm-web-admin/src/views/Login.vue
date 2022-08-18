@@ -22,7 +22,7 @@
 
                 <el-form-item prop="password">
                     <el-input v-model="Login_UserData.password" placeholder="请输入密码" show-password
-                        class="login_main_form_input">
+                        class="login_main_form_input" @keydown.enter = "LoginEvent">
                         <template #prefix>
                             <el-icon>
                                 <Lock />
@@ -32,7 +32,7 @@
                 </el-form-item>
 
                 <el-form-item prop="code">
-                    <el-input v-model="Login_UserData.code" placeholder="请输入验证码" class="login_main_form_input">
+                    <el-input v-model="Login_UserData.code" placeholder="请输入验证码" class="login_main_form_input" @keydown.enter = "LoginEvent">
                         <template #prefix>
                             <el-icon>
                                 <EditPen />
@@ -44,7 +44,7 @@
                     </el-input>
                 </el-form-item>
 
-                <el-button @click="LoginEvent">登录</el-button>
+                <el-button @click="LoginEvent" :loading="login_loading"  >登录</el-button>
             </el-form>
         </div>
     </div>
@@ -60,6 +60,7 @@ const {// 对象解构
     userLoginRules,
     createCaptchaEvent,
     captcha_imgData,
+    login_loading,
 } = userLogin();
 </script>
 

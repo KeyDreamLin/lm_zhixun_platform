@@ -10,14 +10,12 @@ import com.lm.entity.vo.user.UserLoginVo;
 import com.lm.service.user.UserService;
 import com.lm.tool.JwtService;
 import com.lm.tool.LmAssert;
+import com.lm.tool.pwd.DesUtils;
 import com.lm.tool.pwd.MD5Util;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -64,13 +62,20 @@ public class UserLoginController extends BaseController implements RedisAndHeade
         // 对比不上 抛出异常 验证码错误
         LmAssert.isFalseEx(flagCheckCodePwd,UserResultEnum.USER_INPUT_CODE_ERROR);
 
+        // 解密传过来的用户信息
+        userLoginVo.setUsername(DesUtils.decrypt(userLoginVo.getUsername()));
+
         // 根据用户名称查询用户信息
         User userDb = userService.login(userLoginVo.getUsername());
         LmAssert.isNotNull(userDb,UserResultEnum.USER_LOGIN_NO_EXIST);//为空抛出异常，用户不存在
-        // 用户输入的密码 暂时是前端传输明文  然后后台再转换为双重md5加前后掩码
-        String inputPwd = MD5Util.strToMd5s(userLoginVo.getPassword());
-        // 判断输入的密码和数据库的密码是否一致
-        boolean flagCheckPwd = userDb.getPassword().equals(inputPwd);
+
+        // 用户输入的密码 前端传输Des密文  然后后台解密Des后再转换为双重md5加前后掩码
+        String inputPwd = DesUtils.decrypt(userLoginVo.getPassword());
+        // md5加密 再传入解密后的密码加密
+        String inputMd5= MD5Util.strToMd5s(inputPwd);
+
+        // 判断输入的密码和数据库的密码是否一致 数据库存放的是双重md5加前后掩码的
+        boolean flagCheckPwd = userDb.getPassword().equals(inputMd5);
         // 如果输入的密码和数据库密码不一致，抛出异常
         LmAssert.isFalseEx(flagCheckPwd,UserResultEnum.USER_LOGIN_NO_EXIST);
         // 根据用户id生成token
@@ -98,12 +103,13 @@ public class UserLoginController extends BaseController implements RedisAndHeade
      * @param request
      * @return
      */
-    @GetMapping("/login/logout")
+    @ResponseBody
+    @RequestMapping("/login/logout")
     public String Logout(HttpServletRequest request){
         String token_jj = request.getHeader(HEADER_TOKEN_JJ);
         String token_uuid = request.getHeader(HEADER_TOKEN_UUID);
         String token_user_id = request.getHeader(HEADER_TOKEN_USER_ID);
-
+//        log.info("---{}---  {} --- {}",token_jj,token_uuid,token_user_id);
         LmAssert.isNotNull(token_jj,UserResultEnum.USER_TOKEN_NOT_FOUND);
         LmAssert.isNotNull(token_uuid,UserResultEnum.USER_NO_LOGIN);
         LmAssert.isNotNull(token_user_id,UserResultEnum.USER_NO_LOGIN);
