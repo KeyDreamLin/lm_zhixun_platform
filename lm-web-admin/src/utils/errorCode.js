@@ -8,7 +8,7 @@ export default{
     "100105":{errorCode:"100105",msg:"token not found or due",field:""},
     "100106":{errorCode:"100106",msg:"用户不存在",field:""},
     "100107":{errorCode:"100107",msg:"用户已在其他地方登录",field:""},
-    "100108":{errorCode:"100108",msg:"验证码错误",field:"code"},
+    "100108":{errorCode:"100108",msg:"验证码错误啦！",field:"code"},
     "default":{errorCode:"default",msg:"未知异常",field:"default"},
 }
 

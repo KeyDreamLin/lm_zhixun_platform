@@ -13,6 +13,18 @@ const routes_children = [
         meta: { title: "控制面板" },
         component: () => import("@/views/dashboard/Index.vue"),
     },
+    {
+        path: "/user/list",
+        name: "userList",
+        meta: { title: "用户列表" },
+        component: () => import("@/views/user/List.vue"),
+    },
+    {
+        path: "/user/add",
+        name: "userAdd",
+        meta: { title: "用户添加" },
+        component: () => import("@/views/user/Add.vue"),
+    }
 ];
 
 //4 :定义路由配置规则
@@ -61,6 +73,7 @@ router.beforeEach((to, from, next) => {
     } else {
         // 开始检验是否登录。如果没有登录直接退出
         const isLogin = store.getters["user/isLogin"];
+        // 这里在未登录之前，你在地址栏输入啥都会跳转到登录页面，登录后输入路由以外的地址会跳到404
         if (!isLogin) {
             // 重定向到登录去
             next("/toLogin");

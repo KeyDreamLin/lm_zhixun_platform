@@ -2,6 +2,7 @@ import { createStore } from 'vuex'
 // 持久化管理信息
 import VuexPersistence from 'vuex-persist'
 import user from "@/store/modules/user.js"
+import menu from "@/store/modules/menu.js"
 
 // 本地缓存vuex管理信息
 // 为什么要适应vuex-persist组件，因为vuex数据库如果不持久化有一个bug
@@ -17,7 +18,8 @@ const vuexLocal = new VuexPersistence({
 const store = createStore({
     plugins: [vuexLocal.plugin],
     modules: {
-        user
+        user,
+        menu
     }
 })
 

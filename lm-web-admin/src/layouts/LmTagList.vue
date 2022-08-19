@@ -1,7 +1,8 @@
 <template>
-   <div class="lm-tag-list">
+   <div class="lm-tag-list" :style="{ 'left': $store.state.menu.menuWidth }">
       我是标签用于切换仪表盘内容
-
+      {{ $store.state.menu.menuWidth }}
+      {{ $store.state.menu.isCollapse }}
    </div>
 </template>
 <style scoped>

@@ -1,3 +1,4 @@
+import {LmMessageError} from "@/utils/index.js";
 import loginService from "@/services/login/LoginService.js"
 export default {
     namespaced: true,
@@ -48,7 +49,7 @@ export default {
                 context.commit("delUser");//  清除用户在本地的状态
                 return Promise.resolve(serverLogout);
             } catch (error) {
-                alert("退出失败" + error);
+                LmMessageError("退出失败" + error);
                 return Promise.reject(error);
             }
 
@@ -66,11 +67,13 @@ export default {
                 // 这里是通过方法的名称调用方法的
                 context.commit("savaUserData", LoginServer_retrunMessage.data);
                 // 抛出成功
+                // console.log(LoginServer_retrunMessage);
                 return Promise.resolve(LoginServer_retrunMessage);
             } catch (err) {
                 // alert(err);
                 // 捕获到异常抛出给页面
                 // alert("2-----err");
+                // console.log(err);
                 return Promise.reject(err);
 
             }

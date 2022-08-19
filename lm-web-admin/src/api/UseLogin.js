@@ -6,6 +6,9 @@ import store from '@/store';
 import nprogress from 'nprogress'
 import * as utils from '@/utils/index.js';
 import captchaService from "@/services/code/CaptchaService.js"
+// 导入弹窗工具类
+import {LmMessageSuccess,LmMessageError} from "@/utils/index.js";
+
 function UserLogin() {
     //定义form表单对象，用于校验
     const Login_userFormRef = ref(null);
@@ -37,16 +40,17 @@ function UserLogin() {
                 userCopy.username = utils.encryptByDES(Login_UserData.username);
                 userCopy.password = utils.encryptByDES(Login_UserData.password);
                 let ret = await store.dispatch("user/toLogin", userCopy);
-                alert(ret.msg);
+                // console.log(ret);
+                // LmMessageSuccess(ret);
                 // 成功就跳转到首页去
                 router.push("/");
             } catch (error) {
-                // alert("3-----err");
-                // 失败就弹窗
                 createCaptchaEvent();
                 Login_UserData.password = "";
                 Login_UserData.code = "";
-                // alert(error.msg)
+                // alert("3-----err");
+                // 失败就弹窗
+                LmMessageError(error.msg);
             }finally{
                 login_loading.value = false;
                 nprogress.done();

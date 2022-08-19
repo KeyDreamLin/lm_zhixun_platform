@@ -7,8 +7,9 @@
             <el-aside class="lm-aside">
                 <lm-menu></lm-menu>
             </el-aside>
-            <el-main class="lm-main">
+            <el-main class="lm-main" :style="{ 'left': $store.state.menu.menuWidth}">
                 <lm-tag-list></lm-tag-list>
+              
                 <!-- 仪表盘 -->
                 <div class="lm-dashboard__box">
                     <router-view v-slot="{ Component }">
@@ -43,6 +44,7 @@ import { LmHeader, LmMenu, LmTagList, } from "@/layouts/index.js";
 .lm-main {
     position: absolute;
     top: 50px;
+    /* 给menu位置，menu折叠的话这里也需要更改 210-->60 */
     left: 210px;
     right: 0;
     bottom: 0;

@@ -1,5 +1,8 @@
 // 密码的解密解密
 import CryptoJS from 'crypto-js'
+// element弹窗组件
+import { ElNotification ,  ElMessage, ElMessageBox } from 'element-plus'
+
 //DES 加密 key与后端一样的秘钥(8的倍数)   message(值)
 export function encryptByDES(message, key = "739610LmlM3961011") {
     var keyHex = CryptoJS.enc.Utf8.parse(key);
@@ -21,4 +24,50 @@ export function decryptByDES(ciphertext, key = "739610LmlM3961011") {
         padding: CryptoJS.pad.Pkcs7
     });
     return decrypted.toString(CryptoJS.enc.Utf8);
+}
+
+// 弹窗 start
+export const LmMessageSuccess = (msg,title) => {
+    ElNotification({
+        title: title,
+        message: msg,
+        type: 'success',
+    })
+}
+export const LmMessageWarning = (msg,title) => {
+    ElNotification({
+        title: title,
+        message: msg,
+        type: 'warning',
+    })
+}
+export const LmMessageInfo = (msg,title) => {
+    ElNotification({
+        title: title,
+        message: msg,
+        type: 'info',
+    })
+}
+export const LmMessageError = (msg,title) => {
+    ElNotification({
+        title: title,
+        message: msg,
+        type: 'error',
+    })
+}
+// 弹窗 end
+/*确认提示 */
+export function LmMessageConfirm(message = "你确定要离开吗？", title = "提示", type = "warning") {
+    return new Promise((resolve, reject) => {
+        ElMessageBox.confirm(message, title, {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type,
+        }).then(() => {
+            resolve(true)
+        }).catch(() => {
+            resolve(false)
+        })
+    })
+
 }

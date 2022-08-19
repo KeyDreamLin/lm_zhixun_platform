@@ -5,6 +5,9 @@ import store from '@/store';
 // 路由管理 
 import router from '@/router';
 import errorCode from '@/utils/errorCode';
+// 导入弹窗工具类
+import { LmMessageError } from "@/utils/index.js";
+
 // create an axios instance
 const lm_request = axios.create({
     baseURL: "/admin",
@@ -55,11 +58,19 @@ lm_request.interceptors.response.use((response) => {
 
     // 如果第一个为空 那就用第二个
     let errorObj = errorCode[res_data.code] || errorCode["default"];
-    // console.log("server response yes-->", response) // 
+    // console.log("server response yes-->", errorObj) // 
     return Promise.reject(errorObj);
     // return response;
 }, function (err) {
+   
     // console.log("server response error-->", err) // 
-    // return error;
+    if(err.code === "ECONNABORTED"){
+        LmMessageError("服务器超时了喂，等等再刷新试试？");
+    }
+    else if(err.code === "ERR_BAD_RESPONSE"){
+        LmMessageError("服务器走丢了喂...");
+    }
+    console.log("server response error-->", err) // 
+    return err;
 });
 export default lm_request;

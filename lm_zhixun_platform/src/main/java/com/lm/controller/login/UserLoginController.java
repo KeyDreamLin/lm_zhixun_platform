@@ -110,9 +110,9 @@ public class UserLoginController extends BaseController implements RedisAndHeade
         String token_uuid = request.getHeader(HEADER_TOKEN_UUID);
         String token_user_id = request.getHeader(HEADER_TOKEN_USER_ID);
 //        log.info("---{}---  {} --- {}",token_jj,token_uuid,token_user_id);
-        LmAssert.isNotNull(token_jj,UserResultEnum.USER_TOKEN_NOT_FOUND);
-        LmAssert.isNotNull(token_uuid,UserResultEnum.USER_NO_LOGIN);
-        LmAssert.isNotNull(token_user_id,UserResultEnum.USER_NO_LOGIN);
+        LmAssert.isEmptyEx(token_jj,UserResultEnum.USER_TOKEN_NOT_FOUND);
+        LmAssert.isEmptyEx(token_uuid,UserResultEnum.USER_NO_LOGIN);
+        LmAssert.isEmptyEx(token_user_id,UserResultEnum.USER_NO_LOGIN);
         // 删除redis下线的UUID
         // 先拼接Redis的key
         String tokenUuidKey = REDIS_LOGIN_UUID_KEY + token_user_id;
