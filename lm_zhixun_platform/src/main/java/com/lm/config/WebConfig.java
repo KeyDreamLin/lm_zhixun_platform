@@ -43,8 +43,8 @@ public class WebConfig implements WebMvcConfigurer {
                 .excludePathPatterns("/admin/login/**","/admin/captcha");
         // 再检查用户的jwt是否过期
         registry.addInterceptor(passLoginCheckJwtInterceptor)
-                .addPathPatterns("/admin/**").
-                excludePathPatterns("/admin/login/**","/admin/captcha");
+                .addPathPatterns("/admin/**")
+                .excludePathPatterns("/admin/login/**","/admin/captcha");
     }
 
 

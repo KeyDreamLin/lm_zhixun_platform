@@ -4,39 +4,45 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.lm.entity.pojo.AdminMenu;
 import com.lm.entity.vo.banner.BannerUserVo;
 import com.lm.entity.vo.banner.BannerVo;
 import com.lm.mapper.BannerMapper;
+import com.lm.service.adminmenu.AdminMenuService;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.List;
+
 @SpringBootTest(classes = LoginDemoApplication.class)
 @RunWith(SpringRunner.class)
 class LoginDemoApplicationTests {
 
     @Autowired
-    private BannerMapper bannerMapper;
+    private AdminMenuService adminMenuService;
 
     @Test
     public void contextLoads() {
-        BannerVo bannerVo = new BannerVo();
-        bannerVo.setKeyword("米");
+        List<AdminMenu> adminMenuTree = adminMenuService.findAdminMenuTree();
+        System.out.println(adminMenuTree);
+//        BannerVo bannerVo = new BannerVo();
+//        bannerVo.setKeyword("米");
 ////        List<Banner> banners = bannerMapper.findBanners(bannerVo);
 //        List<BannerUserVo> bannerUsersVo = bannerMapper.findBannerUsersVo(bannerVo);
 //        for (BannerUserVo bannerUserVo : bannerUsersVo) {
 //            System.out.println(bannerUserVo.toString());
 //        }
-
-        // 设置分页
-        Page<BannerUserVo> page = new Page<>(1,2);
-        // 设置条件
-        QueryWrapper<BannerVo> queryWrapper = new QueryWrapper<>();
-        queryWrapper.like(StringUtils.isNotEmpty(bannerVo.getKeyword()),"t1.title",bannerVo.getKeyword());
-        IPage<BannerUserVo> bannerUsersVoPage = bannerMapper.findBannerUsersVoPage(page, queryWrapper);
-        System.out.println(bannerUsersVoPage.toString());
+//
+//        // 设置分页
+//        Page<BannerUserVo> page = new Page<>(1,2);
+//        // 设置条件
+//        QueryWrapper<BannerVo> queryWrapper = new QueryWrapper<>();
+//        queryWrapper.like(StringUtils.isNotEmpty(bannerVo.getKeyword()),"t1.title",bannerVo.getKeyword());
+//        IPage<BannerUserVo> bannerUsersVoPage = bannerMapper.findBannerUsersVoPage(page, queryWrapper);
+//        System.out.println(bannerUsersVoPage.toString());
 
 
 //        LambdaQueryWrapper<Banner> lambdaQueryWrapper = new LambdaQueryWrapper<>();

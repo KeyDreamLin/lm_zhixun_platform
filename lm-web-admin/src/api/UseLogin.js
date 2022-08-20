@@ -17,7 +17,7 @@ function UserLogin() {
     // 按钮登录状态
     const login_loading = ref(false);
     const Login_UserData = reactive({
-        username: "lmlm",
+        username: "yykk",
         password: "123456",
         // 用户登录验证码
         code: "",

@@ -54,6 +54,15 @@ lm_request.interceptors.response.use((response) => {
         store.dispatch("user/toLogout");
         // 然后跳转到登录页面
         router.push("/toLogin");
+        LmMessageError("用户已在其他地方登录！");
+    }
+    else if (res_data.code == 100105) {
+        // 清除用户在本地的状态
+        store.dispatch("user/toLogout");
+        // 然后跳转到登录页面
+        router.push("/toLogin");
+        LmMessageError("登录状态异常！");
+
     }
 
     // 如果第一个为空 那就用第二个
@@ -62,12 +71,12 @@ lm_request.interceptors.response.use((response) => {
     return Promise.reject(errorObj);
     // return response;
 }, function (err) {
-   
+
     // console.log("server response error-->", err) // 
-    if(err.code === "ECONNABORTED"){
+    if (err.code === "ECONNABORTED") {
         LmMessageError("服务器超时了喂，等等再刷新试试？");
     }
-    else if(err.code === "ERR_BAD_RESPONSE"){
+    else if (err.code === "ERR_BAD_RESPONSE") {
         LmMessageError("服务器走丢了喂...");
     }
     console.log("server response error-->", err) // 

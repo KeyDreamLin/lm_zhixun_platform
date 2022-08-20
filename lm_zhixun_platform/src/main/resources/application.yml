@@ -5,7 +5,7 @@ server:
 
 spring:
   redis:
-    host: 192.168.100.6
+    host: 192.168.100.4
     port: 6379
     database: 7
     password: wenhao
