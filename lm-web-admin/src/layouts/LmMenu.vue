@@ -1,7 +1,7 @@
 <template>
     <div class="lm-menu__box">
-        <!-- collapse-transition关闭折叠动画 不然看起来有点怪 宽度缩小然后再文字消失 -->
-        <el-menu default-active="2" :collapse-transition="false" class="el-menu-vertical-demo"
+        <!-- collapse-transition关闭折叠动画 不然看起来有点怪 宽度缩小然后再文字消失 unique-opened是否只保持一个子菜单的展开 -->
+        <el-menu :default-active="defaultActive" :unique-opened="true" :collapse-transition="false" class="el-menu-vertical-demo"
             :collapse="$store.state.menu.isCollapse" @select="EventMenuSelect">
 
             <template v-for="(menu_root, index) in  menuTerrData" :key="menu_root.id">
@@ -56,17 +56,11 @@
 
 <script setup>
 import { ref } from 'vue'
-const test = "add-location";
 import useLmMenu from '@/api/layouts/UseLmMenu.js'
-import {
-    Document,
-    Menu as IconMenu,
-    Location,
-    Setting,
-} from '@element-plus/icons-vue'
 const {
     menuTerrData,
     EventMenuSelect,
+    defaultActive,
 } = useLmMenu();
 
 </script>

@@ -6,10 +6,12 @@ import menu from "@/store/modules/menu.js"
 
 // 本地缓存vuex管理信息
 // 为什么要适应vuex-persist组件，因为vuex数据库如果不持久化有一个bug
-// 当然用户刷新F5或者右键刷新的时候，vuex数据就会自动丢失。
+// 当然用户刷新F5或者右键刷新的时候，vuex数据就会自动丢失。 
+// localStorage 可以跨域浏览器窗口、选项卡之间进行共享数据
+// SessionStorage 独立于浏览器窗口、选项卡的，不同浏览器窗口，或者两个选项卡之间都无法共享数据，数据只存在于当前这个浏览器窗口中的这一个选项卡
 const vuexLocal = new VuexPersistence({
     key: "lm-admin-web-vuex",
-    storage: window.localStorage
+    storage: window.sessionStorage
 })
 
 

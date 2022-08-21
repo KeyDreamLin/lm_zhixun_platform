@@ -46,7 +46,7 @@ lm_request.interceptors.response.use((response) => {
     // 业务的错误，全部抛出到页面处理 1、
     // alert("1-----err");
     // 100107
-    // console.log(res_data);
+    console.log(res_data);
 
     // 用户已在其他地方登录
     if (res_data.code == 100107) {
@@ -62,7 +62,13 @@ lm_request.interceptors.response.use((response) => {
         // 然后跳转到登录页面
         router.push("/toLogin");
         LmMessageError("登录状态异常！");
-
+    }
+    else if (res_data.code == 100101) {
+        // 清除用户在本地的状态
+        store.dispatch("user/toLogout");
+        // 然后跳转到登录页面
+        router.push("/toLogin");
+        LmMessageError("登录状态异常！");
     }
 
     // 如果第一个为空 那就用第二个
