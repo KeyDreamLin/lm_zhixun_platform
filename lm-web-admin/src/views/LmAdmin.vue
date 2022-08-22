@@ -37,7 +37,7 @@ import { LmHeader, LmMenu, LmTagList, } from "@/layouts/index.js";
 
 .lm-aside {
     width: 210px !important;
-    background: plum;
+    /* background: plum; */
     transition: all 200ms;
 }
 
@@ -48,12 +48,12 @@ import { LmHeader, LmMenu, LmTagList, } from "@/layouts/index.js";
     left: 210px;
     right: 0;
     bottom: 0;
-    background: peachpuff;
+    /* background: peachpuff; */
     padding: 0 !important;
 }
 
 .lm-dashboard__box {
-    margin-top: 40px;
+    margin-top: 45px;
     padding: 20px 20px 20px;
 }
 
