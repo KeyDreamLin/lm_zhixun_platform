@@ -58,6 +58,7 @@ export const LmMessageError = (msg,title) => {
 // 弹窗 end
 /*确认提示 */
 export function LmMessageConfirm(message = "你确定要离开吗？", title = "提示", type = "warning") {
+    // 使用Promise封装 使用者 用await同步返回的结果在进行处理就行 默认异步
     return new Promise((resolve, reject) => {
         ElMessageBox.confirm(message, title, {
             confirmButtonText: '确定',

@@ -43,11 +43,8 @@
                         <!-- <router-link :to="menu_root.path"></router-link> -->
                     </el-menu-item>
                 </template>
-
-
                 <!-- 无子元素 -->
             </template>
-
 
         </el-menu>
     </div>

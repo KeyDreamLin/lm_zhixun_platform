@@ -51,12 +51,34 @@
                 </template>
             </el-dropdown>
         </div>
+        <lm-drawer title="我是修改密码" @submit="submitUpdataPwdEvent" ref="updataPwdRef">
+            <template #default>
+
+                <el-form label-position="right" label-width="100px" ref="updataPwdFromRef" :model="userPwdFormData"
+                    :rules="updataPwdRules">
+                    <el-form-item label="旧密码：" prop="oldPassword">
+                        <el-input v-model="userPwdFormData.oldPassword" placeholder="请输入旧密码">
+                        </el-input>
+                    </el-form-item>
+                    <el-form-item label="新密码：" prop="newPassword">
+                        <el-input v-model="userPwdFormData.newPassword" placeholder="请输入新密码">
+                        </el-input>
+                    </el-form-item>
+                    <el-form-item label="确认密码：" prop="ReDoNewPassword">
+                        <el-input v-model="userPwdFormData.ReDoNewPassword" placeholder="请再次输入新密码">
+                        </el-input>
+                    </el-form-item>
+                </el-form>
+
+            </template>
+        </lm-drawer>
     </div>
 </template>
 
 <script setup>
 import store from '@/store';
 import useLmHeader from "@/api/layouts/UseLmHeader.js"
+import LmDrawer from '@/components/LmDrawer.vue';
 // 把需要暴露的方法和相应属性全部导入
 const {// 对象解构
     isFullscreen,
@@ -65,7 +87,15 @@ const {// 对象解构
     handleRefresh,
     handleFullScreen,
     headerUserEvent,
+    submitUpdataPwdEvent,
+    updataPwdRef,
+    userPwdFormData,
+    updataPwdRules,
+    updataPwdFromRef,
 } = useLmHeader();
+
+
+
 </script>
 
 <style scoped>
