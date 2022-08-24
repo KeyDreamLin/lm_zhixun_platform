@@ -1,5 +1,6 @@
 <template>
-   <div class="lm-tag-list__box" :style="{ 'left': $store.state.menu.menuWidth }">
+   <!-- :style="{ 'left': $store.state.menu.menuWidth }" -->
+   <div class="lm-tag-list__box">
       <el-tabs v-model="tabsSelectActivateVal" type="card" @tab-remove="removeTab" @tab-change="changeTab">
          <!-- :closable="item.path != '/'" 不够首页删除的按钮 这样就删除不了首页了哈哈 -->
          <el-tab-pane v-for="item in editableTabs" :closable="item.path != '/'" :key="item.path" :label="item.title"
@@ -96,21 +97,24 @@ const changeTab = ((thisChangeTab) => {
 <style>
 .lm-tag-list__box {
    /* background: #eee; */
-   height: 45px !important;
-   position: fixed;
-   left: 210px;
+   height: 35px !important;
+   /* position: relative; */
+   /* left: 210px;
    right: 0;
-   /* background: #fff; */
+   padding: 5px 5px 0;
+   background: #fff; */
+   position: fixed;
+   top: 50px;
 }
 
 .lm-tag_dropdown_box {
    height: 35px !important;
-   position: absolute;
+   /* position: absolute;
    right: 10px;
    top: 5px;
    background: rgb(240, 240, 240);
    border-radius: 6px;
-   padding: 10px;
+   padding: 10px; */
 }
 
 .el-dropdown-link {
@@ -151,6 +155,16 @@ const changeTab = ((thisChangeTab) => {
    background: rgb(240, 240, 240);
    border-radius: 6px;
    margin: 5px;
+}
+
+.lm-tag-list__box .el-tabs__item .is-top .is-closable {
+   padding-left: 10px;
+   padding-right: 10px;
+}
+
+.lm-tag-list__box .el-tabs--top.el-tabs--card>.el-tabs__header .el-tabs__item:last-child {
+   padding-left: 10px;
+   padding-right: 10px;
 }
 
 /* 选中激活的状态 */

@@ -1,17 +1,17 @@
 <template>
-    <el-container>
-        <el-header>
+    <div class="lm-box">
+        <div class="lm-header">
             <lm-header></lm-header>
-        </el-header>
-        <el-container>
-            <el-aside class="lm-aside">
+        </div>
+        <div class="lm-main">
+            <div :style="{ 'left': $store.state.menu.menuWidth }">
                 <lm-menu></lm-menu>
-            </el-aside>
-            <el-main class="lm-main" :style="{ 'left': $store.state.menu.menuWidth}">
-                <lm-tag-list></lm-tag-list>
-              
-                <!-- 仪表盘 -->
-                <div class="lm-dashboard__box">
+            </div>
+            <div class="lm-main-right" :style="{ 'margin-left': $store.state.menu.menuWidth }">
+                <div class="lm-main-right_top__box">
+                    <lm-tag-list></lm-tag-list>
+                </div>
+                <div class="lm-main-right_body__box" :style="{ 'left': $store.state.menu.menuWidth }">
                     <router-view v-slot="{ Component }">
                         <transition name="fade">
                             <keep-alive>
@@ -20,45 +20,57 @@
                         </transition>
                     </router-view>
                 </div>
-            </el-main>
-        </el-container>
-    </el-container>
+            </div>
+        </div>
+    </div>
 </template>
 
 <script setup>
 import { LmHeader, LmMenu, LmTagList, } from "@/layouts/index.js";
+import _404 from "./error/_404.vue";
 
 </script>
 <style scoped>
-.el-header {
-    padding: 0 !important;
-    height: 50px !important;
+.lm-box {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
 }
 
-.lm-aside {
-    width: 210px !important;
-    /* background: plum; */
-    transition: all 200ms;
+.lm-header {
+    height: 50px;
+    width: 100%;
+    background: rebeccapurple;
+    position: fixed;
+    top: 0;
 }
 
 .lm-main {
-    position: absolute;
-    top: 50px;
-    /* 给menu位置，menu折叠的话这里也需要更改 210-->60 */
-    left: 210px;
+    display: flex;
+
+    margin-top: 50px;
+}
+
+
+.lm-main-right {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.lm-main-right_top__box{
+    width: 100%;
+    height: 50px;
+    background: transparent;
+}
+
+.lm-main-right_body__box {
+    position: fixed;
+    top: 100px;
+    
     right: 0;
     bottom: 0;
-    /* background: peachpuff; */
-    padding: 0 !important;
-}
-
-.lm-dashboard__box {
-    margin-top: 45px;
-    padding: 20px 20px 20px;
-}
-
-/* 隐藏滚动条 */
-.lm-main::-webkit-scrollbar {
-    width: 0px;
+    padding: 10px;
+    overflow: auto;
 }
 </style>

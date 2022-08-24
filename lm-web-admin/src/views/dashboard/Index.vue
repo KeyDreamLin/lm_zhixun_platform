@@ -1,41 +1,27 @@
 <template>
-    <div>
-        我是仪表盘 mian
-        当前登录的用户是:{{ store.state.user.username }}
-        <button style="background:red ;" @click="test_toLogout">退出登录</button>
-        <button @click="testttt">测试测试</button>
-        <lm-drawer title="我是修改密码" ref="testRef">
-            <template #default>
-                sss<input>
-                sss<input>
-                sss<input>
-                sss<input>
-                sss<input>
-            </template>
-        </lm-drawer>
+    <!-- 订单组件 -->
+    <lm-order></lm-order>
+    <!-- 分类组件 -->
+    <lm-category></lm-category>
+    <el-row :gutter="20">
+        <el-col :span="12" :offset="0">
+            <!-- 统计组件 -->
+            <lm-chart chartId="chartId1"></lm-chart>
+        </el-col>
+        <el-col :span="12" :offset="0">
+            <!-- 统计组件 -->
+            <lm-chart chartId="chartId2"></lm-chart>
+        </el-col>
+    </el-row>
 
-    </div>
 
+
+    <!-- 其他交易信息 -->
+    <lm-card></lm-card>
 </template>
 <script setup>
-import store from '@/store';
-import router from '@/router';
-import lm_request from '@/utils/request.js'
-import bannerService from "@/services/banner/BannerService.js"
-import LmDrawer from '@/components/LmDrawer.vue';
-import { ref } from 'vue';
-async function test_toLogout() {
-    let serverLogout = await store.dispatch("user/toLogout");
-    console.log("index______________", serverLogout);
-    if (serverLogout.code == 200) {
-        alert(serverLogout.data);
-        router.push("/toLogin");
-    }
-}
-const testRef = ref(null);
-async function testttt() {
-    let serverRes = await lm_request.post("/menu/tree");
-    console.log("testttt______________", serverRes);
-    testRef.value.open();
-}
+import LmOrder from '@/components/dashboard/LmOrder.vue';
+import LmCategory from '@/components/dashboard/LmCategory.vue';
+import LmChart from '@/components/dashboard/LmChart.vue';
+import LmCard from '@/components/dashboard/LmCard.vue';
 </script>
