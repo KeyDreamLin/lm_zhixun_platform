@@ -1,21 +1,44 @@
 <template>
     <el-row :gutter="20" class="mt-5">
-        <el-col :span="3" v-for="(item, index) in iconNavs">
-            <el-card class="box-card " @click="router.push(item.path)">
-                <div class="flex flex-col items-center">
-                    <el-icon :size="26" :color="item.color">
-                        <component :is="item.icon" />
-                    </el-icon>
-                    <span class="mt-3 text-sm font-bold text-gray-600 ">{{ item.title }}</span>
-                </div>
-            </el-card>
-        </el-col>
-
+        <template v-if="loading">
+            <el-col :span="3" v-for="(item, index) in iconNavs">
+                <el-card class="box-card " @click="router.push(item.path)">
+                    <el-skeleton>
+                        <template #template>
+                            <div class="flex flex-col items-center">
+                                <el-skeleton-item variant="text" style="width: 30%; height: 26px; " />
+                                <el-skeleton-item class="mt-3" variant="text" style="width: 30%; height: 15px; " />
+                            </div>
+                        </template>
+                    </el-skeleton>
+                </el-card>
+            </el-col>
+        </template>
+        <!-- 上骨架 下主体 -->
+        <template v-else>
+            <el-col :span="3" v-for="(item, index) in iconNavs">
+                <el-card class="box-card " @click="router.push(item.path)">
+                    <div class="flex flex-col items-center">
+                        <el-icon :size="26" :color="item.color">
+                            <component :is="item.icon" />
+                        </el-icon>
+                        <span class="mt-3 text-sm font-bold text-gray-600 ">{{ item.title }}</span>
+                    </div>
+                </el-card>
+            </el-col>
+        </template>
     </el-row>
 </template>
 <script setup>
 import router from '@/router';
-import { reactive } from 'vue';
+import { reactive, ref } from 'vue';
+// 用于骨架屏
+var loading = ref(true);
+setTimeout(() => {
+    loading.value = false;
+}, 600)
+
+
 const iconNavs = reactive([{
     icon: "user",
     color: "#585e92",
@@ -57,14 +80,15 @@ const iconNavs = reactive([{
     path: "/coupon/list",
     title: "优惠券"
 }]);
-        
+
 </script>
 <style scoped>
 .box-card {
     cursor: pointer;
 }
+
 .box-card:hover {
     /* 四周阴影 */
-    box-shadow:  0px 0px 10px #b5aee4;
+    box-shadow: 0px 0px 10px #b5aee4;
 }
 </style>
