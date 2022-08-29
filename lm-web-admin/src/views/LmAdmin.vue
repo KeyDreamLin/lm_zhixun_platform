@@ -41,14 +41,12 @@ import _404 from "./error/_404.vue";
     height: 50px;
     width: 100%;
     background: rebeccapurple;
-    position: fixed;
-    top: 0;
 }
 
 .lm-main {
     display: flex;
-
-    margin-top: 50px;
+    position: relative;
+    top: 50px;
 }
 
 
@@ -58,7 +56,7 @@ import _404 from "./error/_404.vue";
     flex-direction: column;
 }
 
-.lm-main-right_top__box{
+.lm-main-right_top__box {
     width: 100%;
     height: 50px;
     background: transparent;
@@ -67,7 +65,7 @@ import _404 from "./error/_404.vue";
 .lm-main-right_body__box {
     position: fixed;
     top: 100px;
-    
+
     right: 0;
     bottom: 0;
     padding: 10px;

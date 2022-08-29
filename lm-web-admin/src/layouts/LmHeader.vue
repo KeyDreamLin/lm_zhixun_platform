@@ -1,5 +1,5 @@
 <template>
-    <div class="lm-header">
+    <div class="lm-header__box">
         <span class="lm-header-logo__box">
             <el-image class="lm-hader-logo_img" style="width: 24px; height: 24px"
                 src="../../src/assets/img/logo-w.png" />
@@ -99,7 +99,7 @@ const {// 对象解构
 </script>
 
 <style scoped>
-.lm-header {
+.lm-header__box {
     background: rebeccapurple;
     height: 50px;
     display: flex;
