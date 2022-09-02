@@ -2,7 +2,7 @@ import LmDrawer from "@/components/LmDrawer.vue";
 import LmNum from "@/components/LmNum.vue";
 import LmChooseImage from "@/components/LmChooseImage.vue";
 import LmUploaFile from "@/components/LmUploaFile.vue";
-
+import LmDialog from "@/components/LmDialog.vue";
 // plugins/i18n.js
 export default {
     install: (app, options) => {
@@ -11,7 +11,7 @@ export default {
         app.component("LmDrawer", LmDrawer);
         app.component("LmNum", LmNum);
         app.component("LmChooseImage", LmChooseImage);
-        app.component("LmUploaFile", LmNLmUploaFileum);
-
+        app.component("LmUploaFile", LmUploaFile);
+        app.component("LmDialog", LmDialog);
     }
 }

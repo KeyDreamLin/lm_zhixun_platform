@@ -9,6 +9,7 @@ import com.lm.entity.vo.banner.BannerUserVo;
 import com.lm.entity.vo.banner.BannerVo;
 import com.lm.mapper.BannerMapper;
 import com.lm.service.adminmenu.AdminMenuService;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import java.util.List;
 
 @SpringBootTest(classes = LoginDemoApplication.class)
 @RunWith(SpringRunner.class)
+@Slf4j
 class LoginDemoApplicationTests {
 
     @Autowired
@@ -26,8 +28,19 @@ class LoginDemoApplicationTests {
 
     @Test
     public void contextLoads() {
-        List<AdminMenu> adminMenuTree = adminMenuService.findAdminMenuTree();
-        System.out.println(adminMenuTree);
+        int x=1 ;
+        int a=0 , b=0;
+        switch (x){
+            case 0: b++;
+            case 1: a++;
+            case 2: a++;
+            case 3: a++;
+            b++;
+        }
+        log.info("{} {}",a,b);
+
+//        List<AdminMenu> adminMenuTree = adminMenuService.findAdminMenuTree();
+//        System.out.println(adminMenuTree);
 //        BannerVo bannerVo = new BannerVo();
 //        bannerVo.setKeyword("米");
 ////        List<Banner> banners = bannerMapper.findBanners(bannerVo);

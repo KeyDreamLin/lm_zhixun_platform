@@ -10,7 +10,7 @@
                 </div>
                 <!-- 搜索 -->
                 <div class="lm-handle-search__box flex flex-row  items-center">
-                    <el-input v-model="input4" class="w-50 m-2" placeholder="请输入搜索关键词">
+                    <el-input class="w-50 m-2" placeholder="请输入搜索关键词">
                         <template #suffix>
                             <el-icon class="el-input__icon">
                                 <search />
@@ -60,16 +60,16 @@
         <!-- 表单相关 -->
         <lm-drawer ref="DrawerRef" title="添加用户">
             <el-form ref="ruleFormRef" :model="FormUserData" status-icon :rules="rules" label-width="120px">
-                <el-form-item label="用户名" prop="username">
+                <el-form-item label="用户名" prop="username" :required="true">
                     <el-input v-model="FormUserData.username" type="text" />
                 </el-form-item>
-                <el-form-item label="密码" prop="password">
+                <el-form-item label="密码" prop="password" :required="true">
                     <el-input v-model="FormUserData.password" type="text" />
                 </el-form-item>
-                <el-form-item label="头像" prop="avatar">
+                <el-form-item label="头像" prop="avatar" :required="true">
                     <el-input v-model="FormUserData.avatar" type="text" />
                 </el-form-item>
-                <el-form-item label="角色" prop="roleId">
+                <el-form-item label="角色" prop="roleId" :required="true">
                     <el-select v-model="form.region" placeholder="please select your zone" v-for="(itme,index) in FormUserRoleIdList">
                         <el-option label="Zone one" value="shanghai" />
                     </el-select>
@@ -125,6 +125,12 @@ const pageEvent = (pageNo) => {
 
 // 表单相关 
 const DrawerRef = ref(null)
+// 用于form表单校验回传结果
+const ruleFormRef = ref(null);// 校验规则
+const rules = reactive({
+    "username": [{ required: true, message: "必填项！", trigger: 'blur' }],
+    "password": [{ required: true, message: "必填项！", trigger: 'blur' }],
+});
 // form表单角色下拉框数据~数据库回传
 const FormUserRoleIdList = ref([
     {

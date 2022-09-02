@@ -28,7 +28,7 @@
                                 src="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png" />
                             <div class="ml-3 flex flex-col">
                                 <sapn>{{ row.name }}</sapn>
-                                <sapn class="text-sm">编号：{{ $index }}</sapn>
+                                <sapn class="text-xs">编号：{{ $index }}</sapn>
                             </div>
                         </div>
                     </template>
@@ -41,7 +41,7 @@
                             :active-value="1" inactive-text="否" :inactive-value="0" />
                     </template>
                 </el-table-column>
-                <el-table-column label="操作">
+                <el-table-column label="操作" width="245px">
                     <template #default="scope">
                         <el-button size="small" icon="View" @click="handleEdit(scope.$index, scope.row)">预览</el-button>
                         <el-button size="small" icon="Edit" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
@@ -67,7 +67,7 @@
                     <el-input v-model="FormUserData.password" type="text" />
                 </el-form-item>
                 <el-form-item label="头像" prop="avatar">
-                    <el-input v-model="FormUserData.avatar" type="text" />
+                    <lm-choose-image></lm-choose-image>
                 </el-form-item>
                 <el-form-item label="角色" prop="roleId">
                     <el-select v-model="FormUserData.roleId" placeholder="please select your zone">
@@ -86,8 +86,9 @@
 
 </template>
 <script setup>
+import LmChooseImage from '@/components/LmChooseImage.vue';
 import LmDrawer from '@/components/LmDrawer.vue';
-import { ref } from 'vue';
+import { reactive, ref } from 'vue';
 const tableData = ref([
     {
         date: '2016-05-03',
@@ -125,7 +126,11 @@ const pageEvent = (pageNo) => {
 }
 
 // 表单相关 
-const DrawerRef = ref(null)
+const DrawerRef = ref(null);
+// 校验规则
+const rules = reactive({});
+// 用于form表单校验回传结果
+const ruleFormRef = ref(null);
 // form表单角色下拉框数据~数据库回传
 const FormUserRoleIdList = ref([
     {

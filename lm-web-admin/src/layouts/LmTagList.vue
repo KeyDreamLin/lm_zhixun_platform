@@ -96,25 +96,14 @@ const changeTab = ((thisChangeTab) => {
 </script>
 <style>
 .lm-tag-list__box {
-   /* background: #eee; */
    height: 35px !important;
-   /* position: relative; */
-   /* left: 210px;
-   right: 0;
-   padding: 5px 5px 0;
-   background: #fff; */
    position: fixed;
    top: 50px;
+   padding-left: 5px;
 }
 
 .lm-tag_dropdown_box {
    height: 35px !important;
-   /* position: absolute;
-   right: 10px;
-   top: 5px;
-   background: rgb(240, 240, 240);
-   border-radius: 6px;
-   padding: 10px; */
 }
 
 .el-dropdown-link {

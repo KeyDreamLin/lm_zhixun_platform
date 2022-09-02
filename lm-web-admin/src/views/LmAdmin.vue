@@ -44,9 +44,9 @@ import _404 from "./error/_404.vue";
 }
 
 .lm-main {
-    display: flex;
+    /* display: flex;
     position: relative;
-    top: 50px;
+    top: 50px; */
 }
 
 
@@ -65,10 +65,9 @@ import _404 from "./error/_404.vue";
 .lm-main-right_body__box {
     position: fixed;
     top: 100px;
-
     right: 0;
     bottom: 0;
-    padding: 10px;
+    padding: 0px 10px 10px;
     overflow: auto;
 }
 </style>
