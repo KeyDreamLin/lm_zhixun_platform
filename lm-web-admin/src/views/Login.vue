@@ -10,8 +10,8 @@
                 </span>
             </div>
             <el-form :model="Login_UserData" ref="Login_userFormRef" :rules="userLoginRules" class="login_main_form">
-                <el-form-item prop="userName">
-                    <el-input v-model="Login_UserData.username" placeholder="请输入账号" class="login_main_form_input">
+                <el-form-item prop="userName" class="lm-form__wrapper">
+                        <el-input v-model="Login_UserData.username" placeholder="请输入账号" class="login_main_form_input">
                         <template #prefix>
                             <el-icon>
                                 <User />
@@ -20,7 +20,7 @@
                     </el-input>
                 </el-form-item>
 
-                <el-form-item prop="password">
+                <el-form-item prop="password" class="lm-form__wrapper">
                     <el-input v-model="Login_UserData.password" placeholder="请输入密码" show-password
                         class="login_main_form_input" @keydown.enter = "LoginEvent">
                         <template #prefix>
@@ -31,7 +31,7 @@
                     </el-input>
                 </el-form-item>
 
-                <el-form-item prop="code">
+                <el-form-item prop="code" class="lm-form__wrapper">
                     <el-input v-model="Login_UserData.code" placeholder="请输入验证码" class="login_main_form_input" @keydown.enter = "LoginEvent">
                         <template #prefix>
                             <el-icon>
@@ -43,8 +43,9 @@
                         </template>
                     </el-input>
                 </el-form-item>
-
-                <el-button @click="LoginEvent" :loading="login_loading"  >登录</el-button>
+                <div class="lm-form__wrapper">
+                    <el-button @click="LoginEvent" :loading="login_loading"  >登录</el-button>
+                </div>
             </el-form>
         </div>
     </div>
@@ -64,7 +65,7 @@ const {// 对象解构
 } = userLogin();
 </script>
 
-<style>
+<style scoped>
 .login_box {
     width: 100%;
     height: 100vh;
@@ -123,28 +124,32 @@ const {// 对象解构
 }
 
 /* 覆盖element的样式 */
-.el-input__wrapper {
+.lm-form__wrapper {
+    width: 100%;
+}
+.lm-form__wrapper :deep(.el-input__wrapper) {
     background: none;
 }
 
-.el-input__prefix {
+.lm-form__wrapper :deep(.el-input__prefix) {
     color: #fff;
 }
 
-.el-input__inner {
+.lm-form__wrapper :deep(.el-input__inner) {
     color: #fff;
 }
 
-.el-button {
+.lm-form__wrapper :deep(.el-button) {
+    width: 100%;
     background: none;
     color: #fff;
 }
 
-.el-icon {
+.lm-form__wrapper :deep(.el-icon) {
     color: #fff;
 }
 
-.el-form-item__error {
+.lm-form__wrapper :deep(.el-form-item__error) {
     color: #FF0000;
     font-weight: 500;
     font-size: 15px;

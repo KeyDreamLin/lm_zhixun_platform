@@ -1,18 +1,20 @@
 <template>
     <!-- before-close关闭方法前的回调 用于确认是否关闭 -->
-    <el-dialog v-model="isShowDialog" top="5vh" :title="title" :width="width" :fullscreen="fullscreen" width="30%"
-        :before-close="close" center :lock-scroll="false">
-        <!-- 内容区 -->
-        <div class="lm-dialog-body">
-            <slot></slot>
-        </div>
-        <template #footer>
-            <span class="dialog-footer">
-                <el-button @click="close">关闭</el-button>
-                <el-button @click="submitEvent" type="primary">确定</el-button>
-            </span>
-        </template>
-    </el-dialog>
+    <div class="lm-dialog-main">
+        <el-dialog v-model="isShowDialog" :top="[width=='90%'?'5vh':'15vh']" :title="title" :width="width" :fullscreen="fullscreen"
+            :before-close="closeEvent" center :lock-scroll="false">
+            <!-- 内容区 -->
+            <div class="lm-dialog-body" :class="[fullscreen?'lm-dialog-body_full':'']">
+                <slot></slot>
+            </div>
+            <template #footer>
+                <span class="dialog-footer">
+                    <el-button @click="closeEvent">关闭</el-button>
+                    <el-button @click="submitEvent" type="primary">确定</el-button>
+                </span>
+            </template>
+        </el-dialog>
+    </div>
 </template>
 
 <script setup>
@@ -33,17 +35,22 @@ const props = defineProps({
     width: {
         type: String,
         default: "50%"
-    }
+    },
+    
 });
-const isShowDialog = ref(true);
+const isShowDialog = ref(false);
 /* ****内部方法**** */
 const open = () => {
     isShowDialog.value = true;
 }
-const close = async () => {
+const close = () => {
+    isShowDialog.value = false;
+}
+// element Dialog自带的关闭按钮回调事件右上角叉
+const closeEvent = async () => {
     let isClose = await LmMessageConfirm("你确定要关闭吗？");
     if (isClose) {
-        showDrawer.value = false;
+        isShowDialog.value = false;
     }
 }
 // 抛出句柄 让父组件可以使用里面的方法
@@ -66,9 +73,17 @@ const emit = defineEmits(["submit"])
 .dialog-footer button:first-child {
     margin-right: 10px;
 }
-
+.lm-dialog-main {
+}
+.lm-dialog-main  :deep(.el-dialog__body){
+    padding-top: 10px;
+    padding-bottom: 10px ;
+}
 .lm-dialog-body {
-    max-height: calc(100vh - 10vh - 190px);
+    max-height: calc(100vh - 10vh - 160px);
     overflow-y: auto;
+}
+.lm-dialog-body_full{
+    max-height: calc(100vh - 140px);
 }
 </style>

@@ -7,13 +7,16 @@
     <lm-drawer ref="DrawerRef" title="文件上传">
         <lm-uploa-File></lm-uploa-File>
     </lm-drawer>
+    <lm-image ref="Upimage" width="70%"></lm-image>
 </template>
 
 <script setup>
 import { ref } from 'vue';
 const DrawerRef = ref(null);
+const Upimage = ref(null);
+
 const openEvent = () => {
-    DrawerRef.value.open();
+    Upimage.value.open();
 }
 </script>
 
