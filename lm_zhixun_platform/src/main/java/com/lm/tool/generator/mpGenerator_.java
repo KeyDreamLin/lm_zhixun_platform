@@ -133,7 +133,7 @@ public class mpGenerator_ {
                             //Mapper XML 包名
                             .xml("mapper.xml")
                             //Controller 包名
-                            .controller("controller."+EntityPackageClassPath)
+                            .controller("controller.platform.admin_api."+EntityPackageClassPath)
                             // 重写输出自定义文件方法，自定义文件输出路径 所以这里不需要设置
                             .other("")
                             .pathInfo(Collections.singletonMap(OutputFile.mapperXml, System.getProperty("user.dir")+"/src/main/resources/mapper"));    //配置 mapper.xml 路径信息：项目的 resources 目录下

@@ -1,12 +1,10 @@
 package com.lm.service.adminmenu;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
-import com.lm.entity.pojo.AdminMenu;
+import com.lm.entity.pojo.adminmenu.AdminMenu;
 import com.lm.mapper.AdminMenuMapper;
-import com.lm.tool.LmAssert;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

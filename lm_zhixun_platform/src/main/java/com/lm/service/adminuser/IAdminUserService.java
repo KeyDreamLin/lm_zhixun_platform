@@ -14,6 +14,9 @@ import java.util.List;
 */
 public interface IAdminUserService extends IService<AdminUser> {
 
+        AdminUser login(String userName);
+
+
         /**
         * 查询后台用户管理管理列表信息
         * @method: findAdminUserList

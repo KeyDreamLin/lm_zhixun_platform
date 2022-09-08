@@ -6,7 +6,7 @@ import ${package.Service}.${table.serviceName};
 import ${package.Entity}.${entity};
 import ${voPackage}.${entity}Vo;
 import ${boPackage}.${entity}Bo;
-import com.lm.controller.BaseController;
+import com.lm.controller.platform.admin_api.BaseController;
 import com.lm.common.ex.lthrow.ValidatorExceptionThrow;
 import com.lm.common.r.UserResultEnum;
 import org.springframework.beans.factory.annotation.Autowired;

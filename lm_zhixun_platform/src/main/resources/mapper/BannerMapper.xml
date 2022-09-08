@@ -2,15 +2,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.lm.mapper.BannerMapper">
 
-    <select id="queryBanners" resultType="com.lm.entity.pojo.Banner">
+    <select id="queryBanners" resultType="com.lm.entity.pojo.banner.Banner">
         SELECT * FROM kss_banner ${ew.customSqlSegment}
     </select>
 
-    <select id="queryBannersPage" resultType="com.lm.entity.pojo.Banner">
+    <select id="queryBannersPage" resultType="com.lm.entity.pojo.banner.Banner">
         SELECT * FROM kss_banner
     </select>
 
-    <select id="findBanners" resultType="com.lm.entity.pojo.Banner">
+    <select id="findBanners" resultType="com.lm.entity.pojo.banner.Banner">
         <bind name="title_keyword" value="'%' + bannerVo.keyword + '%'" />
         SELECT
             *

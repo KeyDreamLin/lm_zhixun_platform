@@ -26,6 +26,15 @@ import java.util.List;
 @Service
 public class AdminUserServiceImpl extends ServiceImpl<AdminUserMapper, AdminUser> implements IAdminUserService {
 
+    @Override
+    public AdminUser login(String userName) {
+        LambdaQueryWrapper<AdminUser> userLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        userLambdaQueryWrapper.eq(AdminUser::getAccount,userName);
+        AdminUser user = this.getOne(userLambdaQueryWrapper);
+        return user;
+    }
+
+
     /**
     * 查询后台用户管理管理列表信息
     * @method: findAdminUserList

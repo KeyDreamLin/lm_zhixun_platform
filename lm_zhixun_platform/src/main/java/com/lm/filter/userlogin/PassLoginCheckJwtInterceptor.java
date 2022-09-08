@@ -5,9 +5,9 @@ import com.lm.common.ex.lthrow.UserExceptionThrow;
 import com.lm.common.r.UserResultEnum;
 import com.lm.config.redis.JwtBlackSetService;
 import com.lm.config.redis.key.RedisAndHeaderKey;
-import com.lm.entity.pojo.User;
-import com.lm.service.user.UserService;
-import com.lm.service.user.UserThreadLocal;
+import com.lm.entity.pojo.adminuser.AdminUser;
+import com.lm.service.adminuser.IAdminUserService;
+import com.lm.service.adminmenu.AdminUserThreadLocal;
 import com.lm.tool.DateTool;
 import com.lm.tool.JwtService;
 import com.lm.tool.LmAssert;
@@ -36,7 +36,7 @@ public class PassLoginCheckJwtInterceptor implements HandlerInterceptor , RedisA
     private JwtService jwtService;
 
     @Autowired
-    private UserService userService;
+    private IAdminUserService adminUserService;
 
     @Autowired
     private StringRedisTemplate redisTemplate;
@@ -84,7 +84,7 @@ public class PassLoginCheckJwtInterceptor implements HandlerInterceptor , RedisA
             throw new UserExceptionThrow(UserResultEnum.USER_NULL_ERROR);
         }
         //根据用户id查询用户信息MySQL
-        User user = userService.getById(userId);
+        AdminUser user = adminUserService.getById(userId);
         if (user==null){
             throw new UserExceptionThrow(UserResultEnum.USER_NULL_ERROR);
         }
@@ -111,7 +111,7 @@ public class PassLoginCheckJwtInterceptor implements HandlerInterceptor , RedisA
         }
 
         //把用户信息放入UserThreadLocal
-        UserThreadLocal.put(user);
+        AdminUserThreadLocal.put(user);
         return true;
     }
 
@@ -119,7 +119,7 @@ public class PassLoginCheckJwtInterceptor implements HandlerInterceptor , RedisA
 
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-        UserThreadLocal.remove();
+        AdminUserThreadLocal.remove();
 
     }
 
@@ -127,7 +127,7 @@ public class PassLoginCheckJwtInterceptor implements HandlerInterceptor , RedisA
 
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
-        UserThreadLocal.remove();
+        AdminUserThreadLocal.remove();
     }
 
 }

@@ -1,8 +1,7 @@
 package com.lm.service.adminmenu;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.lm.entity.pojo.AdminMenu;
+import com.lm.entity.pojo.adminmenu.AdminMenu;
 
 import java.util.List;
 

@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Constants;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.lm.entity.pojo.Banner;
+import com.lm.entity.pojo.banner.Banner;
 import com.lm.entity.vo.banner.BannerUserVo;
 import com.lm.entity.vo.banner.BannerVo;
 import org.apache.ibatis.annotations.Param;
