@@ -43,7 +43,7 @@ class LoginDemoApplicationTests {
 //        System.out.println(adminMenuTree);
 //        BannerVo bannerVo = new BannerVo();
 //        bannerVo.setKeyword("米");
-////        List<Banner> banners = bannerMapper.findBanners(bannerVo);
+////      List<Banner> banners = bannerMapper.findBanners(bannerVo);
 //        List<BannerUserVo> bannerUsersVo = bannerMapper.findBannerUsersVo(bannerVo);
 //        for (BannerUserVo bannerUserVo : bannerUsersVo) {
 //            System.out.println(bannerUserVo.toString());
