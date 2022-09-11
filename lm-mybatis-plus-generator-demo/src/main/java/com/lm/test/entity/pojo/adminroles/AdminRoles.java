@@ -1,4 +1,4 @@
-package com.lm.test.entity.pojo.adminuser;
+package com.lm.test.entity.pojo.adminroles;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
@@ -16,52 +16,30 @@ import lombok.Setter;
  * </p>
  *
  * @author Lm
- * @since 2022-09-08
+ * @since 2022-09-11
  */
 @Getter
 @Setter
-@TableName("kss_admin_user")
-public class AdminUser implements Serializable {
+@TableName("kss_roles")
+public class AdminRoles implements Serializable {
 
 
-
-     // 注解
-    @TableId(value = "id", type = IdType.ASSIGN_ID)
+    @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
+    private String roleCode;
 
-     // 姓名
-    private String username;
+    private String roleName;
 
+    private Integer status;
 
-     // 密码
-    private String password;
+    private Integer isdelete;
 
-
-     // 账号
-    private String account;
-
-
-     // 创建时间
     @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 
-
-     // 更新时间
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateTime;
-
-
-     // 头像
-    private String avatar;
-
-
-     // 发布状态 0 未发(离职) 1已发布(入职)
-    private Integer status;
-
-
-     // 删除状态 0 未删除  1 删除
-    private Integer isdelete;
 
 
 }

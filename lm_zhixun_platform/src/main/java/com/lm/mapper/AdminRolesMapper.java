@@ -1,6 +1,6 @@
 package com.lm.mapper;
 
-import com.lm.entity.pojo.roles.Roles;
+import com.lm.entity.pojo.adminroles.AdminRoles;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -8,9 +8,9 @@ import org.apache.ibatis.annotations.Mapper;
  *  Mapper 接口
  *
  * @author Lm
- * @since 2022-09-08
+ * @since 2022-09-11
  */
 @Mapper
-public interface RolesMapper extends BaseMapper<Roles> {
+public interface AdminRolesMapper extends BaseMapper<AdminRoles> {
 
 }

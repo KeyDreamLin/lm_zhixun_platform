@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * AdminUserVo参数类
+ * AdminUserQueryVo参数类  搜索查询分页
  * 创建人:Lm<br/>
  * 时间：2022-09-08 <br/>
  *
@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AdminUserVo implements java.io.Serializable  {
+public class AdminUserQueryVo implements java.io.Serializable  {
 
     //name="操作ID",desc="删除使用"
     private Long id;

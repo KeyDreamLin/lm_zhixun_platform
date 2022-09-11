@@ -1,4 +1,4 @@
-package com.lm.test.entity.bo.adminuser;
+package com.lm.entity.bo.adminroles;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
@@ -13,32 +13,28 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
-* AdminUserBo参数类
+* AdminRolesBo参数类
 * 创建人:Lm<br/>
-* 时间：2022-09-08 <br/>
+* 时间：2022-09-11 <br/>
 *
 */
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AdminUserBo implements java.io.Serializable  {
-    // 注解
+public class AdminRolesBo implements java.io.Serializable  {
+    // 
     private Long id;
-    // 姓名
-    private String username;
-    // 密码
-    private String password;
-    // 账号
-    private String account;
-    // 创建时间
-    private LocalDateTime createTime;
-    // 更新时间
-    private LocalDateTime updateTime;
-    // 头像
-    private String avatar;
-    // 发布状态 0 未发(离职) 1已发布(入职)
+    // 
+    private String roleCode;
+    // 
+    private String roleName;
+    // 
     private Integer status;
-    // 删除状态 0 未删除  1 删除
+    // 
     private Integer isdelete;
+    // 
+    private LocalDateTime createTime;
+    // 
+    private LocalDateTime updateTime;
 }

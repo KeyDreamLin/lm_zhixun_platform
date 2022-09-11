@@ -18,6 +18,11 @@ public class MD5Util {
         }
     }
 
+    /**
+     * 字符串转md5
+     * @param str
+     * @return
+     */
     public static String strToMd5s(String str) {
         return MD5Util.md5(MD5Util.md5("kuangstudy" + str + "202102170318!!!"));
     }

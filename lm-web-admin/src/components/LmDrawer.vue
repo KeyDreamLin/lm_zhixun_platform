@@ -43,6 +43,10 @@ const close = async () => {
         showDrawer.value = false;
     }
 }
+// 关闭抽屉 没有提示 给提交完的用
+const closeNoMsg = async () => {
+    showDrawer.value = false;
+}
 
 // 提交按钮
 const submit = () => {
@@ -57,7 +61,8 @@ const cancel = () => {
 // 父组件可以通过ref去进行调用value.xxx调用
 defineExpose({
     open,
-    close
+    close,
+    closeNoMsg
 })
 </script>
 

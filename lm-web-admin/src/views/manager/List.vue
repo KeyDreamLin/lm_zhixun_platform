@@ -58,21 +58,24 @@
             </div>
         </div>
         <!-- 表单相关 -->
-        <lm-drawer ref="DrawerRef" title="添加用户">
+        <lm-drawer ref="DrawerRef" title="添加用户" @submit="drawerSubmitEvent">
             <el-form ref="ruleFormRef" :model="FormUserData" status-icon :rules="rules" label-width="120px">
                 <el-form-item label="用户名" prop="username">
-                    <el-input v-model="FormUserData.username" type="text" />
+                    <el-input v-model="FormUserData.username" type="text" placeholder="请输入用户名"/>
+                </el-form-item>
+                <el-form-item label="账号" prop="account">
+                    <el-input v-model="FormUserData.account" type="text" placeholder="请输入账号"/>
                 </el-form-item>
                 <el-form-item label="密码" prop="password">
-                    <el-input v-model="FormUserData.password" type="text" />
+                    <el-input v-model="FormUserData.password" type="text" placeholder="请输入密码" />
                 </el-form-item>
                 <el-form-item label="头像" prop="avatar">
                     <lm-choose-image></lm-choose-image>
                 </el-form-item>
-                <el-form-item label="角色" prop="roleId">
-                    <el-select v-model="FormUserData.roleId" placeholder="please select your zone">
+                <el-form-item label="角色" prop="rolesId">
+                    <el-select v-model="FormUserData.rolesId" placeholder="请选择角色">
                         <template v-for="(itme, index) in FormUserRoleIdList">
-                            <el-option :label="itme.name" :value="itme.id" />
+                            <el-option :label="itme.roleName" :value="itme.id" />
                         </template>
                     </el-select>
                 </el-form-item>
@@ -81,6 +84,7 @@
                         :active-value="1" inactive-text="否" :inactive-value="0" />
                 </el-form-item>
             </el-form>
+            {{FormUserData}}
         </lm-drawer>
     </div>
 
@@ -88,6 +92,9 @@
 <script setup>
 import LmChooseImage from '@/components/LmChooseImage.vue';
 import LmDrawer from '@/components/LmDrawer.vue';
+import adminUserService from '@/services/useradmin/AdminUserService.js';
+import adminRoleService from '@/services/adminrole/AdminRoleService.js';
+import { LmMessageError } from '@/utils';
 import { reactive, ref } from 'vue';
 const tableData = ref([
     {
@@ -115,9 +122,16 @@ const tableData = ref([
         address: 'No. 189, Grove St, Los Angeles',
     },
 ]);
-
-// 分页表单 添加按钮
+const loadRoleDatas = async ()=> {
+    const serverRet = await adminRoleService.findadminrolesList();
+    // 转换为int
+    serverRet.data.forEach(item=>{item.id=parseInt(item.id)});
+    FormUserRoleIdList.value = serverRet.data;
+    // console.log(serverRet.data);
+}
+// 分页表单 添加按钮 打开添加抽屉
 const OpenDrawerEvent = () => {
+    loadRoleDatas();
     DrawerRef.value.open();
 }
 // 分页组件回调事件
@@ -128,25 +142,63 @@ const pageEvent = (pageNo) => {
 // 表单相关 
 const DrawerRef = ref(null);
 // 校验规则
-const rules = reactive({});
+const rules = reactive({
+    username: [{required: true,message: '请输入用户名！',trigger: 'blur'}],
+    account: [{required: true,message: '请输入账号！',trigger: 'blur'}],
+    password: [{required: true,message: '请输入密码！',trigger: 'blur'}],
+    rolesId: [{required: true,message: '请选择角色！',trigger: 'blur'}],
+});
 // 用于form表单校验回传结果
 const ruleFormRef = ref(null);
 // form表单角色下拉框数据~数据库回传
 const FormUserRoleIdList = ref([
-    {
-        id: 1,
-        name: "超级管理员"
-    },
-    {
-        id: 2,
-        name: "财务"
-    },
 ]);
-const FormUserData = ref({
-    username: "1",
-    password: "2",
-    avatar: "3",
-    roleId: 1,
-    status: 0,
+
+// 管理员数据模型
+// let FormUserData = ref({
+//     username: "1",
+//     account:"2",
+//     password: "3s",
+//     avatar: "https://ehall.hypt.edu.cn/anonymity/docrepo/download/file?attachmentId=searchPic&v=953",
+//     status: 1,
+//     isdelete : 0,
+//     rolesId: 1,
+// })
+let FormUserData = ref({
+    username: "",
+    account:"",
+    password: "",
+    avatar: "",
+    status: 1,
+    isdelete : 0,
+    rolesId: 1,
 })
+const drawerSubmitEvent = () => {
+    // adminUserService
+    ruleFormRef.value.validate(async (val)=>{
+        if(val){
+            try{
+                const adminUserRet = await adminUserService.saveupdate(FormUserData.value);
+                // 清空数据
+                FormUserData.value = 
+                { 
+                    username: "",
+                    account:"",
+                    password: "",
+                    avatar: "",
+                    status: 1,
+                    isdelete : 0,
+                    rolesId: 1,
+                };
+                DrawerRef.value.closeNoMsg(); 
+            }catch(err){
+                console.error("保存数据出错-->",err);
+                LmMessageError(err.msg);
+            }
+        }
+        else{
+            // 数据错误
+        }
+    })
+}
 </script>

@@ -72,9 +72,9 @@ lm_request.interceptors.response.use((response) => {
     }
 
     // 如果第一个为空 那就用第二个
-    let errorObj = errorCode[res_data.code] || errorCode["default"];
+    // let errorObj = errorCode[res_data.code] || errorCode["default"];
     // console.log("server response yes-->", errorObj) // 
-    return Promise.reject(errorObj);
+    return Promise.reject(res_data);
     // return response;
 }, function (err) {
 

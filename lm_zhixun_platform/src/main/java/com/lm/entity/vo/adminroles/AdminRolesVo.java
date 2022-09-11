@@ -1,4 +1,4 @@
-package com.lm.entity.vo.roles;
+package com.lm.entity.vo.adminroles;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -6,16 +6,16 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * RolesVo参数类
+ * AdminRolesVo参数类
  * 创建人:Lm<br/>
- * 时间：2022-09-08 <br/>
+ * 时间：2022-09-11 <br/>
  *
 */
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class RolesVo implements java.io.Serializable  {
+public class AdminRolesVo implements java.io.Serializable  {
 
     //name="操作ID",desc="删除使用"
     private Long id;

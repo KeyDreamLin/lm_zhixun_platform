@@ -20,6 +20,7 @@ import com.sun.istack.internal.NotNull;
 import java.io.File;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 
@@ -34,9 +35,11 @@ public class mpGenerator_ {
     static String password="123456";
 
     //数据库表的设置
-    static String TableName = "kss_admin_user";  //设置需要自动代码生成的表名
+    static String TableName = "kss_roles";  //设置需要自动代码生成的表名
     static String listTablePrefix = "kss_"; //设置 过滤 表的后缀
     static String Tabletitle = "后台用户管理"; // 注释里面的标题
+    static String ClassNamePrefix = "Admin"; //设置类名的前缀 可以为空
+
     // 包路径
     // 父路径 entity.pojo  entity.vo
     static String EntityPackagePath = "entity";
@@ -44,12 +47,12 @@ public class mpGenerator_ {
     static String EntityVoPackagePath = "vo";
     static String EntityBoPackagePath = "bo";
     // 子路径 entity.pojo.xxx  entity.vo.xxx entity.bo.xxx
-    static String EntityPackageClassPath  = TableName
+    static String EntityPackageClassPath  = (ClassNamePrefix+TableName)
             .replace(listTablePrefix,"")
-            .replace("_","");
+            .replace("_","").toLowerCase();
     // class路径 entity.pojo.xxx.Xxx.java  entity.vo.xxx.XxxVo.java
     // 将class类名转换为大驼峰
-    static String EntityClassName =CamelCaseUtil.toCapitalizeCamelCase(
+    static String EntityClassName =ClassNamePrefix + CamelCaseUtil.toCapitalizeCamelCase(
             TableName.replace(listTablePrefix,""));
 
     //基本信息
@@ -71,6 +74,10 @@ public class mpGenerator_ {
     private static FastAutoGenerator fastAutoGenerator = FastAutoGenerator.create(DATA_SOURCE_CONFIG);
 
     public static void main(String[] args) {
+//        String EntityPackageClassPath  = (ClassNamePrefix+TableName)
+//                .replace(listTablePrefix,"")
+//                .replace("_","").toLowerCase();
+//        System.out.println(EntityPackageClassPath);
         genCode();
     }
 
@@ -97,7 +104,7 @@ public class mpGenerator_ {
         fastAutoGenerator.globalConfig(builder -> {
             builder.
                     // 设置作者
-                    author(author)
+                            author(author)
                     //覆盖之前的文件
                     .fileOverride()
                     //禁止生成代码后自动弹出输出目录
@@ -117,14 +124,14 @@ public class mpGenerator_ {
                             // 设置父包名
                             .parent("com.lm")
                             // 设置父包模块名
-                            .moduleName("test")
+//                            .moduleName("test")
                             //pojo 实体类包名
                             .entity(
                                     EntityPackagePath
-                                    +"."
-                                    +EntityPojoPackagePath
-                                    +"."
-                                    +EntityPackageClassPath)
+                                            +"."
+                                            +EntityPojoPackagePath
+                                            +"."
+                                            +EntityPackageClassPath)
                             //Service 包名
                             .service("service."+EntityPackageClassPath)
                             // ***ServiceImpl 包名
@@ -134,7 +141,7 @@ public class mpGenerator_ {
                             //Mapper XML 包名
                             .xml("mapper.xml")
                             //Controller 包名
-                            .controller("controller."+EntityPackageClassPath)
+                            .controller("controller.platform.admin_api."+EntityPackageClassPath)
                             // 重写输出自定义文件方法，自定义文件输出路径 所以这里不需要设置
                             .other("")
                             .pathInfo(Collections.singletonMap(OutputFile.mapperXml, System.getProperty("user.dir")+"/src/main/resources/mapper"));    //配置 mapper.xml 路径信息：项目的 resources 目录下
@@ -177,9 +184,9 @@ public class mpGenerator_ {
                         objectMap.put("boPackage", aPackageMap.get("Other").toString()+EntityPackagePath+"."+EntityBoPackagePath+"."+EntityPackageClassPath);
                         customFile.put(
                                 EntityPackagePath+"//"
-                                +EntityVoPackagePath+"//"
-                                +EntityPackageClassPath+"//"
-                                +EntityClassName+"Vo.java", "/templates/vo.java.ftl"
+                                        +EntityVoPackagePath+"//"
+                                        +EntityPackageClassPath+"//"
+                                        +EntityClassName+"Vo.java", "/templates/vo.java.ftl"
                         );
                         customFile.put(
                                 EntityPackagePath+"//"
@@ -188,9 +195,9 @@ public class mpGenerator_ {
                                         +EntityClassName+"Bo.java", "/templates/bo.java.ftl"
                         );
                     })
-                    // 自定义属性，模板变量
-                    .customMap(customMap)
-                    .customFile(customFile);
+                            // 自定义属性，模板变量
+                            .customMap(customMap)
+                            .customFile(customFile);
                 });
     }
 
@@ -204,7 +211,8 @@ public class mpGenerator_ {
         // 策略配置 配置需要生成的表 然后java的内容
         fastAutoGenerator
                 .strategyConfig(builder -> {
-                    builder.addInclude(TableName) // 设置需要生成的表名
+                    builder
+                            .addInclude(TableName) // 设置需要生成的表名
                             .addTablePrefix(listTablePrefix) // 设置过滤表前缀
                             //4.1、实体类策略配置
                             .entityBuilder()
@@ -216,10 +224,18 @@ public class mpGenerator_ {
                                     new Column("create_time", FieldFill.INSERT),
                                     new Column("update_time", FieldFill.INSERT_UPDATE)
                             )
-                            .idType(IdType.ASSIGN_ID);    //设置主键雪花
-        //                            // 数据库中存在逻辑删除 但是不需要在springboot配置
-        //                            .logicDeleteColumnName("isdelete")   //逻辑删除字段名(数据库)
-        //                            .logicDeletePropertyName("isdelete");  //逻辑删除属性名(实体)
+                            .idType(IdType.ASSIGN_ID)    //设置主键雪花
+                            .formatFileName(ClassNamePrefix+"%s") //实体添加前缀
+
+                            .serviceBuilder()
+                            .formatServiceFileName(ClassNamePrefix+"%sServiceImpl") //实体添加前缀
+                            .formatServiceImplFileName("I"+ClassNamePrefix+"%sService") //格式化 service 实现类文件名称，%s进行匹配表名，如 UserServiceImpl
+                            .controllerBuilder()
+                            .formatFileName(ClassNamePrefix+"%sController") //实体添加前缀
+
+                            .mapperBuilder()
+                            .formatMapperFileName(ClassNamePrefix+"%sMapper")
+                            .formatXmlFileName(ClassNamePrefix+"%sMapper"); //格式化 Xml 文件名称
                 });
     }
 
@@ -242,7 +258,5 @@ public class mpGenerator_ {
             }
         }); // 使用Freemarker引擎模板，默认的是Velocity引擎模板
     }
-
-
 
 }

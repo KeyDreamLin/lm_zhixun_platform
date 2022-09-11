@@ -3,8 +3,10 @@ package com.lm.service.adminuser;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.lm.entity.pojo.adminuser.AdminUser;
-import com.lm.entity.vo.adminuser.AdminUserVo;
+import com.lm.entity.vo.adminuser.AdminUserQueryVo;
 import com.lm.entity.bo.adminuser.AdminUserBo;
+import com.lm.entity.vo.adminuser.AdminUserRegVo;
+
 import java.util.List;
 
 /**
@@ -33,24 +35,24 @@ public interface IAdminUserService extends IService<AdminUser> {
         * 方法名：findAdminUser<br/>
         * 创建人：Lm <br/>
         * 时间：2022-09-08<br/>
-        * @param adminuserVo
+        * @param adminuserQueryVo
         * @return IPage<AdminUserBo><br />
         * @throws <br/>
         * @since 1.0.0<br />
         */
-        IPage<AdminUserBo> findAdminUserPage(AdminUserVo adminuserVo);
+        IPage<AdminUserBo> findAdminUserPage(AdminUserQueryVo adminuserQueryVo);
 
         /**
         * 保存&修改后台用户管理管理
         * 方法名：saveupdateAdminUser<br/>
         * 创建人：Lm <br/>
         * 时间：2022-09-08<br/>
-        * @param adminuser
+        * @param adminUserRegVo
         * @return AdminUserBo<br />
         * @throws <br/>
         * @since 1.0.0<br />
         */
-        AdminUserBo saveupdateAdminUser(AdminUser adminuser);
+        AdminUserBo saveupdateAdminUser(AdminUserRegVo adminUserRegVo);
 
         /**
         * 根据Id查询后台用户管理管理明细信息

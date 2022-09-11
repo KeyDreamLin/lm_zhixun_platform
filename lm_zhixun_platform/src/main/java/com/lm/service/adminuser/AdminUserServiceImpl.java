@@ -5,14 +5,19 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.lm.common.ex.lthrow.ValidatorExceptionThrow;
+import com.lm.common.r.UserResultEnum;
+import com.lm.entity.vo.adminuser.AdminUserQueryVo;
+import com.lm.entity.vo.adminuser.AdminUserRegVo;
+import com.lm.tool.pwd.MD5Util;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import com.lm.mapper.AdminUserMapper;
-import com.lm.service.adminuser.IAdminUserService;
 import com.lm.entity.pojo.adminuser.AdminUser;
-import com.lm.entity.vo.adminuser.AdminUserVo;
 import com.lm.entity.bo.adminuser.AdminUserBo;
 import com.lm.tool.LmAssert;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.stream.Collectors;
 import java.util.Arrays;
 import java.util.ArrayList;
@@ -64,22 +69,22 @@ public class AdminUserServiceImpl extends ServiceImpl<AdminUserMapper, AdminUser
     * 方法名：findAdminUser<br/>
     * 创建人：Lm <br/>
     * 时间：2022-09-08<br/>
-    * @param adminuserVo
+    * @param adminuserQueryVo
     * @return IPage<AdminUserBo><br />
     */
     @Override
-    public IPage<AdminUserBo> findAdminUserPage(AdminUserVo adminuserVo){
+    public IPage<AdminUserBo> findAdminUserPage(AdminUserQueryVo adminuserQueryVo){
         // 先设置分页信息
-        Page<AdminUser> page = new Page<>(adminuserVo.getPageNo(),adminuserVo.getPageSize());
+        Page<AdminUser> page = new Page<>(adminuserQueryVo.getPageNo(), adminuserQueryVo.getPageSize());
         // 设置条件查询
         LambdaQueryWrapper<AdminUser> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         // 2：查询发布的 0 未发布  1 发布
         lambdaQueryWrapper.eq(AdminUser::getStatus, 1);
         lambdaQueryWrapper.eq(AdminUser::getIsdelete, 0);
-        lambdaQueryWrapper.and(LmAssert.isNotEmpty(adminuserVo.getKeyword()) , wrapper->{wrapper
-            .like(AdminUser::getUsername, adminuserVo.getKeyword())
+        lambdaQueryWrapper.and(LmAssert.isNotEmpty(adminuserQueryVo.getKeyword()) , wrapper->{wrapper
+            .like(AdminUser::getUsername, adminuserQueryVo.getKeyword())
             .or()
-            .like(AdminUser::getAccount, adminuserVo.getKeyword());
+            .like(AdminUser::getAccount, adminuserQueryVo.getKeyword());
         });
         // 根据时间排降序
         lambdaQueryWrapper.orderByDesc(AdminUser::getCreateTime);
@@ -102,14 +107,37 @@ public class AdminUserServiceImpl extends ServiceImpl<AdminUserMapper, AdminUser
     * 方法名：saveupdateAdminUser<br/>
     * 创建人：Lm <br/>
     * 时间：2022-09-08<br/>
-    * @param adminuser
+    * @param adminUserRegVo
     * @return AdminUserBo<br />
     */
     @Override
-    public AdminUserBo saveupdateAdminUser(AdminUser adminuser){
-        boolean flag = this.saveOrUpdate(adminuser);
+    @Transactional(rollbackFor = Exception.class) // 事务
+    public AdminUserBo saveupdateAdminUser(AdminUserRegVo adminUserRegVo){
+        // 1、保证账号的唯一性
+        LambdaQueryWrapper<AdminUser> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.eq(AdminUser::getAccount,adminUserRegVo.getAccount());
+        Long db_count = this.count(lambdaQueryWrapper);
+        // 大于0账号已存在
+        if (db_count > 0){
+            throw  new ValidatorExceptionThrow(UserResultEnum.ACCOUNT_REG_ERROR);
+        }
+
+        // 2、密码MD5加密
+        adminUserRegVo.setPassword(MD5Util.strToMd5s(adminUserRegVo.getPassword()));
+
+        // 3、将用户信息插入到数据库
+        AdminUser db_adminUser = new AdminUser();
+        BeanUtils.copyProperties(adminUserRegVo,db_adminUser);
+        // 插入 会自动填充id
+        boolean flag = this.saveOrUpdate(db_adminUser);
+        // 插入或者更新成功后绑定权限
+        if (flag){
+            // 权限
+            this.baseMapper.saveUserRole(db_adminUser.getId(), adminUserRegVo.getRolesId());
+        }
+        // 返回给前端使用
         AdminUserBo adminuserBo = new AdminUserBo();
-        BeanUtils.copyProperties(adminuser,adminuserBo);
+        BeanUtils.copyProperties(adminUserRegVo,adminuserBo);
         return flag ? adminuserBo : null;
     }
 

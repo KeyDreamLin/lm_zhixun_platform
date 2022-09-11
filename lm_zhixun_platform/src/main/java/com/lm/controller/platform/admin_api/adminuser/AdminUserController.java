@@ -6,7 +6,8 @@ import com.lm.common.r.UserResultEnum;
 import com.lm.controller.platform.admin_api.BaseController;
 import com.lm.entity.bo.adminuser.AdminUserBo;
 import com.lm.entity.pojo.adminuser.AdminUser;
-import com.lm.entity.vo.adminuser.AdminUserVo;
+import com.lm.entity.vo.adminuser.AdminUserQueryVo;
+import com.lm.entity.vo.adminuser.AdminUserRegVo;
 import com.lm.service.adminuser.IAdminUserService;
 import com.lm.tool.LmAssert;
 import lombok.extern.slf4j.Slf4j;
@@ -47,7 +48,7 @@ public class AdminUserController extends BaseController {
     * 查询后台用户管理列表信息并分页
     * @path : /admin/adminuser/list
     * @method: findAdminUsers
-    * @param : AdminUserVo
+    * @param : AdminUserQueryVo
     * @result : IPage<AdminUserBo>
     * 创建人:Lm
     * 创建时间：2022-09-08
@@ -55,8 +56,8 @@ public class AdminUserController extends BaseController {
     */
     @GetMapping("/adminuser/list")
     @ResponseBody
-    public IPage<AdminUserBo> findAdminUsers(@RequestBody AdminUserVo adminuserVo){
-        return adminuserService.findAdminUserPage(adminuserVo);
+    public IPage<AdminUserBo> findAdminUsers(@RequestBody AdminUserQueryVo adminuserQueryVo){
+        return adminuserService.findAdminUserPage(adminuserQueryVo);
     }
 
     /**
@@ -71,8 +72,8 @@ public class AdminUserController extends BaseController {
     */
     @PostMapping("/adminuser/saveupdate")
     @ResponseBody
-    public AdminUserBo saveupdateAdminUser(@RequestBody AdminUser adminuser) {
-        return adminuserService.saveupdateAdminUser(adminuser);
+    public AdminUserBo saveupdateAdminUser(@RequestBody AdminUserRegVo adminUserRegVo) {
+        return adminuserService.saveupdateAdminUser(adminUserRegVo);
     }
 
     /**
@@ -117,18 +118,18 @@ public class AdminUserController extends BaseController {
     * 根据后台用户管理ids批量删除后台用户管理
     * @method: adminuser/delBatch
     * @path : /admin/adminuser/delBatch
-    * @param : AdminUserVo
+    * @param : AdminUserQueryVo
     * @result : boolean
     * 创建人:Lm
     * 创建时间：2022-09-08
     * @version 1.0.0
     */
     @PostMapping("/adminuser/delBatch")
-    public boolean delAdminUser(@RequestBody AdminUserVo adminuserVo) {
-        log.info("你要批量删除的IDS是:{}", adminuserVo.getBatchIds());
-        if (LmAssert.isEmpty(adminuserVo.getBatchIds())) {
+    public boolean delAdminUser(@RequestBody AdminUserQueryVo adminuserQueryVo) {
+        log.info("你要批量删除的IDS是:{}", adminuserQueryVo.getBatchIds());
+        if (LmAssert.isEmpty(adminuserQueryVo.getBatchIds())) {
             throw new ValidatorExceptionThrow(UserResultEnum.ID_NOT_EMPTY);
         }
-        return adminuserService.delBatchAdminUser(adminuserVo.getBatchIds());
+        return adminuserService.delBatchAdminUser(adminuserQueryVo.getBatchIds());
     }
 }

@@ -83,7 +83,7 @@ public class mpGenerator {
                     builder.customMap(Collections.singletonMap("VoClassName", "AdminUser"))
                             .customMap(Collections.singletonMap("VoClassName", "AdminUser"))
                             // 文件名 和 模版路径
-                            .customFile(Collections.singletonMap("AdminUserVo.java", "/templates/vo.java.ftl"));
+                            .customFile(Collections.singletonMap("AdminUserQueryVo.java", "/templates/vo.java.ftl"));
                 })
                 // 配置自定义模版
                 .templateConfig(builder->{

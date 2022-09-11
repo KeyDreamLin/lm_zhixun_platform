@@ -1,4 +1,4 @@
-package com.lm.entity.bo.roles;
+package com.lm.entity.pojo.adminroles;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
@@ -7,34 +7,41 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+
+import lombok.*;
 
 /**
-* RolesBo参数类
-* 创建人:Lm<br/>
-* 时间：2022-09-08 <br/>
-*
-*/
+ * <p>
+ * 
+ * </p>
+ *
+ * @author Lm
+ * @since 2022-09-11
+ */
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class RolesBo implements java.io.Serializable  {
-    // 
+@TableName("kss_roles")
+public class AdminRoles implements Serializable {
+
+
+    @TableId(type = IdType.AUTO)
     private Long id;
-    // 
+
     private String roleCode;
-    // 
+
     private String roleName;
-    // 
+
     private Integer status;
-    // 
+
     private Integer isdelete;
-    // 
+
+    @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createTime;
-    // 
+
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateTime;
+
+
 }
