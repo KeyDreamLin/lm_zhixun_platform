@@ -3,6 +3,7 @@ import { createStore } from 'vuex'
 import VuexPersistence from 'vuex-persist'
 import user from "@/store/modules/user.js"
 import menu from "@/store/modules/menu.js"
+import i18n from "@/store/modules/i18n"
 
 // 本地缓存vuex管理信息
 // 为什么要适应vuex-persist组件，因为vuex数据库如果不持久化有一个bug
@@ -12,16 +13,18 @@ import menu from "@/store/modules/menu.js"
 const vuexLocal = new VuexPersistence({
     key: "lm-admin-web-vuex",
     storage: window.sessionStorage
-})
-
+});
 
 // 创建一个新的 store 实例
 // 创建状态管
-const store = createStore({
-    plugins: [vuexLocal.plugin],
+const store = createStore( {
+    plugins: [
+        vuexLocal.plugin,
+    ],
     modules: {
         user,
-        menu
+        menu,
+        i18n,
     }
 })
 

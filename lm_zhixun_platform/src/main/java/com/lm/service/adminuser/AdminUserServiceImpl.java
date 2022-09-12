@@ -79,15 +79,15 @@ public class AdminUserServiceImpl extends ServiceImpl<AdminUserMapper, AdminUser
         // 设置条件查询
         LambdaQueryWrapper<AdminUser> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         // 2：查询发布的 0 未发布  1 发布
-        lambdaQueryWrapper.eq(AdminUser::getStatus, 1);
-        lambdaQueryWrapper.eq(AdminUser::getIsdelete, 0);
+//        lambdaQueryWrapper.eq(AdminUser::getStatus, 1);
+//        lambdaQueryWrapper.eq(AdminUser::getIsdelete, 0);
         lambdaQueryWrapper.and(LmAssert.isNotEmpty(adminuserQueryVo.getKeyword()) , wrapper->{wrapper
             .like(AdminUser::getUsername, adminuserQueryVo.getKeyword())
             .or()
             .like(AdminUser::getAccount, adminuserQueryVo.getKeyword());
         });
         // 根据时间排降序
-        lambdaQueryWrapper.orderByDesc(AdminUser::getCreateTime);
+        lambdaQueryWrapper.orderByAsc(AdminUser::getCreateTime);
         // 查询分页返回
         IPage<AdminUser> results = this.page(page, lambdaQueryWrapper);
         IPage<AdminUserBo> results_bo = new Page<>();

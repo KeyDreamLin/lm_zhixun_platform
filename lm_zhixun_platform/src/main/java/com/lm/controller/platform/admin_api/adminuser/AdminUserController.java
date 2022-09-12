@@ -1,6 +1,8 @@
 package com.lm.controller.platform.admin_api.adminuser;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.lm.common.anno.IgnoreToken;
 import com.lm.common.ex.lthrow.ValidatorExceptionThrow;
 import com.lm.common.r.UserResultEnum;
 import com.lm.controller.platform.admin_api.BaseController;
@@ -11,10 +13,13 @@ import com.lm.entity.vo.adminuser.AdminUserRegVo;
 import com.lm.service.adminuser.IAdminUserService;
 import com.lm.tool.LmAssert;
 import lombok.extern.slf4j.Slf4j;
+import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -37,7 +42,7 @@ public class AdminUserController extends BaseController {
     * 创建时间：2022-09-08
     * @return
     */
-    @GetMapping("/adminuser/load")
+    @PostMapping("/adminuser/load")
     @ResponseBody
     public List<AdminUserBo> findadminuserList() {
         return adminuserService.findAdminUserList();
@@ -54,10 +59,12 @@ public class AdminUserController extends BaseController {
     * 创建时间：2022-09-08
     * @version 1.0.0
     */
-    @GetMapping("/adminuser/list")
+    @PostMapping("/adminuser/list")
     @ResponseBody
+//    @IgnoreToken
     public IPage<AdminUserBo> findAdminUsers(@RequestBody AdminUserQueryVo adminuserQueryVo){
-        return adminuserService.findAdminUserPage(adminuserQueryVo);
+        final val adminUserPage = adminuserService.findAdminUserPage(adminuserQueryVo);
+        return adminUserPage;
     }
 
     /**
@@ -72,8 +79,12 @@ public class AdminUserController extends BaseController {
     */
     @PostMapping("/adminuser/saveupdate")
     @ResponseBody
-    public AdminUserBo saveupdateAdminUser(@RequestBody AdminUserRegVo adminUserRegVo) {
-        return adminuserService.saveupdateAdminUser(adminUserRegVo);
+//    @IgnoreToken
+    public AdminUserBo saveupdateAdminUser(@RequestBody @Validated AdminUserRegVo adminUserRegVo) {
+        AdminUserBo adminUserBo = new AdminUserBo();
+        adminUserBo.setAccount("test");
+        return  adminUserBo;
+//        return adminuserService.saveupdateAdminUser(adminUserRegVo);
     }
 
     /**

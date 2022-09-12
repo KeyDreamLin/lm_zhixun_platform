@@ -10,37 +10,52 @@
                 </div>
                 <!-- 搜索 -->
                 <div class="lm-handle-search__box flex flex-row  items-center">
-                    <el-input v-model="input4" class="w-50 m-2" placeholder="请输入搜索关键词">
+                    <el-input v-model="keyword" class="w-50 m-2" placeholder="请输入搜索关键词">
                         <template #suffix>
                             <el-icon class="el-input__icon">
                                 <search />
                             </el-icon>
                         </template>
                     </el-input>
-                    <el-button icon="search" type="success">搜索</el-button>
+                    <el-button icon="search" @click="queryKeywordEvent" type="success">搜索</el-button>
                 </div>
             </div>
             <el-table :data="tableData" style="width: 100%">
-                <el-table-column prop="名字" label="Name" width="180">
+                <el-table-column prop="名字" label="Name" width="240">
                     <template #default="{ $index, row }">
                         <div class="flex items-center">
                             <el-avatar :size="30"
-                                src="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png" />
+                                :src="row.avatar" />
                             <div class="ml-3 flex flex-col">
-                                <sapn>{{ row.name }}</sapn>
-                                <sapn class="text-xs">编号：{{ $index }}</sapn>
+                                <sapn>{{ row.username }}</sapn>
+                                <sapn class="text-xs">编号：{{ row.id }}</sapn>
                             </div>
                         </div>
                     </template>
                 </el-table-column>
-                <el-table-column prop="date" label="Date" width="180" />
-                <el-table-column prop="address" label="Address" />
-                <el-table-column label="状态">
+
+                <el-table-column prop="account" label="账号" />
+
+                <el-table-column prop="updateTime" label="更新时间"/>
+                
+                <el-table-column label="发布状态" >
                     <template #default="scope">
                         <el-switch v-model="scope.row.status" active-color="#8389c7" inline-prompt active-text="是"
                             :active-value="1" inactive-text="否" :inactive-value="0" />
                     </template>
                 </el-table-column>
+
+                <el-table-column label="删除状态" >
+                    <template #default="scope">
+                        <el-switch
+                         v-model="scope.row.isdelete" active-color="#8389c7" inline-prompt 
+                        active-text="是"
+                        :active-value="1"
+                        inactive-text="否" 
+                        :inactive-value="0" />
+                    </template>
+                </el-table-column>
+                
                 <el-table-column label="操作" width="245px">
                     <template #default="scope">
                         <el-button size="small" icon="View" @click="handleEdit(scope.$index, scope.row)">预览</el-button>
@@ -53,8 +68,9 @@
             </el-table>
             <div class="lm-page__box flex mt-4">
                 <!--  :page-count="10"  总页数 -->
-                <el-pagination @current-change="pageEvent" :page-count="10" background
-                    layout="prev, pager, next , jumper" :total="1000" />
+                <el-pagination @current-change="pageEvent" :page-count="pageCount" background
+                    layout="prev, pager, next , jumper" :total="total" />
+                    <!-- {{total}}++{{pageSize}}++{{pageCount}} -->
             </div>
         </div>
         <!-- 表单相关 -->
@@ -95,39 +111,35 @@ import LmDrawer from '@/components/LmDrawer.vue';
 import adminUserService from '@/services/useradmin/AdminUserService.js';
 import adminRoleService from '@/services/adminrole/AdminRoleService.js';
 import { LmMessageError } from '@/utils';
-import { reactive, ref } from 'vue';
-const tableData = ref([
-    {
-        date: '2016-05-03',
-        name: 'Tom',
-        status: 1,
-        address: 'No. 189, Grove St, Los Angeles',
-    },
-    {
-        date: '2016-05-02',
-        name: 'Tom',
-        status: 0,
-        address: 'No. 189, Grove St, Los Angeles',
-    },
-    {
-        date: '2016-05-04',
-        name: 'Tom',
-        status: 1,
-        address: 'No. 189, Grove St, Los Angeles',
-    },
-    {
-        date: '2016-05-01',
-        name: 'Tom',
-        status: 0,
-        address: 'No. 189, Grove St, Los Angeles',
-    },
-]);
-const loadRoleDatas = async ()=> {
-    const serverRet = await adminRoleService.findadminrolesList();
-    // 转换为int
-    serverRet.data.forEach(item=>{item.id=parseInt(item.id)});
-    FormUserRoleIdList.value = serverRet.data;
-    // console.log(serverRet.data);
+import { onMounted, reactive, ref } from 'vue';
+// 表数据
+const tableData = ref([]);
+const total = ref(0); // 总条数
+const pageSize = ref(10); // 需要每一页有多少条
+const pageCount = ref(1); // 总页数
+const pageNo = ref(1);// 当前页数
+const keyword = ref("");// 关键词查询
+// 加载admin用户数据
+const loadUserAdminData = async () =>{
+    let serverRetUserAdminData = await adminUserService.findAdminUsers({
+            pageNo:pageNo.value,
+            pageSize:pageSize.value,
+            keyword:keyword.value
+        });
+    let retData = serverRetUserAdminData.data;
+    tableData.value = retData.records;
+    total.value = retData.total;
+    pageSize.value =retData.size;
+    pageCount.value = retData.pages;
+    pageNo.value = retData.current;
+    console.log("--------------------",serverRetUserAdminData);
+}
+onMounted(()=>{
+    loadUserAdminData();
+})
+// 关键词查询
+const queryKeywordEvent = () => {
+    loadUserAdminData();
 }
 // 分页表单 添加按钮 打开添加抽屉
 const OpenDrawerEvent = () => {
@@ -135,8 +147,9 @@ const OpenDrawerEvent = () => {
     DrawerRef.value.open();
 }
 // 分页组件回调事件
-const pageEvent = (pageNo) => {
-    alert(pageNo);
+const pageEvent = (ToPageNo) => {
+    pageNo.value = ToPageNo;
+    loadUserAdminData();
 }
 
 // 表单相关 
@@ -151,9 +164,13 @@ const rules = reactive({
 // 用于form表单校验回传结果
 const ruleFormRef = ref(null);
 // form表单角色下拉框数据~数据库回传
-const FormUserRoleIdList = ref([
-]);
-
+const FormUserRoleIdList = ref({});
+const loadRoleDatas = async ()=> {
+    const serverRet = await adminRoleService.findadminrolesList();
+    // 转换为int
+    serverRet.data.forEach(item=>{item.id=parseInt(item.id)});
+    FormUserRoleIdList.value = serverRet.data;
+}
 // 管理员数据模型
 // let FormUserData = ref({
 //     username: "1",
@@ -173,6 +190,7 @@ let FormUserData = ref({
     isdelete : 0,
     rolesId: 1,
 })
+// 抽屉提交事件
 const drawerSubmitEvent = () => {
     // adminUserService
     ruleFormRef.value.validate(async (val)=>{

@@ -1,5 +1,6 @@
 package com.lm.filter.userlogin;
 
+import com.lm.common.anno.IgnoreToken;
 import com.lm.common.ex.lthrow.ValidatorExceptionThrow;
 import com.lm.common.r.UserResultEnum;
 import com.lm.config.redis.key.RedisAndHeaderKey;
@@ -8,11 +9,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
+import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.lang.reflect.Method;
 
 /**
  * 判断用户是否在其他地方登录
@@ -26,6 +29,16 @@ public class PassportLogoutInterceptor implements HandlerInterceptor , RedisAndH
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        // 通过自定义注解去跳过token校验
+        // handler从object对象转换成具体的目标对象HandlerMethod
+        HandlerMethod handlerMethod = (HandlerMethod) handler;
+        // 获取执行的方法
+        Method method = handlerMethod.getMethod();
+        if (method.getAnnotation(IgnoreToken.class) != null ||
+                handlerMethod.getBeanType().getAnnotation(IgnoreToken.class) != null) {
+            return true;
+        }
+
         // 获取请求头的UUID
         String token_uuid = request.getHeader(HEADER_TOKEN_UUID);
         log.info("获取到请求头中的token_uuid--->{}",token_uuid);

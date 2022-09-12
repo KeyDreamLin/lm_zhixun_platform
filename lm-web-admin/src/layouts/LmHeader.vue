@@ -24,15 +24,34 @@
         </el-tooltip>
 
         <div class="lm-user__box">
-            <el-tooltip effect="dark" content="全屏" placement="bottom">
-                <el-icon class="lm-icon-btn" @click="handleFullScreen">
-                    <!-- 不是是全屏icon -->
-                    <Grid v-if="isFullscreen" />
-                    <!-- 全屏icon -->
-                    <FullScreen v-else />
-                </el-icon>
-            </el-tooltip>
+            <!-- 全屏按钮 -->
+            <div>
+                <el-tooltip effect="dark" content="全屏" placement="bottom">
+                    <el-icon class="lm-icon-btn" @click="handleFullScreen">
+                        <!-- 不是是全屏icon -->
+                        <Grid v-if="isFullscreen" />
+                        <!-- 全屏icon -->
+                        <FullScreen v-else />
+                    </el-icon>
+                </el-tooltip>
+            </div>
 
+            <!-- 国际化语言切换 -->
+            <div class="mr-1 ">
+                <el-dropdown >
+                    <el-icon class="lm-icon-btn text-[17px]">
+                        <Guide />
+                    </el-icon>
+                    <template #dropdown>
+                        <el-dropdown-menu>
+                            <el-dropdown-item @click="setI18n('zh_CN')">中文</el-dropdown-item>
+                            <el-dropdown-item @click="setI18n('en_US')">English</el-dropdown-item>
+                        </el-dropdown-menu>
+                    </template>
+                </el-dropdown>
+            </div>
+
+            <!-- 头像信息等 -->
             <el-dropdown @command="headerUserEvent">
                 <span class="lm-dropdown-link">
                     <el-avatar :size="28" src="../../src/assets/img/img_01.jpg"></el-avatar>
@@ -50,6 +69,7 @@
                     </el-dropdown-menu>
                 </template>
             </el-dropdown>
+
         </div>
         <lm-drawer title="我是修改密码" @submit="submitUpdataPwdEvent" ref="updataPwdRef">
             <template #default>
@@ -93,7 +113,11 @@ const {// 对象解构
     updataPwdRules,
     updataPwdFromRef,
 } = useLmHeader();
-
+// 国际化语言切换
+const setI18n = (data) => {
+    console.log(data);
+    store.commit("i18n/setLang",data);
+}
 
 
 </script>

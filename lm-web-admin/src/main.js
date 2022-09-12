@@ -19,7 +19,7 @@ import 'nprogress/nprogress.css'
 import router from '@/router'
 
 // 导入状态管理
-import store from '@/store'
+import store from '@/store' //默认使用Session
 
 
 const app = createApp(App);

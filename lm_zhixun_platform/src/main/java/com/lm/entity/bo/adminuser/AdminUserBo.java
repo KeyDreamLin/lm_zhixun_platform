@@ -7,6 +7,8 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Date;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -32,9 +34,9 @@ public class AdminUserBo implements java.io.Serializable  {
     // 账号
     private String account;
     // 创建时间
-    private LocalDateTime createTime;
+    private Date createTime;
     // 更新时间
-    private LocalDateTime updateTime;
+    private Date updateTime;
     // 头像
     private String avatar;
     // 发布状态 0 未发(离职) 1已发布(入职)

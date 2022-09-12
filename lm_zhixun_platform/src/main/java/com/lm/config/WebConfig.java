@@ -1,13 +1,23 @@
 package com.lm.config;
 
+import com.lm.config.i18n.MyLocaleResolver;
 import com.lm.filter.userlogin.PassLoginCheckJwtInterceptor;
 import com.lm.filter.userlogin.PassportLogoutInterceptor;
+import org.passay.MessageResolver;
+import org.passay.spring.SpringMessageResolver;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
+import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
+import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
@@ -37,6 +47,8 @@ public class WebConfig implements WebMvcConfigurer {
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
+//        // 拦截所有请求 用于国际化处理
+//        registry.addInterceptor(i18nConfig);
         // 先检查用户UUID是否过期
         registry.addInterceptor(passportLogoutInterceptor)
                 .addPathPatterns("/admin/**")
@@ -47,16 +59,12 @@ public class WebConfig implements WebMvcConfigurer {
                 .excludePathPatterns("/admin/login/**","/admin/captcha");
     }
 
-
-
     /***
      * 设置静态资源映射
      * @param registry
      */
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-
         registry.addResourceHandler("/login-pc-demo/**").addResourceLocations("classpath:/login-pc-demo/");
-
     }
 }

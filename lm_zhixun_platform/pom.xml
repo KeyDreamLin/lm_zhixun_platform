@@ -43,13 +43,6 @@
             <artifactId>mybatis-plus-generator</artifactId>
             <version>3.5.1</version>
         </dependency>
-        <!--velocity-->
-        <dependency>
-            <groupId>org.apache.velocity</groupId>
-            <artifactId>velocity-engine-core</artifactId>
-            <version>2.3</version>
-        </dependency>
-        <!--以下两个引擎模板保留一个即可，看个人爱好选择-->
         <!--freemarker引擎模板-->
         <dependency>
             <groupId>org.freemarker</groupId>
@@ -107,6 +100,17 @@
             <groupId>com.github.penggle</groupId>
             <artifactId>kaptcha</artifactId>
             <version>2.3.2</version>
+        </dependency>
+        <!--spring统一验证框架-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+        <!--密码策略库 校验密码生成密码等-->
+        <dependency>
+            <groupId>org.passay</groupId>
+            <artifactId>passay</artifactId>
+            <version>1.6.0</version>
         </dependency>
     </dependencies>
 

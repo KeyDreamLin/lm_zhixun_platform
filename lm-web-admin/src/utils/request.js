@@ -20,6 +20,7 @@ lm_request.interceptors.request.use((config) => {
     // console.log("server request yes-->", config);
     if (config.isToken) {
         // 请求头携带token_jj 用于校验登录状态
+        config.headers['lang'] = store.getters["i18n/getLang"];
         config.headers['token_jj'] = store.getters["user/getTokenJj"];
         config.headers['token_user_id'] = store.getters["user/getUserId"];
         config.headers['token_uuid'] = store.getters["user/getTokenUuid"];

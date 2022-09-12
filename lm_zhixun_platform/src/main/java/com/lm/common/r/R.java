@@ -32,12 +32,9 @@ public class R<T> {
                         ServerSuccessResultEnum.SERVER_SUCCESS.getMsg(),
                         object);
     }
-    public static Object sss(Object obj){
-        return obj;
-    }
 
-    public static <T> R<T> error(Integer code, String msg) {
-        return new R<T>(code,msg,null);
+    public static <T> R<T> error(Integer code, T data, Object msg) {
+        return new R<T>(code,msg.toString(),data);
     }
 
     public static <T> R<T> error(GlobalResultEnumInterface globalResultEnumInterface) {
