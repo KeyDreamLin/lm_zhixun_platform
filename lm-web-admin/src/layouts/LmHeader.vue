@@ -55,6 +55,9 @@
             <el-dropdown @command="headerUserEvent">
                 <span class="lm-dropdown-link">
                     <el-avatar :size="28" src="../../src/assets/img/img_01.jpg"></el-avatar>
+                    <span class="ml-2">
+                        {{store.getters["user/getRoleNames"]}}
+                    </span>
                     <span class="lm-user_name">
                         {{ store.state.user.username }}
                     </span>

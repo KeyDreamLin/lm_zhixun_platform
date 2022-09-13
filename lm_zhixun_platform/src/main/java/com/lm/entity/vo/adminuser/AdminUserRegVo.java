@@ -27,9 +27,9 @@ public class AdminUserRegVo implements Serializable {
     @Size(min = 4, max = 20, message = "{AdminUserRegVo.username}")
     private String username;
     // 密码
-    @NotBlank
+//    @NotBlank
 //    @Size(min = 4,max=20,message = "密码长度要在4~20位以内")
-    @ValidPassword
+//    @ValidPassword
     private String password;
     // 账号
     @NotBlank(message = "{AdminUserRegVo.NotBlank.account.message}")

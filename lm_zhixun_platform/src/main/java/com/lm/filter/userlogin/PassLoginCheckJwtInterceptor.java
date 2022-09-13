@@ -105,7 +105,6 @@ public class PassLoginCheckJwtInterceptor implements HandlerInterceptor , RedisA
             // 续期，重新生成一个新的token
             String newToken = jwtService.createToken(Long.valueOf(token_user_id));
             log.info("重新生成一个jwt--->{}",newToken);
-
             // 通过response的头部输出token,然后前台通过reponse获取
             response.setHeader("token_jj", newToken);
         }

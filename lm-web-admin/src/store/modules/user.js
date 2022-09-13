@@ -17,14 +17,18 @@ export default {
         }
     },
     mutations: {
+        // 设置token_jj jwt
+        setToken_jj(state, token_jj){
+            state.tokenJj = token_jj;
+        },
         savaUserData(state, serverUserData) {
             state.tokenJj = serverUserData.tokenJj;
             state.tokenUuid = serverUserData.tokenUuid;
             state.userId = serverUserData.user.id;
             state.username = serverUserData.user.username;
             state.avatar = serverUserData.avatar;
-            state.roleList = [{ name: "管理员" }];
-            state.permissionList = [{ code: "-1" }];
+            state.roleList = serverUserData.roleNames;
+            state.permissionList = serverUserData.permissions;
             // console.log("-1231231", serverUserData);
         },
         // 清除状态
@@ -106,6 +110,10 @@ export default {
         // 判断是否登录
         isLogin(state) {
             return state.userId != "";
+        },
+        // 获取角色列表
+        getRoleNames(state){
+            return state.roleList.join(",");
         }
     }
 

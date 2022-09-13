@@ -43,7 +43,15 @@ lm_request.interceptors.response.use((response) => {
     if (typeof res_data === "string") {
         res_data = JSON.parse(res_data);
     }
-    if (res_data.code == 200) { return res_data }
+    if (res_data.code == 200) {
+        // 更新token_jj jwt 秘钥
+        if(response.headers.token_jj != undefined 
+            && typeof response.headers.token_jj != undefined){
+            store.commit("user/setToken_jj",response.headers.token_jj); 
+            console.log("-------------updataToken_jj");
+        }
+        return res_data 
+    }
     // 业务的错误，全部抛出到页面处理 1、
     // alert("1-----err");
     // 100107

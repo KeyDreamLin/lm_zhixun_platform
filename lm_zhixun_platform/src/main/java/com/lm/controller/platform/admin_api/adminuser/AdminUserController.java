@@ -10,6 +10,7 @@ import com.lm.entity.bo.adminuser.AdminUserBo;
 import com.lm.entity.pojo.adminuser.AdminUser;
 import com.lm.entity.vo.adminuser.AdminUserQueryVo;
 import com.lm.entity.vo.adminuser.AdminUserRegVo;
+import com.lm.entity.vo.adminuser.AdminUserUpdateVo;
 import com.lm.service.adminuser.IAdminUserService;
 import com.lm.tool.LmAssert;
 import lombok.extern.slf4j.Slf4j;
@@ -63,8 +64,7 @@ public class AdminUserController extends BaseController {
     @ResponseBody
 //    @IgnoreToken
     public IPage<AdminUserBo> findAdminUsers(@RequestBody AdminUserQueryVo adminuserQueryVo){
-        final val adminUserPage = adminuserService.findAdminUserPage(adminuserQueryVo);
-        return adminUserPage;
+        return adminuserService.findAdminUserPage(adminuserQueryVo);
     }
 
     /**
@@ -81,10 +81,7 @@ public class AdminUserController extends BaseController {
     @ResponseBody
 //    @IgnoreToken
     public AdminUserBo saveupdateAdminUser(@RequestBody @Validated AdminUserRegVo adminUserRegVo) {
-        AdminUserBo adminUserBo = new AdminUserBo();
-        adminUserBo.setAccount("test");
-        return  adminUserBo;
-//        return adminuserService.saveupdateAdminUser(adminUserRegVo);
+        return adminuserService.saveupdateAdminUser(adminUserRegVo);
     }
 
     /**
@@ -141,6 +138,22 @@ public class AdminUserController extends BaseController {
         if (LmAssert.isEmpty(adminuserQueryVo.getBatchIds())) {
             throw new ValidatorExceptionThrow(UserResultEnum.ID_NOT_EMPTY);
         }
-        return adminuserService.delBatchAdminUser(adminuserQueryVo.getBatchIds());
+        final val b = adminuserService.delBatchAdminUser(adminuserQueryVo.getBatchIds());
+        return b;
+
+    }
+    /**
+     * 后台用户状态更新
+     * @method: adminuser/update
+     * @path : /admin/adminuser/update
+     * @param : adminUserRegVo
+     * @result : boolean
+     * 创建人:lm
+     * 创建时间：2022-09-13
+     * @version 1.0.0
+     */
+    @PostMapping("/adminuser/update")
+    public boolean updateAdminUser(@RequestBody AdminUserUpdateVo adminUserUpdateVo) {
+        return adminuserService.updateAdminUser(adminUserUpdateVo);
     }
 }

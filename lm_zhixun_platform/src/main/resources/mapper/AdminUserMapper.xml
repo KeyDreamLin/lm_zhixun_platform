@@ -24,4 +24,11 @@
           and
             role_id = #{roleId}
     </delete>
+    <!--通过id查找角色-->
+    <select id="findUserRolesByUid" resultType="com.lm.entity.pojo.adminroles.AdminRoles">
+        SELECT t2.*
+        from kss_users_roles t1 ,kss_roles t2
+        where
+              t1.user_id = #{userId} and t1.role_id = t2.id
+    </select>
 </mapper>

@@ -1,9 +1,12 @@
 package com.lm.mapper;
 
+import com.lm.entity.pojo.adminroles.AdminRoles;
 import com.lm.entity.pojo.adminuser.AdminUser;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  *  Mapper 接口
@@ -40,4 +43,12 @@ public interface AdminUserMapper extends BaseMapper<AdminUser> {
      * @return
      */
     int delUserRole(@Param("userId") Long userId, @Param("roleId") Long roleId);
+
+    /**
+     * 通过admin用户id查询到对应的角色
+     * @param id adminUser id
+     * @return 对应角色表
+     */
+    List<AdminRoles> findUserRolesByUid(@Param("userId") Long id);
+
 }

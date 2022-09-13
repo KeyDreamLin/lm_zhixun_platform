@@ -7,9 +7,12 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.lm.common.ex.lthrow.ValidatorExceptionThrow;
 import com.lm.common.r.UserResultEnum;
+import com.lm.entity.pojo.adminroles.AdminRoles;
 import com.lm.entity.vo.adminuser.AdminUserQueryVo;
 import com.lm.entity.vo.adminuser.AdminUserRegVo;
+import com.lm.entity.vo.adminuser.AdminUserUpdateVo;
 import com.lm.tool.pwd.MD5Util;
+import lombok.val;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import com.lm.mapper.AdminUserMapper;
@@ -79,8 +82,8 @@ public class AdminUserServiceImpl extends ServiceImpl<AdminUserMapper, AdminUser
         // 设置条件查询
         LambdaQueryWrapper<AdminUser> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         // 2：查询发布的 0 未发布  1 发布
-//        lambdaQueryWrapper.eq(AdminUser::getStatus, 1);
-//        lambdaQueryWrapper.eq(AdminUser::getIsdelete, 0);
+        lambdaQueryWrapper.eq(AdminUser::getStatus, 1);
+        lambdaQueryWrapper.eq(AdminUser::getIsdelete, 0);
         lambdaQueryWrapper.and(LmAssert.isNotEmpty(adminuserQueryVo.getKeyword()) , wrapper->{wrapper
             .like(AdminUser::getUsername, adminuserQueryVo.getKeyword())
             .or()
@@ -113,17 +116,34 @@ public class AdminUserServiceImpl extends ServiceImpl<AdminUserMapper, AdminUser
     @Override
     @Transactional(rollbackFor = Exception.class) // 事务
     public AdminUserBo saveupdateAdminUser(AdminUserRegVo adminUserRegVo){
-        // 1、保证账号的唯一性
-        LambdaQueryWrapper<AdminUser> lambdaQueryWrapper = new LambdaQueryWrapper<>();
-        lambdaQueryWrapper.eq(AdminUser::getAccount,adminUserRegVo.getAccount());
-        Long db_count = this.count(lambdaQueryWrapper);
-        // 大于0账号已存在
-        if (db_count > 0){
-            throw  new ValidatorExceptionThrow(UserResultEnum.ACCOUNT_REG_ERROR);
+        // 在编辑的情况下 通过id查询数据库的账号和vo进行对比 如果数据库的账号和vo的账号不一致就需要验证账号是否存在 反之不验证
+        // 怎么样区分编辑还是添加
+        // 添加的时候id是null 判断是null就好了
+        // 查询出数据库的admin用户数据 !当前编辑的用户
+        AdminUser this_db_edit_adminUser = this.getById(adminUserRegVo.getId());
+        if((adminUserRegVo!=null && adminUserRegVo.getId() == null) ||
+           (adminUserRegVo != null && !this_db_edit_adminUser.getAccount().equals(adminUserRegVo.getAccount()))
+        ){
+            // 1、保证账号的唯一性
+            LambdaQueryWrapper<AdminUser> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+            lambdaQueryWrapper.eq(AdminUser::getAccount,adminUserRegVo.getAccount());
+            Long db_count = this.count(lambdaQueryWrapper);
+            // 大于0账号已存在
+            if (db_count > 0){
+                throw  new ValidatorExceptionThrow(UserResultEnum.ACCOUNT_REG_ERROR);
+            }
+        }
+        // 如果是不是空就执行 null "" 返回true
+        // 如果密码不为空
+        if(LmAssert.isNotEmpty(adminUserRegVo.getPassword())){
+            // 2、密码MD5加密
+            adminUserRegVo.setPassword(MD5Util.strToMd5s(adminUserRegVo.getPassword()));
+        }
+        else{
+            //如果密码为空那就表示编辑状态下需要将 原始的密码回填回去 因为在编辑状态下密码是可以允许“”放行的
+            adminUserRegVo.setPassword(this_db_edit_adminUser.getPassword());
         }
 
-        // 2、密码MD5加密
-        adminUserRegVo.setPassword(MD5Util.strToMd5s(adminUserRegVo.getPassword()));
 
         // 3、将用户信息插入到数据库
         AdminUser db_adminUser = new AdminUser();
@@ -132,8 +152,12 @@ public class AdminUserServiceImpl extends ServiceImpl<AdminUserMapper, AdminUser
         boolean flag = this.saveOrUpdate(db_adminUser);
         // 插入或者更新成功后绑定权限
         if (flag){
-            // 权限
-            this.baseMapper.saveUserRole(db_adminUser.getId(), adminUserRegVo.getRolesId());
+            // 编辑状态下 不需要查询添加数据
+            int count = this.baseMapper.countUserRole(db_adminUser.getId(), adminUserRegVo.getRolesId());
+            if(count == 0){
+                // 权限
+                this.baseMapper.saveUserRole(db_adminUser.getId(), adminUserRegVo.getRolesId());
+            }
         }
         // 返回给前端使用
         AdminUserBo adminuserBo = new AdminUserBo();
@@ -192,6 +216,30 @@ public class AdminUserServiceImpl extends ServiceImpl<AdminUserMapper, AdminUser
         }).collect(Collectors.toList());
         // 3: 批量删除
         return this.updateBatchById(adminuserList);
+    }
+    /**
+     * 状态更新
+     * @param adminUserUpdateVo
+     * @return
+     */
+    @Override
+    public boolean updateAdminUser(AdminUserUpdateVo adminUserUpdateVo){
+        AdminUser adminUser = new AdminUser();
+        BeanUtils.copyProperties(adminUserUpdateVo,adminUser);
+        return updateById(adminUser);
+    }
+
+    /**
+     * 通过admin用户id查询到对应的角色
+     *
+     * @param id adminUser id
+     * @return 对应角色表
+     */
+    @Override
+    public List<String> getRoleNamesByUid(Long id) {
+        List<String> RolesNameList = this.baseMapper.findUserRolesByUid(id)
+                .stream().map(AdminRoles::getRoleName).collect(Collectors.toList());
+        return RolesNameList;
     }
 
 }

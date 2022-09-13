@@ -4,7 +4,7 @@ import com.lm.common.r.UserResultEnum;
 import com.lm.config.redis.JwtBlackSetService;
 import com.lm.config.redis.key.RedisAndHeaderKey;
 import com.lm.controller.platform.admin_api.BaseController;
-import com.lm.entity.bo.adminuser.AdminUserTokenBo;
+import com.lm.entity.bo.adminuser.AdminUserLoginBo;
 import com.lm.entity.pojo.adminuser.AdminUser;
 import com.lm.entity.vo.adminuser.AdminUserLoginVo;
 import com.lm.service.adminuser.AdminUserServiceImpl;
@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.UUID;
 
 @Slf4j
@@ -38,7 +39,7 @@ public class AdminUserLoginController extends BaseController implements RedisAnd
     private JwtBlackSetService jwtBlackSetService;
 
     @PostMapping("/login/toLogin")
-    public AdminUserTokenBo Login(@RequestBody AdminUserLoginVo adminUserLoginVo) {
+    public AdminUserLoginBo Login(@RequestBody AdminUserLoginVo adminUserLoginVo) {
         log.info("UserController_Login--->用户登录-->账号：{}--密码：{}  验证码：{} 验证码UUID：{}"
                 , adminUserLoginVo.getUsername()
                 , adminUserLoginVo.getPassword()
@@ -79,23 +80,23 @@ public class AdminUserLoginController extends BaseController implements RedisAnd
         // 如果输入的密码和数据库密码不一致，抛出异常
         LmAssert.isFalseEx(flagCheckPwd,UserResultEnum.USER_LOGIN_NO_EXIST);
         // 根据用户id生成token
-        AdminUserTokenBo adminUserTokenBo = new AdminUserTokenBo();
-        adminUserTokenBo.setTokenJj(jwtService.createToken(adminUserDb.getId()));
-
+        AdminUserLoginBo adminUserLoginBo = new AdminUserLoginBo();
+        adminUserLoginBo.setTokenJj(jwtService.createToken(adminUserDb.getId()));
+        // 查询用户角色信息
+        adminUserLoginBo.setRoleNames(adminUserService.getRoleNamesByUid(adminUserDb.getId()));
+        adminUserLoginBo.setPermissions(new ArrayList<>());
         // 往redis传tokenUuid
         String tokenUuid_key = REDIS_LOGIN_UUID_KEY + adminUserDb.getId();
         String tokenUuid_Val = UUID.randomUUID().toString();
         // 把键和值传进去
         redisTemplate.opsForValue().set(tokenUuid_key,tokenUuid_Val);
-
         // 屏蔽一些敏感的信息
         adminUserDb.setPassword(null);
-        adminUserTokenBo.setUser(adminUserDb);
+        adminUserLoginBo.setUser(adminUserDb);
         // 设置jwt_token
-        adminUserTokenBo.setTokenUuid(tokenUuid_Val);
-
+        adminUserLoginBo.setTokenUuid(tokenUuid_Val);
         // 返回前台状态
-        return adminUserTokenBo;
+        return adminUserLoginBo;
     }
 
     /**
