@@ -33,7 +33,7 @@ public class mpGenerator_ {
     static String password="123456";
 
     //数据库表的设置
-    static String TableName = "kss_roles";  //设置需要自动代码生成的表名
+    static String TableName = "kss_permission";  //设置需要自动代码生成的表名
     static String listTablePrefix = "kss_"; //设置 过滤 表的后缀
     static String Tabletitle = "后台权限管理"; // 注释里面的标题
     static String ClassNamePrefix = "Admin"; //设置类名的前缀 可以为空
@@ -108,7 +108,8 @@ public class mpGenerator_ {
                     //禁止生成代码后自动弹出输出目录
                     .disableOpenDir()
                     //设置输出路径：项目的 java 目录下【System.getProperty("user.dir")意思是获取到项目所在的绝对路径】
-                    .outputDir(System.getProperty("user.dir") + "/src/main/java");
+                    .outputDir(System.getProperty("user.dir") + "/src/main/java")
+                    .dateType(DateType.ONLY_DATE);
         });
     }
 
@@ -133,7 +134,7 @@ public class mpGenerator_ {
                             //Service 包名
                             .service("service."+EntityPackageClassPath)
                             // ***ServiceImpl 包名
-                            .serviceImpl("service."+EntityPackageClassPath+".impl")
+                            .serviceImpl("service."+EntityPackageClassPath)
                             //Mapper 包名
                             .mapper("mapper")
                             //Mapper XML 包名

@@ -65,9 +65,9 @@
                     </template>
                 </el-table-column>
                 
-                <el-table-column label="操作" width="245px">
+                <el-table-column label="操作" width="280px">
                     <template #default="scope">
-                        <el-button size="small" icon="View" @click="handleEdit(scope.$index, scope.row)">预览</el-button>
+                        <el-button size="small" icon="View" @click="RoleEvent(scope.row)">查看角色</el-button>
                         <el-button size="small" icon="Edit" @click="EditEvent(scope.$index, scope.row)">编辑</el-button>
                         <el-button size="small" icon="Delete" type="danger"
                             @click="handleDelete(scope.$index, scope.row)">
@@ -77,8 +77,9 @@
             </el-table>
             <div class="lm-page__box flex mt-4">
                 <!--  :page-count="10"  总页数 -->
-                <el-pagination @current-change="pageEvent" :page-count="pageCount" background
-                    layout="prev, pager, next , jumper" :total="total" />
+                <el-pagination @current-change="pageEvent" 
+                    :page-count="pageCount" :total="total" :current-page="pageNo"
+                    layout="prev, pager, next , jumper"  background  />
                     <!-- {{total}}++{{pageSize}}++{{pageCount}} -->
             </div>
         </div>
@@ -104,6 +105,7 @@
                         </template>
                     </el-select>
                 </el-form-item>
+                
                 <el-form-item label="发布状态" prop="status">
                     <el-switch v-model="FormUserData.status" active-color="#8389c7" inline-prompt active-text="是"
                         :active-value="1" inactive-text="否" :inactive-value="0" />
@@ -114,9 +116,26 @@
                         active-text="是" :active-value="1" inactive-text="否" :inactive-value="0" 
                     />
                 </el-form-item>
+                
             </el-form>
             {{FormUserData}}
         </lm-drawer>
+        <lm-dialog ref="RoleDiaLogRef" title="查看角色" :isbutton="false">
+            <el-table :data="RoleTableData" style="width: 100%">
+                <el-table-column prop="roleName" label="角色名称" style="width: 100%" />
+
+                <el-table-column label="操作" style="width: 100%" >
+                    <template #default="{ $index, row }">
+                        <el-button 
+                        :type="row.isAuth ? 'danger' : 'success'"
+                        size="default" @click="UpdRoleEvent(row)" >
+                            {{ row.isAuth ? "解除绑定" : "绑定关系" }}
+                        </el-button>
+                              
+                    </template>
+                </el-table-column>
+            </el-table>
+        </lm-dialog>
     </div>
 
 </template>
@@ -158,8 +177,12 @@ onMounted(()=>{
 })
 // 关键词查询
 const queryKeywordEvent = () => {
+    pageNo.value = 1;
+    console.log(pageNo.value);
     loadUserAdminData();
 }
+
+
 // 分页表单 添加按钮 打开添加抽屉
 const OpenDrawerEvent = () => {
     loadRoleDatas();
@@ -281,6 +304,7 @@ const ruleFormRef = ref(null);
 const FormUserRoleIdList = ref({});
 const loadRoleDatas = async ()=> {
     const serverRet = await adminRoleService.findadminrolesList();
+    console.log("loadRoleDatas",serverRet);
     // 转换为int
     serverRet.data.forEach(item=>{item.id=parseInt(item.id)});
     FormUserRoleIdList.value = serverRet.data;
@@ -337,4 +361,47 @@ const drawerSubmitEvent = () => {
         }
     })
 }
+
+
+// 查看角色相关
+
+const RoleDiaLogRef = ref(null); // 角色弹窗
+const RoleTableData = ref([]);// 展示所有角色表格
+const selectUserid = ref(null); // 要查看的用户角色
+// 查看用户拥有的角色
+const RoleEvent = async (data) => {
+    // // 所有的角色
+    // let ServerRoleList = await adminRoleService.findadminrolesList();
+    // RoleTableData.value = ServerRoleList.data;
+    // console.log("----------------------",RoleTableData.value);
+    // // 用户拥有的角色
+    let ServerResponse = await adminUserService.findRoleByUserid(data.id);
+    RoleTableData.value = ServerResponse.data;
+    // 要查看的用户角色
+    selectUserid.value = data.id;
+    RoleDiaLogRef.value.open();
+    console.log("----------------------",ServerResponse);
+}
+// 操作用户角色
+const UpdRoleEvent = async (Ritem) => {
+    await userRoleRelation[Ritem.isAuth ? "unbind" : "binding"](selectUserid.value, Ritem.id);
+    // console.log( Ritem.isAuth ? "解除绑定" : "绑定关系");
+    // 重新加载用户角色列表
+    let ServerResponse = await adminUserService.findRoleByUserid(selectUserid.value);
+    RoleTableData.value = ServerResponse.data;
+}
+// 操作用户绑定角色
+const userRoleRelation = {
+    binding(userId, roleId, row) {
+        adminUserService.bindingRoleByUserId(userId, roleId).then(res => {
+            LmMessageSuccess("绑定成功");
+        })
+    },
+    unbind(userId, roleId, row) {
+        return adminUserService.unbindingRoleByUserId(userId, roleId).then(res => {
+            LmMessageSuccess("解除绑定成功");
+        })
+    }
+}
+
 </script>

@@ -60,7 +60,7 @@ public class GlobalExceptionHandler {
     }
 
     /**
-     * 验证器抛出异常捕获 自定义异常
+     * 自定义异常类捕获 自定义异常
      * @param e
      * @param request
      * @return

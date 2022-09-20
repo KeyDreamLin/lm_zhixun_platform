@@ -42,6 +42,16 @@ public class AdminUserServiceImpl extends ServiceImpl<AdminUserMapper, AdminUser
         return user;
     }
 
+    /**
+     * 获取用户拥有的角色 根据用户id
+     * @param id
+     * @return
+     */
+    @Override
+    public List<String> getRoleByUserId(Long id) {
+        return this.baseMapper.findRoleByUserId(id);
+    }
+
 
     /**
     * 查询后台用户管理管理列表信息
@@ -65,6 +75,34 @@ public class AdminUserServiceImpl extends ServiceImpl<AdminUserMapper, AdminUser
             list_bo.add(bo);
         });
         return list_bo;
+    }
+
+    /**
+     * 为用户绑定一个角色
+     * @param userId
+     * @param roleId
+     * @return
+     */
+    @Override
+    public boolean bindingRoleByUserId(Long userId, Long roleId) {
+        int count = this.baseMapper.countUserRole(userId, roleId);
+        // 如果存在就不添加了
+        if(count == 0){
+            // 角色
+            return this.baseMapper.saveUserRole(userId, roleId)>0;
+        }
+        return true;
+    }
+
+    /**
+     * 为用户解除绑定一个角色
+     * @param userId
+     * @param roleId
+     * @return
+     */
+    @Override
+    public boolean unbindingRoleByUserId(Long userId, Long roleId) {
+        return this.baseMapper.delUserRole(userId, roleId) > 0;
     }
 
     /**
@@ -155,7 +193,7 @@ public class AdminUserServiceImpl extends ServiceImpl<AdminUserMapper, AdminUser
             // 编辑状态下 不需要查询添加数据
             int count = this.baseMapper.countUserRole(db_adminUser.getId(), adminUserRegVo.getRolesId());
             if(count == 0){
-                // 权限
+                // 角色
                 this.baseMapper.saveUserRole(db_adminUser.getId(), adminUserRegVo.getRolesId());
             }
         }
@@ -240,6 +278,16 @@ public class AdminUserServiceImpl extends ServiceImpl<AdminUserMapper, AdminUser
         List<String> RolesNameList = this.baseMapper.findUserRolesByUid(id)
                 .stream().map(AdminRoles::getRoleName).collect(Collectors.toList());
         return RolesNameList;
+    }
+
+    /**
+     * 查询用户对应的权限表
+     * @param userId
+     * @return
+     */
+    @Override
+    public List<String> findByUserPermission(Long userId) {
+        return this.baseMapper.findByUserPermission(userId);
     }
 
 }

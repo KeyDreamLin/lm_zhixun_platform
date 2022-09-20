@@ -2,6 +2,7 @@ package com.lm.service.adminuser;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.lm.common.anno.login.IgnoreToken;
 import com.lm.entity.pojo.adminroles.AdminRoles;
 import com.lm.entity.pojo.adminuser.AdminUser;
 import com.lm.entity.vo.adminuser.AdminUserQueryVo;
@@ -9,6 +10,8 @@ import com.lm.entity.bo.adminuser.AdminUserBo;
 import com.lm.entity.vo.adminuser.AdminUserRegVo;
 import com.lm.entity.vo.adminuser.AdminUserUpdateVo;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -21,6 +24,12 @@ public interface IAdminUserService extends IService<AdminUser> {
 
     AdminUser login(String userName);
 
+    /**
+     * 获取用户拥有的角色 根据用户id
+     * @param id
+     * @return
+     */
+    List<String> getRoleByUserId(Long id);
 
     /**
      * 查询后台用户管理管理列表信息
@@ -32,6 +41,21 @@ public interface IAdminUserService extends IService<AdminUser> {
      * @return
      */
     List<AdminUserBo> findAdminUserList() ;
+
+    /**
+     * 为用户绑定一个角色
+     * @param userId
+     * @param roleId
+     * @return
+     */
+    boolean bindingRoleByUserId(Long userId,  Long roleId);
+    /**
+     * 为用户解除绑定一个角色
+     * @param userId
+     * @param roleId
+     * @return
+     */
+    boolean unbindingRoleByUserId( Long userId,  Long roleId);
 
     /**
      * 查询后台用户管理管理列表信息并分页
@@ -106,4 +130,11 @@ public interface IAdminUserService extends IService<AdminUser> {
      * @return 对应角色表
      */
     List<String> getRoleNamesByUid(Long id);
+
+    /**
+     * 查询用户对应的权限表
+     * @param userId
+     * @return
+     */
+    List<String> findByUserPermission(Long userId);
 }

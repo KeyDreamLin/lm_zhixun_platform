@@ -7,6 +7,8 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Date;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,7 +17,7 @@ import lombok.NoArgsConstructor;
 /**
 * AdminRolesBo参数类
 * 创建人:Lm<br/>
-* 时间：2022-09-11 <br/>
+* 时间：2022-09-14 <br/>
 *
 */
 @Data
@@ -34,7 +36,9 @@ public class AdminRolesBo implements java.io.Serializable  {
     // 
     private Integer isdelete;
     // 
-    private LocalDateTime createTime;
+    private Date createTime;
     // 
-    private LocalDateTime updateTime;
+    private Date updateTime;
+    // 是否授权
+    private Boolean isAuth;
 }

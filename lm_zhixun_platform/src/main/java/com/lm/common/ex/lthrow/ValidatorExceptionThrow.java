@@ -3,7 +3,7 @@ package com.lm.common.ex.lthrow;
 import com.lm.common.r.GlobalResultEnumInterface;
 
 /**
- * 验证器抛出异常
+ * 自定义异常类抛出
  */
 public class ValidatorExceptionThrow extends RuntimeException{
     private Integer code;

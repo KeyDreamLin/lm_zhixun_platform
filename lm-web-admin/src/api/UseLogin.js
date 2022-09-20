@@ -40,7 +40,7 @@ function UserLogin() {
                 userCopy.username = utils.encryptByDES(Login_UserData.username);
                 userCopy.password = utils.encryptByDES(Login_UserData.password);
                 let ret = await store.dispatch("user/toLogin", userCopy);
-                // console.log(ret);
+                // console.log("login------------------->",ret);
                 // LmMessageSuccess(ret);
                 // 成功就跳转到首页去
                 router.push("/");

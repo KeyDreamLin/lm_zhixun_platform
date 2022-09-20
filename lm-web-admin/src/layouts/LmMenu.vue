@@ -8,7 +8,7 @@
 
                 <template v-if="menu_root.children.length > 0">
                     <!-- 有子元素的 -->
-                    <el-sub-menu :index="menu_root.name">
+                    <el-sub-menu v-permission="menu_root.code" :index="menu_root.name">
                         <template #title>
                             <el-icon>
                                 <component :is="menu_root.icon" />
@@ -17,7 +17,7 @@
                         </template>
                         <!-- 遍历子元素 只支持二级 -->
                         <template v-for="(menu_children, index__) in  menu_root.children" :key="menu_children.id">
-                            <el-menu-item :index="menu_children.path">
+                            <el-menu-item v-permission="menu_children.code" :index="menu_children.path">
                                 <el-icon>
                                     <component :is="menu_children.icon" />
                                 </el-icon>
@@ -33,7 +33,7 @@
                 </template>
                 <!-- 无子元素的 -->
                 <template v-else>
-                    <el-menu-item :index="menu_root.path">
+                    <el-menu-item v-permission="menu_root.code" :index="menu_root.path">
                         <el-icon>
                             <Ticket />
                         </el-icon>

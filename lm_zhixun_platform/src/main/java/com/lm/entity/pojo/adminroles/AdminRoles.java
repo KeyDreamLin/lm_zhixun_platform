@@ -7,8 +7,10 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Date;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * <p>
@@ -16,17 +18,15 @@ import lombok.*;
  * </p>
  *
  * @author Lm
- * @since 2022-09-11
+ * @since 2022-09-14
  */
-@Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
+@Getter
+@Setter
 @TableName("kss_roles")
 public class AdminRoles implements Serializable {
 
 
-    @TableId(type = IdType.AUTO)
+    @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
     private String roleCode;
@@ -38,10 +38,10 @@ public class AdminRoles implements Serializable {
     private Integer isdelete;
 
     @TableField(fill = FieldFill.INSERT)
-    private LocalDateTime createTime;
+    private Date createTime;
 
     @TableField(fill = FieldFill.INSERT_UPDATE)
-    private LocalDateTime updateTime;
+    private Date updateTime;
 
 
 }

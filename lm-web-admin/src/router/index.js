@@ -114,6 +114,13 @@ const routes = [
             import('@/views/error/_404.vue'),
     },
     {
+        path: "/403",
+        meta: { title: "403" },
+        name: "Forbidden",
+        component: () =>
+            import('@/views/error/_403.vue'),
+    },
+    {
         path: "/login",
         meta: { title: "登录" },
         name: "login",

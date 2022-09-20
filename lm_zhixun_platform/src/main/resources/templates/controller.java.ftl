@@ -2,7 +2,8 @@ package ${package.Controller};
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import ${package.Mapper}.${table.mapperName};
-import ${package.Service}.${table.serviceName};
+<#--import ${package.Service}.${table.serviceName};-->
+import ${package.ServiceImpl}.${table.serviceImplName};
 import ${package.Entity}.${entity};
 import ${voPackage}.${entity}Vo;
 import ${boPackage}.${entity}Bo;
@@ -36,7 +37,7 @@ public class ${table.controllerName} extends BaseController {
     * 创建时间：${date}
     * @return
     */
-    @GetMapping("/${voLowerClassName}/load")
+    @PostMapping("/${voLowerClassName}/load")
     @ResponseBody
     public List<${entity}Bo> find${voLowerClassName}List() {
         return ${voLowerClassName}Service.find${entity}List();
@@ -53,9 +54,9 @@ public class ${table.controllerName} extends BaseController {
     * 创建时间：${date}
     * @version 1.0.0
     */
-    @GetMapping("/${voLowerClassName}/list")
+    @PostMapping("/${voLowerClassName}/list")
     @ResponseBody
-    public IPage<${entity}Bo> find${entity}s(@RequestBody ${entity}Vo ${voLowerClassName}Vo){
+    public IPage<${entity}Bo> find${entity}Page(@RequestBody ${entity}Vo ${voLowerClassName}Vo){
         return ${voLowerClassName}Service.find${entity}Page(${voLowerClassName}Vo);
     }
 
@@ -63,16 +64,16 @@ public class ${table.controllerName} extends BaseController {
     * 保存和修改${title}
     * @method: saveupdate
     * @path : /admin/${voLowerClassName}/save
-    * @param : ${entity}
-    * @result : ${entity}
+    * @param : ${voLowerClassName}Vo
+    * @result : ${entity}Bo
     * 创建人:${author}
     * 创建时间：${date}
     * @version 1.0.0
     */
     @PostMapping("/${voLowerClassName}/saveupdate")
     @ResponseBody
-    public ${entity}Bo saveupdate${entity}(@RequestBody ${entity} ${voLowerClassName}) {
-        return ${voLowerClassName}Service.saveupdate${entity}(${voLowerClassName});
+    public ${entity}Bo saveupdate${entity}(@RequestBody ${entity}Vo ${voLowerClassName}Vo) {
+        return ${voLowerClassName}Service.saveupdate${entity}(${voLowerClassName}Vo);
     }
 
     /**
@@ -85,7 +86,7 @@ public class ${table.controllerName} extends BaseController {
     * 创建时间：${date}
     * @version 1.0.0
     */
-    @GetMapping("/${voLowerClassName}/get/{id}")
+    @PostMapping("/${voLowerClassName}/get/{id}")
     @ResponseBody
     public ${entity}Bo get${entity}ById(@PathVariable("id") String id) {
         if(LmAssert.isEmpty(id)){

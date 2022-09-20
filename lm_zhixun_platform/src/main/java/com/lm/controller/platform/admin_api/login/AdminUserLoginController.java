@@ -84,7 +84,8 @@ public class AdminUserLoginController extends BaseController implements RedisAnd
         adminUserLoginBo.setTokenJj(jwtService.createToken(adminUserDb.getId()));
         // 查询用户角色信息
         adminUserLoginBo.setRoleNames(adminUserService.getRoleNamesByUid(adminUserDb.getId()));
-        adminUserLoginBo.setPermissions(new ArrayList<>());
+        // 查询用户对应的权限列表
+        adminUserLoginBo.setPermissions(adminUserService.findByUserPermission(adminUserDb.getId()));
         // 往redis传tokenUuid
         String tokenUuid_key = REDIS_LOGIN_UUID_KEY + adminUserDb.getId();
         String tokenUuid_Val = UUID.randomUUID().toString();

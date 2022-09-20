@@ -1,27 +1,33 @@
 package com.lm.controller.platform.admin_api.adminuser;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.lm.common.anno.IgnoreToken;
+import com.lm.common.anno.login.IgnoreToken;
+import com.lm.common.anno.permissionauth.HasAuth;
 import com.lm.common.ex.lthrow.ValidatorExceptionThrow;
 import com.lm.common.r.UserResultEnum;
 import com.lm.controller.platform.admin_api.BaseController;
+import com.lm.entity.bo.adminroles.AdminRolesBo;
 import com.lm.entity.bo.adminuser.AdminUserBo;
-import com.lm.entity.pojo.adminuser.AdminUser;
+import com.lm.entity.pojo.adminroles.AdminRoles;
 import com.lm.entity.vo.adminuser.AdminUserQueryVo;
 import com.lm.entity.vo.adminuser.AdminUserRegVo;
 import com.lm.entity.vo.adminuser.AdminUserUpdateVo;
+import com.lm.service.adminroles.IAdminRolesService;
 import com.lm.service.adminuser.IAdminUserService;
 import com.lm.tool.LmAssert;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.constraints.NotNull;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 /**
  * 后台用户管理web Api
@@ -33,7 +39,8 @@ import java.util.List;
 public class AdminUserController extends BaseController {
     @Autowired
     private IAdminUserService adminuserService;
-
+    @Autowired
+    private IAdminRolesService adminRolesService;
     /**
     * 查询后台用户管理列表信息
     ** @path : /admin/adminuser/load
@@ -62,11 +69,44 @@ public class AdminUserController extends BaseController {
     */
     @PostMapping("/adminuser/list")
     @ResponseBody
-//    @IgnoreToken
+    @HasAuth({"130104","130105"})
     public IPage<AdminUserBo> findAdminUsers(@RequestBody AdminUserQueryVo adminuserQueryVo){
         return adminuserService.findAdminUserPage(adminuserQueryVo);
     }
 
+    /**
+     * 查询用户拥有的角色权限
+     * @param userId
+     * @return
+     */
+    @PostMapping("adminuser/user/role")
+    @IgnoreToken
+    public List<AdminRolesBo> findRoleByUserid(Long userId){
+        // 所有的角色列表
+        List<AdminRolesBo> adminRolesAllList = adminRolesService.findAdminRolesList();
+        // 用户拥有的角色id
+        List<String> roleByUserId = adminuserService.getRoleByUserId(userId);
+
+        return adminRolesAllList.stream().map(a_roles->{
+            Long count = roleByUserId.stream().filter(u_rold->
+                a_roles.getId().equals(new Long(u_rold))
+            ).count();
+            a_roles.setIsAuth(count>0);
+            return a_roles;
+        }).collect(Collectors.toList());
+    }
+    // 为用户绑定一个角色
+    @PostMapping("adminuser/user/role/binding")
+    @IgnoreToken
+    public boolean bindingRoleByUserId(@RequestParam("userId") Long userId, @RequestParam("roleId") Long roleId){
+        return adminuserService.bindingRoleByUserId(userId,roleId);
+    }
+    // 为用户解除绑定一个角色
+    @PostMapping("adminuser/user/role/unbinding")
+    @IgnoreToken
+    public boolean unbindingRoleByUserId(@RequestParam("userId") Long userId, @RequestParam("roleId") Long roleId){
+        return adminuserService.unbindingRoleByUserId(userId,roleId);
+    }
     /**
     * 保存和修改后台用户管理
     * @method: saveupdate
@@ -79,8 +119,8 @@ public class AdminUserController extends BaseController {
     */
     @PostMapping("/adminuser/saveupdate")
     @ResponseBody
-//    @IgnoreToken
-    public AdminUserBo saveupdateAdminUser(@RequestBody @Validated AdminUserRegVo adminUserRegVo) {
+    @HasAuth("130107")
+    public AdminUserBo saveupdateAdminUser(@RequestBody AdminUserRegVo adminUserRegVo) {
         return adminuserService.saveupdateAdminUser(adminUserRegVo);
     }
 
@@ -115,6 +155,7 @@ public class AdminUserController extends BaseController {
     */
     @PostMapping("/adminuser/delete/{id}")
     @ResponseBody
+    @HasAuth("130108")
     public int deleteAdminUserById(@PathVariable("id") String id) {
         if(LmAssert.isEmpty(id)){
             throw new ValidatorExceptionThrow(UserResultEnum.ID_NOT_EMPTY);
@@ -133,6 +174,7 @@ public class AdminUserController extends BaseController {
     * @version 1.0.0
     */
     @PostMapping("/adminuser/delBatch")
+    @HasAuth("130109")
     public boolean delAdminUser(@RequestBody AdminUserQueryVo adminuserQueryVo) {
         log.info("你要批量删除的IDS是:{}", adminuserQueryVo.getBatchIds());
         if (LmAssert.isEmpty(adminuserQueryVo.getBatchIds())) {
@@ -153,6 +195,7 @@ public class AdminUserController extends BaseController {
      * @version 1.0.0
      */
     @PostMapping("/adminuser/update")
+    @HasAuth("130110")
     public boolean updateAdminUser(@RequestBody AdminUserUpdateVo adminUserUpdateVo) {
         return adminuserService.updateAdminUser(adminUserUpdateVo);
     }

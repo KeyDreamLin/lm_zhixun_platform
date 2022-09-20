@@ -37,7 +37,7 @@ export default {
         async findServerMenuTree(context) {
             let serverRes = await adminMenuService.tree();
             context.commit("setMenuTree", serverRes.data);
-            // console.log("-------",state.serverMenuTreeData);
+            console.log("-------",serverRes);
         }
     },
     // getters["名称"]  获取数据

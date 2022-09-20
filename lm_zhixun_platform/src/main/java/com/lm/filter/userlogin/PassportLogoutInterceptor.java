@@ -1,6 +1,6 @@
 package com.lm.filter.userlogin;
 
-import com.lm.common.anno.IgnoreToken;
+import com.lm.common.anno.login.IgnoreToken;
 import com.lm.common.ex.lthrow.ValidatorExceptionThrow;
 import com.lm.common.r.UserResultEnum;
 import com.lm.config.redis.key.RedisAndHeaderKey;

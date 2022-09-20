@@ -93,14 +93,16 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
     * 方法名：saveupdate${entity}<br/>
     * 创建人：${author} <br/>
     * 时间：${date}<br/>
-    * @param ${voLowerClassName}
+    * @param ${voLowerClassName}Vo
     * @return ${entity}Bo<br />
     */
     @Override
-    public ${entity}Bo saveupdate${entity}(${entity} ${voLowerClassName}){
+    public ${entity}Bo saveupdate${entity}(${entity}Vo ${voLowerClassName}Vo){
+        ${entity} ${voLowerClassName} = new ${entity}();
+        BeanUtils.copyProperties(${voLowerClassName}Vo,${voLowerClassName});
         boolean flag = this.saveOrUpdate(${voLowerClassName});
         ${entity}Bo ${voLowerClassName}Bo = new ${entity}Bo();
-        BeanUtils.copyProperties(${voLowerClassName},${voLowerClassName}Bo);
+        BeanUtils.copyProperties(${voLowerClassName}Vo,${voLowerClassName}Bo);
         return flag ? ${voLowerClassName}Bo : null;
     }
 

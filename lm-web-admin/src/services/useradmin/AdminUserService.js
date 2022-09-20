@@ -43,5 +43,43 @@ export default {
         if(params.id==""){return;}
         let temp = lm_request.post("/adminuser/update", params);
         return temp;
-    }
+    },
+    /**
+    * 查询用户拥有的角色权限
+    * @param {用户id} userId 
+    * @returns 
+    */
+    findRoleByUserid(userId){
+        if(!userId){return;}
+        let temp = lm_request.post(`adminuser/user/role/?userId=${userId}`);
+        return temp;
+     },
+    /**
+     *  为用户绑定一个角色
+     * @param {*} userId 
+     * @param {*} roleId 
+     * @returns 
+     */
+    bindingRoleByUserId(userId,roleId){
+        if(!userId){return;}
+        if(!roleId){return;}
+        let temp = lm_request.post(
+            `adminuser/user/role/binding/?userId=${userId}&roleId=${roleId}`
+            );
+        return temp;
+    },
+    /**
+     * 为用户解除绑定一个角色
+     * @param {*} userId 
+     * @param {*} roleId 
+     * @returns 
+     */
+    unbindingRoleByUserId(userId,roleId){
+        if(!userId){return;}
+        if(!roleId){return;}
+        let temp = lm_request.post(
+            `adminuser/user/role/unbinding/?userId=${userId}&roleId=${roleId}`
+            );
+        return temp;
+    },
 }

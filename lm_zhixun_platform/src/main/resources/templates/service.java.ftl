@@ -42,12 +42,12 @@ public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
         * 方法名：saveupdate${entity}<br/>
         * 创建人：${author} <br/>
         * 时间：${date}<br/>
-        * @param ${voLowerClassName}
+        * @param ${voLowerClassName}Vo
         * @return ${entity}Bo<br />
         * @throws <br/>
         * @since 1.0.0<br />
         */
-        ${entity}Bo saveupdate${entity}(${entity} ${voLowerClassName});
+        ${entity}Bo saveupdate${entity}(${entity}Vo ${voLowerClassName}Vo);
 
         /**
         * 根据Id查询${title}管理明细信息

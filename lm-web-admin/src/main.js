@@ -21,6 +21,8 @@ import router from '@/router'
 // 导入状态管理
 import store from '@/store' //默认使用Session
 
+// 导入自定义的permission指令 
+import Vpermission from '@/directive/Vpermission'
 
 const app = createApp(App);
 app.use(ElementPlus)
@@ -28,11 +30,17 @@ app.use(ElementPlus)
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
     app.component(key, component)
 }
+
 // 注册路由
 app.use(router)
+
 // 注册状态管理
 app.use(store)
+
 // 注册自定义组件
 app.use(LmUi)
+
+// 导入自定义的permission指令 
+Vpermission(app);
 
 app.mount('#app')

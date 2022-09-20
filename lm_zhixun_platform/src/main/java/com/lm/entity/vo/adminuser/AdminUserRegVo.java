@@ -23,8 +23,8 @@ public class AdminUserRegVo implements Serializable {
 
     private Long id;
     // 姓名
-    @NotBlank(message = "{AdminUserRegVo.NotBlank.username.message}")
-    @Size(min = 4, max = 20, message = "{AdminUserRegVo.username}")
+//    @NotBlank(message = "{AdminUserRegVo.NotBlank.username.message}")
+//    @Size(min = 4, max = 20, message = "{AdminUserRegVo.username}")
     private String username;
     // 密码
 //    @NotBlank
@@ -32,7 +32,7 @@ public class AdminUserRegVo implements Serializable {
 //    @ValidPassword
     private String password;
     // 账号
-    @NotBlank(message = "{AdminUserRegVo.NotBlank.account.message}")
+//    @NotBlank(message = "{AdminUserRegVo.NotBlank.account.message}")
 //    @Size(min = 4,max=20,message = "账号长度要在4~20位以内")
     private String account;
     // 头像

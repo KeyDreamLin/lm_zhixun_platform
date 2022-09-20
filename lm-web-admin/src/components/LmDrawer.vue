@@ -5,7 +5,7 @@
                 <div class="lm-drawer-main">
                     <slot></slot>
                 </div>
-                <div class="lm-drawer-footer">
+                <div class="lm-drawer-footer" v-if="isbutton">
                     <el-button type="primary" @click="submit">提交</el-button>
                     <el-button @click="cancel">取消</el-button>
                 </div>
@@ -27,6 +27,10 @@ const props = defineProps({
         type: String,
         default: "我是默认的标题"
     },
+    isbutton:{
+        type:Boolean,
+        default:true
+    }
 });
 
 // 将抽屉的click方法抛出去给父组件 然后可以通过 @submit @cancel 来绑定方法

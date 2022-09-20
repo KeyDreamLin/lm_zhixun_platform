@@ -1,13 +1,13 @@
 package com.lm.filter.userlogin;
 
-import com.lm.common.anno.IgnoreToken;
+import com.lm.common.anno.login.IgnoreToken;
 import com.lm.common.ex.lthrow.UserExceptionThrow;
 import com.lm.common.r.UserResultEnum;
 import com.lm.config.redis.JwtBlackSetService;
 import com.lm.config.redis.key.RedisAndHeaderKey;
 import com.lm.entity.pojo.adminuser.AdminUser;
 import com.lm.service.adminuser.IAdminUserService;
-import com.lm.service.adminmenu.AdminUserThreadLocal;
+import com.lm.service.adminuser.AdminUserThreadLocal;
 import com.lm.tool.DateTool;
 import com.lm.tool.JwtService;
 import com.lm.tool.LmAssert;

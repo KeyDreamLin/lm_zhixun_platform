@@ -17,6 +17,7 @@ public enum UserResultEnum implements GlobalResultEnumInterface{
     USER_INPUT_CODE_ERROR(100108,"验证码错误"),
     ID_NOT_EMPTY(100109, "id不允许为空"),
     ACCOUNT_REG_ERROR(100110,"该账号已存在！"),
+    USER_ROLE_AUTH_EMPTY(100110,"权限不足！无法访问...")
     ;
 
     private Integer code; //编码

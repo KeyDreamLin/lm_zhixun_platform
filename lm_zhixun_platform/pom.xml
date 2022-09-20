@@ -112,6 +112,17 @@
             <artifactId>passay</artifactId>
             <version>1.6.0</version>
         </dependency>
+        <!--aop切面-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
+        <!--常用集合工具类 交集并集等-->
+        <dependency>
+            <groupId>commons-collections</groupId>
+            <artifactId>commons-collections</artifactId>
+            <version>3.2</version>
+        </dependency>
     </dependencies>
 
     <build>

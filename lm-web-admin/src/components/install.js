@@ -5,6 +5,7 @@ import LmUploaFile from "@/components/LmUploaFile.vue";
 import LmDialog from "@/components/LmDialog.vue";
 import LmEditor from "@/components/LmEditor.vue";
 import LmImage from "@/components/LmImage.vue";
+import LmSelectIcon from "@/components/LmSelectIcon.vue";
 // plugins/i18n.js
 export default {
     install: (app, options) => {
@@ -17,5 +18,6 @@ export default {
         app.component("LmDialog", LmDialog);
         app.component("LmEditor", LmEditor);
         app.component("LmImage", LmImage);
+        app.component("LmSelectIcon", LmSelectIcon);
     }
 }

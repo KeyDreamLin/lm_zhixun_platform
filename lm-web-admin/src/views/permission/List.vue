@@ -6,7 +6,6 @@
             <div class="lm-handle__box pb-4 flex flex-row  items-center justify-between">
                 <div class="lm-handle-but__box">
                     <el-button icon="Plus" @click="OpenDrawerEvent" type="success">新增</el-button>
-                    <el-button icon="Delete" type="danger">批量删除</el-button>
                 </div>
                 <!-- 搜索 -->
                 <div class="lm-handle-search__box flex flex-row  items-center">
@@ -21,8 +20,11 @@
                 </div>
             </div>
             <div class="lm-tree__box">
-                <el-tree style="background:#f8f8f8;" ref="TreeRef" :data="data" show-checkbox node-key="id"
-                    :default-expand-all="false" :highlight-current="true" :expand-on-click-node="true">
+                <el-tree 
+                    style="background:#f8f8f8;" node-key="id"
+                    ref="TreeRef" :data="permissionTree" :props="{label:'name'}"
+                    :default-expand-all="true" :highlight-current="true" :expand-on-click-node="false"
+                >
                     <template #default="{ node, data }">
                         <div class="lm-tree-body">
                             <!-- 标签图标等 -->
@@ -34,15 +36,13 @@
                                 <el-icon class="mr-1">
                                     <component :is="data.icon" />
                                 </el-icon>
-                                <span class="mr-2">{{ data.label }}</span>
+                                <span class="mr-2">{{ data.name }}</span>
                             </div>
                             <!-- 按钮控件 -->
                             <div class="lm-tree-but">
-                                <el-switch class="mr-2" v-model="data.status" width="60px" active-color="#8389c7"
-                                    inline-prompt active-text="已发布" :active-value="1" inactive-text="不发布"
-                                    :inactive-value="0" />
-                                <el-button type="success" size="small">添加</el-button>
-                                <el-button type="danger" size="small">删除</el-button>
+                                <el-button type="success" size="small" v-if="data.type == 1" @click="addItemEvent(data)">添加子项</el-button>
+                                <el-button type="warning" size="small" @click="UpdItemEvent(data)">编辑</el-button>
+                                <el-button type="danger" size="small" @click="DelItemEvent(data.id)">删除</el-button>
                             </div>
                         </div>
                     </template>
@@ -50,115 +50,197 @@
             </div>
         </div>
 
-        <lm-drawer ref="DrawerRef" title="新增权限">
-            {{ permissionManger }}
-            <el-form ref="formRef" :model="permissionManger" :rules="rules" label-width="120px" status-icon>
+        <lm-drawer ref="DrawerRef" title="新增权限" @submit="drawerSubmitPermissionsEvent">
+            {{ FormPermissionData }}
+            <el-form ref="formRef" :model="FormPermissionData" :rules="rules" label-width="120px" status-icon>
                 <el-form-item label="父亲权限ID">
-                    <el-cascader :props="{ label: 'label',value:'id',emitPath:false,checkStrictly:true}" :options="data" :show-all-levels="false" v-model="permissionManger.pid" :model-value="permissionManger.pid" placeholder="请选择父权限ID" />
+                    <el-cascader placeholder="请选中父信息" 
+                        :props="{
+                            label:'name',
+                            value:'id',
+                            multiple: false, 
+                            children:'children',
+                            checkStrictly:true,
+                        emitPath:false}" :options="SelectOfPermissionData" clearable
+                         v-model="FormPermissionData.pid"/>
                 </el-form-item>
+
                 <el-form-item label="菜单规则" class="flex items-center">
-                    <el-radio-group v-model="permissionManger.menutype">
+                    <el-radio-group v-model="FormPermissionData.type">
                         <el-radio :label="1" size="large">菜单</el-radio>
                         <el-radio :label="2" size="large">权限</el-radio>
                     </el-radio-group>
                 </el-form-item>
+
+                <el-form-item 
+                    :label="FormPermissionData.type==1?'菜单名称':'权限名称'">
+                        <el-input v-model="FormPermissionData.name" />
+                </el-form-item>
+
                 <!-- 是添加菜单的时候才显示前端路由 -->
-                <el-form-item label="前端路由" v-if="permissionManger.menutype==1">
-                    <el-input v-model="permissionManger.frontpath" />
+                <el-form-item label="路由路径" v-if="FormPermissionData.type==1">
+                    <el-input v-model="FormPermissionData.path" />
                 </el-form-item>
-                <el-form-item label="权限名称" prop="permissionname">
-                    <el-input v-model="permissionManger.permissionname" />
+                <el-form-item label="路由名称" v-if="FormPermissionData.type==1">
+                    <el-input v-model="FormPermissionData.pathname" />
                 </el-form-item>
-                <el-form-item label="权限代号" prop="permissioncode">
-                    <el-input v-model="permissionManger.permissioncode" />
+               
+
+                <el-form-item :label="FormPermissionData.type==1?'菜单代号':'权限代号'" >
+                    <el-input v-model="FormPermissionData.code" />
                 </el-form-item>
-                <el-form-item label="请求方式">
-                    <el-select v-model="permissionManger.method" placeholder="permissionManger.method">
-                        <el-option v-for="item in methodList" :key="item" :label="item" :value="item" />
-                    </el-select>
+
+                <el-form-item 
+                    :label="FormPermissionData.type==1?'菜单图标':'权限图标'"
+                    class="felx items-center">
+                        <lm-select-icon class="mr-2" v-model="FormPermissionData.icon"></lm-select-icon>
+                        <el-icon>
+                            <component :is="FormPermissionData.icon" />
+                        </el-icon>
                 </el-form-item>
+
                 <el-form-item label="权限排序">
-                    <el-input-number v-model="permissionManger.sort" :min="1" :max="10" />
+                    <el-input-number v-model="FormPermissionData.sorted" :min="1" :max="100" />
                 </el-form-item>
-                <el-form-item label="权限状态">
-                    <el-switch v-model="permissionManger.status" active-color="#8389c7" inline-prompt active-text="是"
-                        :active-value="1" inactive-text="否" :inactive-value="0" />
+
+                <el-form-item label="权限状态" class="flex items-center">
+                    <el-switch 
+                        class="mr-2" v-model="FormPermissionData.status" size="large" width="65px" active-color="#8389c7"
+                        inline-prompt active-text="已发布" :active-value="1" inactive-text="不发布"
+                        :inactive-value="0" />
                 </el-form-item>
+            
             </el-form>
         </lm-drawer>
     </div>
 </template>
   
 <script setup>
-import { reactive, ref } from 'vue';
+import { onMounted, reactive, ref } from 'vue';
 import LmDrawer from '@/components/LmDrawer.vue';
+import permissionService from '@/services/permission/PermissionService'
+import { LmMessageError, LmMessageSuccess } from '@/utils';
 /* tree相关 */
 // 可以去调用Tree的一些行为和方法
 const TreeRef = ref(null);
-// 新建按钮
-const OpenDrawerEvent = () => {
+const permissionTree = ref([]);
+
+// 新增权限的按钮
+const OpenDrawerEvent = async () => {
     DrawerRef.value.open();
+    // 加载权限表到页面的抽屉的下拉框
+    await loadSelectBoxData();
+    // 设置排序
+    FormPermissionData.value.sorted = SelectOfPermissionData.value.length + 1;
+}
+// 加载权限表到页面的tree
+const loadTreeData = async () =>{
+    let serverRet =  await permissionService.permissionTree();
+    // 页面的数据
+    permissionTree.value = serverRet.data;
+    console.log(serverRet);
+}
+// 加载权限表到页面的抽屉的下拉框
+const loadSelectBoxData = async () =>{
+    let serverRet =  await permissionService.permissionTree();
+    // 选择框的数据
+    SelectOfPermissionData.value = serverRet.data;
+    console.log(serverRet);
 }
 
-const data = [
-    {
-        id: 1,
-        label: '后台面板',
-        icon: "add-location",
-        type: 2,
-        pid: 0,
-        status: 1,
-        children: [
-            {
-                id: 2,
-                label: '主控台',
-                icon: "home-filled",
-                type: 1,
-                pid: 1,
-                status: 1,
-            },
-        ],
-    },
-    {
-        id: 3,
-        label: '商品管理',
-        icon: "shopping-bag",
-        type: 1,
-        pid: 0,
-        children: [
-            {
-                id: 4,
-                label: '商品管理',
-                icon: "apple",
-                type: 1,
-                pid: 3,
-            },
-        ],
-    },
-];
+
+onMounted(()=>{
+    // 将权限加载到页面
+    loadTreeData(); 
+})
 
 /* 抽屉form */
 const DrawerRef = ref(null);
 const formRef = ref(null);
+
 // form 表单验证规则
 const rules = reactive({
-    "permissionname": [{ required: true, message: "请输入权限名", trigger: 'blur' }],
-    "permissioncode": [{ required: true, message: "请输入权限代号", trigger: 'blur' }],
-    "status": [{ required: true, message: "请选择状态", trigger: 'blur' }],
+
 });
+
 // 请求方式
-const methodList = reactive(["POST", "PUT", "DELETE"]);
+// const methodList = reactive(["POST", "PUT", "DELETE"]);
 // form数据模型
-const permissionManger = reactive({
-    pid: 0,
-    menutype: 1,//1 菜单 2 权限
-    frontpath: "/product/list",
-    permissionname: "1",
-    permissioncode: "2",
-    method: "POST",
-    sort: 3,
-    status: 1
+const FormPermissionData = ref({
+    pid: 0,// 对应的父级 0 就是最大的父 
+    name: "",// 权限或者菜单名字
+    path: "", //路由访问路径
+    pathname: "", // 路由名称
+    icon: "", // 图标
+    code: "",// 代号
+    type: 1,// 1 菜单 2 权限
+    sorted: 0, // 排序
+    status: 1,// 状态
+    isdelete:0,// 是否删除
 })
+const reset = () => {
+    FormPermissionData.value = {
+        pid: 0,// 对应的父级 0 就是最大的父 
+        name: "",// 权限或者菜单名字
+        path: "", //路由访问路径
+        pathname: "", // 路由名称
+        icon: "", // 图标
+        code: "",// 代号
+        type: 1,// 1 菜单 2 权限
+        sorted: 0, // 排序
+        status: 1,// 状态
+        isdelete:0,// 是否删除
+    }
+}
+// 下拉框 选择父权限的数据
+const SelectOfPermissionData = ref([]);
+
+// 抽屉提交事件 权限表添加
+const drawerSubmitPermissionsEvent = async () =>{
+   try {
+        permissionService.saveupdateAdminPermission(FormPermissionData.value);
+        LmMessageSuccess("操作成功！");
+        DrawerRef.value.closeNoMsg();
+        reset();
+        // 将权限加载到页面
+        loadTreeData(); 
+   } catch (err) {
+        console.log(err);
+        LmMessageError("操作失败！");
+   }
+}
+// 添加子权限事件按钮
+const addItemEvent = async (item) => {
+    DrawerRef.value.open();
+    // 加载权限表到页面的抽屉的下拉框
+    await loadSelectBoxData();
+    reset();
+    FormPermissionData.value.pid = item.id;
+    // 设置排序 
+    FormPermissionData.value.sorted = item.children.length + 1;
+    console.log(item);
+}
+// 修改子权限事件按钮
+const UpdItemEvent = async (item) => {
+    DrawerRef.value.open();
+    // 加载权限表到页面的抽屉的下拉框
+    await loadSelectBoxData();
+    reset();
+    // 深拷贝
+    FormPermissionData.value  = {...item};
+    console.log(item);
+}
+// 删除子项
+const DelItemEvent = async (id) => {
+    try{
+        await permissionService.deleteAdminPermissionById(id);
+        LmMessageSuccess("删除成功");
+        // 将权限加载到页面
+        loadTreeData();  
+    }catch(err){
+        LmMessageSuccess("删除失败");
+    }
+}
 </script>
 
 <style >
@@ -170,6 +252,6 @@ const permissionManger = reactive({
 }
 
 .el-tree-node__content {
-    margin-bottom: 5px;
+    margin: 5px 0;
 }
 </style>

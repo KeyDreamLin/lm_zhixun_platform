@@ -7,7 +7,7 @@ export default {
      * @returns 
      */
     tree() {
-        let temp = lm_request.post("/menu/tree");
+        let temp = lm_request.post("/adminpermission/menu/tree");
         return temp;
     }
 

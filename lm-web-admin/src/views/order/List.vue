@@ -1,3 +1,6 @@
 <template>
-    <h1>我是用户列表-Order</h1>
+    src\views\order\List.vue
 </template>
+<script setup>
+import { ref } from 'vue';
+</script>

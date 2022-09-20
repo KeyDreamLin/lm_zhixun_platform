@@ -1,14 +1,14 @@
 <template>
     <!-- before-close关闭方法前的回调 用于确认是否关闭 -->
     <div class="lm-dialog-main">
-        <el-dialog v-model="isShowDialog" :top="[width=='90%'?'5vh':'15vh']" :title="title" :width="width" :fullscreen="fullscreen"
+        <el-dialog v-model="isShowDialog" :top="[width=='90%'?'5vh':'30vh']" :title="title" :width="width" :fullscreen="fullscreen"
             :before-close="closeEvent" center :lock-scroll="false">
             <!-- 内容区 -->
             <div class="lm-dialog-body" :class="[fullscreen?'lm-dialog-body_full':'']">
                 <slot></slot>
             </div>
             <template #footer>
-                <span class="dialog-footer">
+                <span class="dialog-footer" v-if="isbutton">
                     <el-button @click="closeEvent">关闭</el-button>
                     <el-button @click="submitEvent" type="primary">确定</el-button>
                 </span>
@@ -36,6 +36,11 @@ const props = defineProps({
         type: String,
         default: "50%"
     },
+    // 是否有底部按钮
+    isbutton:{
+        type:Boolean,
+        default:true
+    }
     
 });
 const isShowDialog = ref(false);

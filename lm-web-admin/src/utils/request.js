@@ -79,7 +79,11 @@ lm_request.interceptors.response.use((response) => {
         router.push("/toLogin");
         LmMessageError("登录状态异常！");
     }
-
+    else if (res_data.code == 100110) {
+        // 权限不足 跳转懂啊403
+        router.push("/403");
+        LmMessageError("权限不足！禁止访问...");
+    }
     // 如果第一个为空 那就用第二个
     // let errorObj = errorCode[res_data.code] || errorCode["default"];
     // console.log("server response yes-->", errorObj) // 

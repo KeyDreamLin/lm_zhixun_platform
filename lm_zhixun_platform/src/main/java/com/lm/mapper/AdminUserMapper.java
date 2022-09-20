@@ -51,4 +51,18 @@ public interface AdminUserMapper extends BaseMapper<AdminUser> {
      */
     List<AdminRoles> findUserRolesByUid(@Param("userId") Long id);
 
+    /**
+     * 查询用户对应的权限表
+     * @param userId
+     * @return
+     */
+    List<String> findByUserPermission(@Param("userId") Long userId);
+
+    /**
+     * 查询用户拥有的角色 根据用户id
+     * @param userId
+     * @return
+     */
+    List<String> findRoleByUserId(@Param("userId") Long userId);
+
 }

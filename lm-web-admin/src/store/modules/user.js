@@ -29,7 +29,7 @@ export default {
             state.avatar = serverUserData.avatar;
             state.roleList = serverUserData.roleNames;
             state.permissionList = serverUserData.permissions;
-            // console.log("-1231231", serverUserData);
+            // console.log("StorePermissions", serverUserData.permissions);
         },
         // 清除状态
         delUser(state) {
@@ -65,7 +65,7 @@ export default {
             // console.log("store----tologin");
             try {
                 let LoginServer_retrunMessage = await loginService.toLogin(loginUserData); // 这个会抛出异常
-                // alert(LoginServer_retrunMessage.msg);
+                // console.log("toLogin",LoginServer_retrunMessage);
 
                 // console.log("go to server later of data:", LoginServer_retrunMessage);// 这个会为空
                 // 这里是通过方法的名称调用方法的
@@ -92,7 +92,7 @@ export default {
         },
         // 获取权限
         getPermissions(state) {
-            return state.permissionList.map(role => role.code);
+            return state.permissionList;
         },
         // 获取用户ID
         getUserId(state) {

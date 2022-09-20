@@ -1,4 +1,4 @@
-package com.lm.service.adminmenu;
+package com.lm.service.adminuser;
 
 
 import com.lm.entity.pojo.adminuser.AdminUser;
